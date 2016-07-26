@@ -7,11 +7,11 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: ru
 
 framework:
     #esi:             ~
-    translator:      ~
+    translator:      { fallbacks: [en, ru] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -52,7 +52,8 @@ doctrine:
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
         #     path:     "%database_path%"
-
+        types:
+            json: Sonata\Doctrine\Types\JsonType
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -66,17 +67,52 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+sonata_user:
+    security_acl: true
+    manager_type: orm
+    # class:              # Entity Classes
+    #    user:           PokemonBundle\Entity\User
+    #    group:          PokemonBundle\Entity\UserGroup
+
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: PokemonBundle\Entity\User
+    group:
+        group_class:   PokemonBundle\Entity\UserGroup
+        group_manager: sonata.user.orm.group_manager
+    service:
+        user_manager: sonata.user.orm.user_manager
 
 sonata_block:
     default_contexts: [cms]
     blocks:
         # enable the SonataAdminBundle block
         sonata.admin.block.admin_list:
-            contexts:   [admin]
+           contexts:   [admin]
+        #sonata.user.block.menu:    # used to display the menu in profile pages
+        #sonata.user.block.account: # used to display menu option (login option)
+        #sonata.block.service.text: # used to if you plan to use Sonata user routes
 
 sonata_admin:
     title:      POKEMON
+    options:
+        use_select2:    true
+    security:
+        handler: sonata.admin.security.handler.acl
+    templates:
+        layout: main_layout.html.twig
+        dashboard: SonataAdminBundle:Core:dashboard.html.twig
+    dashboard:
+        groups:
+            pokemon.admin.pokemon:
+                label: pokemon.admin
+                label_catalogue: PokemonBundle
+                items:
+                    - pokemon.admin.pokemon
+                    - pokemon.admin.user
+
+
+sonata_translation:
+    locales: [en, ru]
+    default_locale: en

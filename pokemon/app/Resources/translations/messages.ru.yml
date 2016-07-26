@@ -1,0 +1,68 @@
+pokemon.admin.model.pokemon: Список покемонов
+pokemon.admin.model.user: Пользователи
+list.label_id: Идентификатор
+list.label_name: Название
+list.label__action: Действия
+filter.label_id: Идентификатор
+filter.label_name: Название
+breadcrumb.link_pokemon_list: Список покемонов
+show.label_id: Идентификатор
+show.label_name: Название
+
+list.label_username: Имя пользователя
+list.label_email: Email
+list.label_enabled: Доступен
+list.label_locked: Заблокирован
+list.label_created_at: Дата регистрации
+list.label_impersonating: Персонализация
+filter.label_username: Имя пользователя
+filter.label_locked: Заблокирован
+filter.label_email: Email
+breadcrumb.link_user_list: Список пользователей
+
+User: Пользователь
+Security: Безопасность
+Profile: Профиль
+form.label_date_of_birth: Дата рождения
+form.label_firstname: Имя
+form.label_lastname: Фамилия
+form.label_website: Веб сайт
+form.label_biography: Биография
+form.label_gender: Пол
+gender_unknown: Неизвесно
+gender_female: Жен
+gender_male: Муж
+form.label_locale: Место разположения
+form.label_timezone: Временной пояс
+form.label_phone: Телефон
+General: Основные параметры
+form.label_username: Имя пользователя
+form.label_email: Email
+form.label_plain_password: Пароль
+Social: Социалки
+form.label_facebook_uid:
+form.label_facebook_name:
+form.label_twitter_uid:
+form.label_twitter_name:
+form.label_gplus_uid:
+form.label_gplus_name:
+Status: Статус
+form.label_locked: Заблокирован
+form.label_expired: Устарел
+form.label_enabled: Боступен
+form.label_credentials_expired: Устарели учетные данные
+Keys: Ключи
+form.label_token: Токен
+form.label_two_step_verification_code: Код 2 шаговой авторизации
+Roles: Роли
+form.label_roles: Роли
+breadcrumb.link_user_create: Создание пользователя
+
+=: =
+>=: >=
+>: >
+<=: <=
+<: <
+содержит: содержит
+не содержит: не содержит
+равен: равен

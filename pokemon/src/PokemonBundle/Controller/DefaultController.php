@@ -15,12 +15,4 @@ class DefaultController extends Controller
         return $this->render('PokemonBundle:Default:index.html.twig');
     }
 
-    /**
-     * @Route("/admin")
-     */
-    public function indexAction2()
-    {
-        return $this->render('PokemonBundle:Default:index.html.twig');
-    }
-
 }

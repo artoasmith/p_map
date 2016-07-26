@@ -2,10 +2,9 @@
 
 namespace PokemonBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 /**
  * User
  *
@@ -23,9 +22,43 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rate", type="integer", nullable=true)
+     */
+    private $rate;
+
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getRate()
+    {
+        return $this->rate;
+    }
+
+    /**
+     * @param int $rate
+     * @return User
+     */
+    public function setRate($rate)
+    {
+        $this->rate = $rate;
+        return $this;
+    }
 }
