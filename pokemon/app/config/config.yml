@@ -110,6 +110,7 @@ sonata_admin:
                 label_catalogue: PokemonBundle
                 items:
                     - pokemon.admin.pokemon
+                    - pokemon.admin.point
                     - pokemon.admin.user
 
 

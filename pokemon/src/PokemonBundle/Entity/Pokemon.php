@@ -43,6 +43,13 @@ class Pokemon extends UploaderEntity
     private $fileImage;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="rare", type="integer",length=2)
+     */
+    private $rare;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -99,6 +106,13 @@ class Pokemon extends UploaderEntity
     }
 
     /**
+     * @return string
+     */
+    public function getImageUrl()
+    {
+        return (empty($this->image)?'':$this->defaultFolderPath().$this->image);
+    }
+    /**
      * @return mixed
      */
     public function getFileImage()
@@ -112,6 +126,29 @@ class Pokemon extends UploaderEntity
     public function setFileImage($fileImage)
     {
         $this->fileImage = $fileImage;
+    }
+
+    /**
+     * Set rare
+     *
+     * @param integer $rare
+     * @return Pokemon
+     */
+    public function setRare($rare)
+    {
+        $this->rare = $rare;
+
+        return $this;
+    }
+
+    /**
+     * Get rare
+     *
+     * @return integer
+     */
+    public function getRare()
+    {
+        return $this->rare;
     }
 
     /**

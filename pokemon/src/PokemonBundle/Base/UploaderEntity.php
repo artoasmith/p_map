@@ -8,7 +8,7 @@ class UploaderEntity
 {
     public function documentRoot(){
         $yaml = new Parser();
-        $a = $yaml->parse(file_get_contents(__DIR__ . '/../../../../app/config/params.yml'));
+        $a = $yaml->parse(file_get_contents(__DIR__ . '\..\..\..\app\config\params.yml'));
         return (isset($a['document_root'])?$a['document_root']:'');
     }
 
@@ -29,18 +29,18 @@ class UploaderEntity
 
     public function upload($type, $fileurl = ''){
         if (empty($fileurl)) {
-            if (null === $this->{'file' . $type}) {
+            if (null === $this->{'getFile' . $type}()) {
                 return;
             }
 
-            $filename = md5(time() . rand(5, 100)) . '.' . pathinfo($this->{'file' . $type}->getClientOriginalName(), PATHINFO_EXTENSION);
+            $filename = md5(time() . rand(5, 100)) . '.' . pathinfo($this->{'getFile' . $type}()->getClientOriginalName(), PATHINFO_EXTENSION);
             $filePath = $this->defaultFolderPath();
             $filename = str_replace('..', '.', $filename);
 
 
             $this->clearOldUpload($type);
 
-            $file = $this->{'file' . $type};
+            $file = $this->{'getFile' . $type}();
             $newfile = $this->documentRoot() . $filePath . $filename;
 
             if (\copy($file, $newfile)) {

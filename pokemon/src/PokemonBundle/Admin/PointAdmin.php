@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: artoa
+ * Date: 27.07.2016
+ * Time: 10:52
+ */
+
 namespace PokemonBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -7,9 +14,9 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use PokemonBundle\Entity\Pokemon;
+use PokemonBundle\Entity\Point;
 
-class PokemonAdmin extends AbstractAdmin
+class PointAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -18,7 +25,9 @@ class PokemonAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('id')
-            ->add('name')
+            ->add('locationX')
+            ->add('locationY')
+            ->add('pokemon')
         ;
     }
 
@@ -30,10 +39,9 @@ class PokemonAdmin extends AbstractAdmin
 
         $listMapper
             ->add('id')
-            ->add('name')
-            ->add('image', 'image', array(
-                'template' => 'PokemonBundle:Default:image_value.html.twig'
-            ))
+            ->add('locationX')
+            ->add('locationY')
+            ->add('pokemon')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -49,18 +57,11 @@ class PokemonAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        /**
-         * @var Pokemon $object
-         */
-        $object = $this->getSubject();
-        $fileImageOptions = array('required' => false);
-        if ($object && ($webPath = $object->getImageUrl()))
-            $fileImageOptions['help'] = '<img src="'.$webPath.'" class="admin-preview thumbnail" />';
-
         $formMapper
             ->with('Основная информация')
-                ->add('name',null,['label'=>'Название'])
-                ->add('fileImage','file',$fileImageOptions)
+                ->add('locationX')
+                ->add('locationY')
+                ->add('pokemon')
             ->end()
         ;
     }
@@ -71,25 +72,9 @@ class PokemonAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
-            ->add('name');
-    }
-
-    public function prePersist($pm) {
-        /**
-         * @var Pokemon $pm
-         */
-        $this->saveFile($pm);
-    }
-
-    public function preUpdate($pm) {
-        $this->saveFile($pm);
-    }
-
-    public function saveFile($pm) {
-        /**
-         * @var Pokemon $pm
-         */
-        $pm->upload('Image');
+            ->add('locationX')
+            ->add('locationY')
+            ->add('pokemon')
+        ;
     }
 }

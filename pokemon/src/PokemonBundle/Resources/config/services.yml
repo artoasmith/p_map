@@ -12,13 +12,23 @@ services:
             - ~
         calls:
            - [ setLabelTranslatorStrategy, ["@sonata.admin.label.strategy.underscore"]]
+    pokemon.admin.point:
+        class: PokemonBundle\Admin\PointAdmin
+        tags:
+           - {name: sonata.admin, manager_type: orm, group: "pokemon.admin.group.content", label: "pokemon.admin.model.point", label_catalogue: "PokemonBundle"}
+        arguments:
+            - ~
+            - PokemonBundle\Entity\Point
+            - ~
+        calls:
+           - [ setLabelTranslatorStrategy, ["@sonata.admin.label.strategy.underscore"]]
     pokemon.admin.user:
-            class: PokemonBundle\Admin\UserAdmin
-            tags:
-               - {name: sonata.admin, manager_type: orm, group: "pokemon.admin.group.content", label: "pokemon.admin.model.user", label_catalogue: "PokemonBundle"}
-            arguments:
-                - ~
-                - PokemonBundle\Entity\User
-                - ~
-            calls:
-               - [ setLabelTranslatorStrategy, ["@sonata.admin.label.strategy.underscore"]]
+        class: PokemonBundle\Admin\UserAdmin
+        tags:
+           - {name: sonata.admin, manager_type: orm, group: "pokemon.admin.group.content", label: "pokemon.admin.model.user", label_catalogue: "PokemonBundle"}
+        arguments:
+           - ~
+           - PokemonBundle\Entity\User
+           - ~
+        calls:
+           - [ setLabelTranslatorStrategy, ["@sonata.admin.label.strategy.underscore"]]

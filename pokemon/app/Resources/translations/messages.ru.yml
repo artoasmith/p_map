@@ -58,6 +58,24 @@ Roles: Роли
 form.label_roles: Роли
 breadcrumb.link_user_create: Создание пользователя
 
+form.label_file_image: Иконка
+list.label_image: Иконка
+
+show.label_location_x: Позиция Х
+show.label_location_y: Позиция Y
+show.label_pokemon: Покемон
+list.label_location_x: Позиция Х
+list.label_location_y: Позиция Y
+list.label_pokemon: Покемон
+filter.label_location_x: Позиция Х
+filter.label_location_y: Позиция Y
+filter.label_pokemon: Покемон
+form.label_location_x: Позиция Х
+form.label_location_y: Позиция Y
+form.label_pokemon: Покемон
+pokemon.admin.model.point: Позиция
+breadcrumb.link_point_list: Позиции
+
 =: =
 >=: >=
 >: >
@@ -66,3 +84,4 @@ breadcrumb.link_user_create: Создание пользователя
 содержит: содержит
 не содержит: не содержит
 равен: равен
+не равен: не равен
