@@ -12,9 +12,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use PokemonBundle\Entity\Pokemon;
 use PokemonBundle\Entity\Point;
+use Symfony\Component\Yaml\Parser;
 
 class Controller extends BaseController
 {
+    public function getDefaultTemplateParams(){
+        $yaml = new Parser();
+        $a = $yaml->parse(file_get_contents(__DIR__ . '\..\..\..\app\config\params.yml'));
+        return (is_array($a)?$a:[]);
+    }
+
     public function renderApiJson($value, $httpStatus = 204, $httpMessage = 'Message', $contentType = 'application/json'){
         @ob_clean(); // clear output buffer to avoid rendering anything else
         @header("Content-type: $contentType");
@@ -25,6 +32,20 @@ class Controller extends BaseController
 
         echo json_encode($value);
         exit();
+    }
+
+    public function getGoogleMapLength($fromX,$fromY,$toX,$toY){
+        $DEG_TO_RAD = 0.017453292519943295769236907684886;
+        $EARTH_RADIUS_IN_METERS = 6372797.560856;
+        $MERT_IN_KM = 1000;
+        $latitudeArc = ($fromX - $toX) * $DEG_TO_RAD;
+        $longitudeArc = ($fromY - $toY) * $DEG_TO_RAD;
+        $latitudeH = sin($latitudeArc * 0.5);
+        $latitudeH *= $latitudeH;
+        $lontitudeH = sin($longitudeArc * 0.5);
+        $lontitudeH *= $lontitudeH;
+        $tmp = cos($fromX * $DEG_TO_RAD) * cos($toX * $DEG_TO_RAD);
+        return round((($EARTH_RADIUS_IN_METERS * 2.0 * asin(sqrt($latitudeH + $tmp * $lontitudeH))) / $MERT_IN_KM),1);
     }
 
     /**
@@ -38,7 +59,7 @@ class Controller extends BaseController
         $y = round($y,3);
 
         //generation on ratio 0,002 ~ 220m in range 0.1 ~10 km
-        $areaSide = 0.1;
+        $areaSide = 0.02;
         $side = 0.002;
         $tailLength = 4; //google maps need 7 numbers after point. $side is first 3, left 4 for "tail"
         $pokemonsOnSector = 4;
@@ -51,14 +72,16 @@ class Controller extends BaseController
         $endY = $y+$delimeter;
 
         $response = [];
-        while($startX<$endX){
-            while($startY<$endY){
-                foreach ($this->sectorPokemon($startX,$startY,$pokemonsOnSector,$side,$tailLength) as $a)
-                    $response[] = $a;
-                $startY+=$side;
+        $iterator = $areaSide/$side;
+        for($i=0;$i<$iterator;$i++){
+            for($j=0;$j<$iterator;$j++){
+                $timeY = $startY+$j*$side;
+                foreach ($this->sectorPokemon($startX,$timeY,$pokemonsOnSector,$side,$tailLength) as $a)
+                   $response[] = $a;
             }
             $startX += $side;
         }
+
         return $response;
     }
 
@@ -112,10 +135,12 @@ class Controller extends BaseController
             $formater = function(Point $a){
                 return [
                     'id'=>$a->getId(),
-                    'pokemon'=>$a->getPokemon()->getId(),
+                    'pokemon'=>str_pad(strval($a->getPokemon()->getId()), 3, '0', STR_PAD_LEFT),
+                    'name'=>$a->getPokemon()->getName(),
                     'image'=>$a->getPokemon()->getImageUrl(),
                     'locationX'=>$a->getLocationX(),
-                    'locationY'=>$a->getLocationY()
+                    'locationY'=>$a->getLocationY(),
+                    'distance'=>false
                 ];
             };
             $response = array_map($formater,$res);
@@ -178,6 +203,13 @@ class Controller extends BaseController
 
         //get rare list
         $a = rand(1,12); //1-12
+
+        //rarest block
+        if($a>6){
+            $block = rand(1,2);
+            if($block==2)
+                $a = rand(1,5);
+        }
         $ready = 1;
         $middle = 0; //3-5
         if($a<5 && $count>3) {
@@ -203,8 +235,8 @@ class Controller extends BaseController
         if($count<=1)
             return $count;
 
-        $a = rand(1,3);
-        if($a!=3)
+        $a = rand(1,2);
+        if($a!=2)
             return $count;
 
         $count--;

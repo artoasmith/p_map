@@ -1,0 +1,76 @@
+{% extends 'PokemonBundle:Front:Base.html.twig' %}
+{% block content %}
+    <div class="sorting-wrap">
+        {% if items is defined and items is not empty %}
+            <div class="top-row">
+                <div class="mbox">
+                    <div class="con">
+                        <div class="title">СОРТИРОВКА</div>
+                        <div class="sort-navi">
+                            <div class="tabs">
+                                <ul>
+                                    <li>
+                                        <span>A-Я</span>
+                                    </li>
+                                    <li>
+                                        <span>Я-A</span>
+                                    </li>
+                                </ul>
+                                <ul class="displaying">
+                                    <li class="active">
+                                            <span class="polos">
+                                                <b></b>
+                                                <b></b>
+                                                <b></b>
+                                            </span>
+                                    </li>
+                                    <li>
+                                            <span class="qadri">
+                                                <i></i>
+                                                <i></i>
+                                                <i></i>
+                                                <i></i>
+                                            </span>
+                                    </li>
+                                </ul>
+                                <ul class="butt">
+                                    <li>
+                                            <span class="arrow">
+                                                <q></q>
+                                            </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bot-row list">
+            <div class="items-wrap">
+                {% for item in items %}
+                    <div class="item">
+                        <div class="num">#{{ item.pokemon }}</div>
+                        <div class="look">
+                            <img src="{{ item.image }}" alt="{{ item.name }}" title="{{ item.name }}">
+                        </div>
+                        <div class="name">{{ item.name }}</div>
+                        <div class="disance"> {{ item.distance }}км </div>
+                        <div class="button">
+                            <a href="{{ item.id }}"> <span>ПОКАЗАТЬ</span> </a>
+                        </div>
+                        <!--<div class="location"> ул.Турбостроителей 5, </div>-->
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="map">
+        <div class="top-row">
+            <div class="title">КАРТА</div>
+        </div>
+        <div class="row">
+            <div id="map"></div>
+        </div>
+    </div>
+{% endblock %}

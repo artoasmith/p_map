@@ -13,10 +13,20 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $points = $this->areaPokemon(4.433,-2.132);
-        print_r($points);
-        exit();
-        return $this->render('PokemonBundle:Default:index.html.twig');
+        $params = $this->getDefaultTemplateParams();
+
+        //demo params
+        $x = 44.442;
+        $y = 35.504;
+        $params['items'] = $this->areaPokemon($x,$y);
+        if(!empty($params['items'])){
+            //calculate distance
+            foreach ($params['items'] as &$point){
+                $point['distance'] = $this->getGoogleMapLength($x,$y,$point['locationX'],$point['locationY']);
+            }
+        }
+
+        return $this->render('PokemonBundle:Front:main.html.twig',$params);
     }
 
     /**
@@ -25,11 +35,19 @@ class DefaultController extends Controller
     public function getLocationPoints($locX,$locY){
 
         //normalization
-        $x = round(floatval($locX),3);
-        $y = round(floatval($locY),3);
+        $locX = floatval($locX);
+        $locY = floatval($locY);
+        $x = round($locX,3);
+        $y = round($locY,3);
 
         //get points
         $points = $this->areaPokemon($x,$y);
+        if(!empty($points)){
+            //calculate distance
+            foreach ($points as &$point){
+                $point['distance'] = $this->getGoogleMapLength($locX,$locY,$point['locationX'],$point['locationY']);
+            }
+        }
         $this->renderApiJson($points);
     }
 }

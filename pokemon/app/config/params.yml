@@ -1,6 +1,21 @@
 document_root2: /Users/N1/Sites/pokemon/pokemon/web
 document_root: D:/OpenServer/domains/pokemon/pokemon/web
-generate_ratio: 0.2
 # 1 = 111 km
 # 0.01 = 1.11 km
 # 0.001 = 0.111 km
+page_title: Pokémon GO
+banner: /images/pok-ban.jpg
+logo:
+    image:        /images/logo.png
+    text:         Logo
+main_menu:
+    main:
+        title:    Главная
+        link:     /
+    about:
+        title:    О нас
+        link:     /about
+    contacts:
+        title:    Контакты
+        link:     /contacts
+copi_right: &copy; 2016 Copyright All right reserved
