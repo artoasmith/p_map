@@ -1,7 +1,6 @@
 {% extends 'PokemonBundle:Front:Base.html.twig' %}
 {% block content %}
     <div class="sorting-wrap">
-        {% if items is defined and items is not empty %}
             <div class="top-row">
                 <div class="mbox">
                     <div class="con">
@@ -47,23 +46,24 @@
             </div>
             <div class="bot-row list">
             <div class="items-wrap">
-                {% for item in items %}
-                    <div class="item">
-                        <div class="num">#{{ item.pokemon }}</div>
-                        <div class="look">
-                            <img src="{{ item.image }}" alt="{{ item.name }}" title="{{ item.name }}">
+                {% if items is defined and items is not empty %}
+                    {% for item in items %}
+                        <div class="item">
+                            <div class="num">#{{ item.pokemon }}</div>
+                            <div class="look">
+                                <img src="{{ item.image }}" alt="{{ item.name }}" title="{{ item.name }}">
+                            </div>
+                            <div class="name">{{ item.name }}</div>
+                            <div class="disance"> {{ item.distance }}км </div>
+                            <div class="button">
+                                <a href="{{ item.id }}"> <span>ПОКАЗАТЬ</span> </a>
+                            </div>
+                            <!--<div class="location"> ул.Турбостроителей 5, </div>-->
                         </div>
-                        <div class="name">{{ item.name }}</div>
-                        <div class="disance"> {{ item.distance }}км </div>
-                        <div class="button">
-                            <a href="{{ item.id }}"> <span>ПОКАЗАТЬ</span> </a>
-                        </div>
-                        <!--<div class="location"> ул.Турбостроителей 5, </div>-->
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
-        {% endif %}
     </div>
     <div class="map">
         <div class="top-row">

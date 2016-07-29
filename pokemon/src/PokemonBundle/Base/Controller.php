@@ -18,7 +18,7 @@ class Controller extends BaseController
 {
     public function getDefaultTemplateParams(){
         $yaml = new Parser();
-        $a = $yaml->parse(file_get_contents(__DIR__ . '\..\..\..\app\config\params.yml'));
+        $a = $yaml->parse(file_get_contents(__DIR__ . '/../../../app/config/params.yml'));
         return (is_array($a)?$a:[]);
     }
 
@@ -120,7 +120,9 @@ class Controller extends BaseController
                     $point = new Point();
                     $point->setPokemon($pokemon)
                         ->setLocationX(floatval($newX))
-                        ->setLocationY(floatval($newY));
+                        ->setLocationY(floatval($newY))
+                        ->setCreateAt(new \DateTime())
+                    ;
                     $errors = $this->get('validator')->validate($point);
                     if (count($errors) > 0)
                         continue;
