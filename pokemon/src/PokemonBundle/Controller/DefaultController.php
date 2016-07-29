@@ -18,16 +18,11 @@ class DefaultController extends Controller
         //demo params
         $x = 44.442;
         $y = 35.504;
-        $params['items'] = $this->areaPokemon($x,$y);
-        if(!empty($params['items'])){
-            //calculate distance
-            foreach ($params['items'] as &$point){
-                $point['distance'] = $this->getGoogleMapLength($x,$y,$point['locationX'],$point['locationY']);
-            }
-        }
-        
+        $params['items'] = [];
+
         return $this->render('PokemonBundle:Front:main.html.twig',$params);
     }
+
 
     /**
      * @Route("/location/{locX}/{locY}")

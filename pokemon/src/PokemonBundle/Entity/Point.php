@@ -24,6 +24,13 @@ class Point
     private $id;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createAt", type="datetime")
+     */
+    private $createAt;
+
+    /**
      * @var float
      * @Assert\NotBlank()
      * @Assert\Range(
@@ -61,6 +68,13 @@ class Point
     private $pokemon;
 
     /**
+     * @var string
+     * @ORM\Column(name="jsonInfo", type="string", length=255, nullable=true)
+     */
+    private $jsonInfo;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -68,6 +82,29 @@ class Point
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set createAt
+     *
+     * @param \DateTime $createAt
+     * @return Point
+     */
+    public function setCreateAt($createAt)
+    {
+        $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createAt
+     *
+     * @return \DateTime
+     */
+    public function getCreateAt()
+    {
+        return $this->createAt;
     }
 
     /**
@@ -141,6 +178,25 @@ class Point
     {
         return $this->pokemon;
     }
+
+    /**
+     * @return string
+     */
+    public function getJsonInfo()
+    {
+        return $this->jsonInfo;
+    }
+
+    /**
+     * @param string $jsonInfo
+     * @return Point
+     */
+    public function setJsonInfo($jsonInfo)
+    {
+        $this->jsonInfo = $jsonInfo;
+        return $this;
+    }
+
 
     public function __toString()
     {
