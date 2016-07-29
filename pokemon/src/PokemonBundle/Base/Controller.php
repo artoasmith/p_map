@@ -66,16 +66,16 @@ class Controller extends BaseController
 
         $delimeter = $areaSide/2;
         $startX = $x-$delimeter;
-        $endX = $x+$delimeter;
-
         $startY = $y-$delimeter;
-        $endY = $y+$delimeter;
 
         $response = [];
         $iterator = $areaSide/$side;
         for($i=0;$i<$iterator;$i++){
             for($j=0;$j<$iterator;$j++){
                 $timeY = $startY+$j*$side;
+                if(!$this->pointInCircle($x,$y,$startX,$timeY,$delimeter))
+                    continue;
+
                 foreach ($this->sectorPokemon($startX,$timeY,$pokemonsOnSector,$side,$tailLength) as $a)
                    $response[] = $a;
             }
@@ -259,5 +259,15 @@ class Controller extends BaseController
             $length--;
         }
         return $a;
+    }
+
+    private function pointInCircle($x,$y,$c_x,$c_y,$rad)
+    {
+        return ($this->pointsDist($x,$y,$c_x,$c_y)<=$rad);
+    }
+
+    private function pointsDist($x,$y,$x2,$y2){
+        $a = pow(($x-$x2),2)+pow(($y-$y2),2);
+        return sqrt($a);
     }
 }
