@@ -88,7 +88,8 @@ function addContentToHell(){
             "<div class='name'>" + stack[i].name + "</div>" +
             "<div class='disance'> " + stack[i].distance + " км </div>" +
             "<div class='button'>"+
-                "<a href='" + stack[i].id + "'> <span>ПОКАЗАТЬ</span> </a>" +
+                "<a href='" + stack[i].id + "' data-locationx='" + stack[i].locationX + 
+                "' data-locationy='" + stack[i].locationY + "' > <span>ПОКАЗАТЬ</span> </a>" +
             "</div>" +
         "</div>";
     }
@@ -230,43 +231,61 @@ $(document).ready(function(){
         });
     /* tabs */
 
-    $('.sorting>li').on('click', function(){
+    /* sorting */
+        $('.sorting>li').on('click', function(){
 
-        var steak;
+            var steak;
 
-        var i = 0;
-
-        $('.sorting-wrap>.bot-row>.items-wrap').find('.item').each(function(){
-
-            stashNames[i] = $(this).find('.name').html();
-            i++;
-
-        });
-        
-
-        if ( $(this).index() == 0 ){
-
-            steak = stashNames.sort();
-
-        } else {
-
-            steak = (stashNames.sort()).reverse();
-
-        }
-
-        setTimeout(function(){
+            var i = 0;
 
             $('.sorting-wrap>.bot-row>.items-wrap').find('.item').each(function(){
 
-                $(this).css("order", steak.indexOf( $(this).attr('data-names') ) ); 
-            
+                stashNames[i] = $(this).find('.name').html();
+                i++;
+
             });
+            
 
-        }, 500);
+            if ( $(this).index() == 0 ){
 
-        
-        
-    });
+                steak = stashNames.sort();
+
+            } else {
+
+                steak = (stashNames.sort()).reverse();
+
+            }
+
+            setTimeout(function(){
+
+                $('.sorting-wrap>.bot-row>.items-wrap').find('.item').each(function(){
+
+                    $(this).css("order", steak.indexOf( $(this).attr('data-names') ) ); 
+                
+                });
+
+            }, 500);
+
+            
+            
+        });
+    /* sorting */
+
+    /*  */
+    $('.sorting-wrap').on('click', '.item>.button>a', function(e){
+        e.preventDefault();
+
+        var target = $('.map').offset().top;
+
+        $(scroller).stop().animate({scrollTop:target},800);
+
+        $(this).attr('data-locationy')
+
+        map.panTo( new google.maps.LatLng( $(this).attr('data-locationx') , $(this).attr('data-locationy') ) );
+
+        return false;
+
+    })
 });
 
 $(window).load(function(){
