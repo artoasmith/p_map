@@ -25,7 +25,7 @@ class DefaultController extends Controller
                 $point['distance'] = $this->getGoogleMapLength($x,$y,$point['locationX'],$point['locationY']);
             }
         }
-
+        
         return $this->render('PokemonBundle:Front:main.html.twig',$params);
     }
 
