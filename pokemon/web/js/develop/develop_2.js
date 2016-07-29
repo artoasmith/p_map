@@ -1,35 +1,6 @@
 // <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
     var googleText = 'pockemon here';
-    var cordX = 10;
-    var cordY = 10;
-    var map ;
-
-    var ser = {
-        "points" : [
-                        {
-                            "point" : [10, 10],
-                            "text" : "123"
-                        },
-                        {
-                            "point" : [20, 20],
-                            "text" : "123"
-                        },
-                        {
-                            "point" : [20, 10],
-                            "text" : "123"
-                        },
-                        {
-                            "point" : [10, 20],
-                            "text" : "123"
-                        },
-                        {
-                            "point" : [12, 15],
-                            "text" : "123"
-                        }
-
-                    ]
-        }
 
 var currentPosition;
 var stack;
@@ -77,8 +48,6 @@ function onLoadStartData(){
 
 function superAjax(){
 
-   // console.log(currentPosition);
-
     $.ajax({
         url : '/location/'+currentPosition[0]+'/'+ currentPosition[1],
         // data: formSur,
@@ -117,9 +86,10 @@ function addContentToHell(){
                 "alt='" + stack[i].name + "' title='" + stack[i].name +"'>" +
             "</div>" +
             "<div class='name'>" + stack[i].name + "</div>" +
-            "<div class='disance'> " + stack[i].distance + " </div>" +
+            "<div class='disance'> " + stack[i].distance + " км </div>" +
             "<div class='button'>"+
-                "<a href='" + stack[i].id + "'> <span>ПОКАЗАТЬ</span> </a>" +
+                "<a href='" + stack[i].id + "' data-locationx='" + stack[i].locationX + 
+                "' data-locationy='" + stack[i].locationY + "' > <span>ПОКАЗАТЬ</span> </a>" +
             "</div>" +
         "</div>";
     }
@@ -178,12 +148,17 @@ function googleMap(mapWrap) {
 
         for ( var i = 0;  i < stack.length; i++ ){
 
+            var infowindow = new google.maps.InfoWindow({
+                content: '<h1>' + stack[i].name + '</h1>'
+            });
+
             var myLatlng2 = new google.maps.LatLng( stack[i].locationX, stack[i].locationY );
             var image = stack[i].image ;
 
             var marker = new google.maps.Marker({
                 position: myLatlng2,
                 map: map,
+                title: stack[i].name,
                 animation: google.maps.Animation.DROP, // анимация при загрузке карты
                 icon: image //  иконка картинкой
                 /* icon: {                               //маркер на svg
@@ -195,8 +170,21 @@ function googleMap(mapWrap) {
                 },
                 */
             });
+
+            makeInfoWindowEvent(map, infowindow, marker);
         }
-        
+
+        function makeInfoWindowEvent(map, infowindow, marker) {
+            //Привязываем событие КЛИК к маркеру
+            google.maps.event.addListener(marker, 'click', function() {
+                
+                infowindow.open(map, marker);
+               // console.log( marker.getPosition() );
+                map.panTo( marker.getPosition() );
+
+                setTimeout(function () { infowindow.close(); }, 5000);
+            });
+        }
 
         /*анимация при клике на маркер*/
         marker.addListener('click', toggleBounce);
@@ -211,10 +199,12 @@ function googleMap(mapWrap) {
 
         /*По клику открываеться инфоблок*/
         /*
-                google.maps.event.addListener(marker, 'click', function() {
-                    infowindow.open(map,marker);
-                });
+        google.maps.event.addListener( marker, 'click', function() {
+            infowindow.open(map,marker);
+            
+        });
         */
+        
     }
     initialize();
 }
@@ -241,43 +231,61 @@ $(document).ready(function(){
         });
     /* tabs */
 
-    $('.sorting>li').on('click', function(){
+    /* sorting */
+        $('.sorting>li').on('click', function(){
 
-        var steak;
+            var steak;
 
-        var i = 0;
-
-        $('.sorting-wrap>.bot-row>.items-wrap').find('.item').each(function(){
-
-            stashNames[i] = $(this).find('.name').html();
-            i++;
-
-        });
-        
-
-        if ( $(this).index() == 0 ){
-
-            steak = stashNames.sort();
-
-        } else {
-
-            steak = (stashNames.sort()).reverse();
-
-        }
-
-        setTimeout(function(){
+            var i = 0;
 
             $('.sorting-wrap>.bot-row>.items-wrap').find('.item').each(function(){
 
-                $(this).css("order", steak.indexOf( $(this).attr('data-names') ) ); 
-            
+                stashNames[i] = $(this).find('.name').html();
+                i++;
+
             });
+            
 
-        }, 500);
+            if ( $(this).index() == 0 ){
 
-        
-        
-    });
+                steak = stashNames.sort();
+
+            } else {
+
+                steak = (stashNames.sort()).reverse();
+
+            }
+
+            setTimeout(function(){
+
+                $('.sorting-wrap>.bot-row>.items-wrap').find('.item').each(function(){
+
+                    $(this).css("order", steak.indexOf( $(this).attr('data-names') ) ); 
+                
+                });
+
+            }, 500);
+
+            
+            
+        });
+    /* sorting */
+
+    /*  */
+    $('.sorting-wrap').on('click', '.item>.button>a', function(e){
+        e.preventDefault();
+
+        var target = $('.map').offset().top;
+
+        $(scroller).stop().animate({scrollTop:target},800);
+
+        $(this).attr('data-locationy')
+
+        map.panTo( new google.maps.LatLng( $(this).attr('data-locationx') , $(this).attr('data-locationy') ) );
+
+        return false;
+
+    })
 });
 
 $(window).load(function(){
