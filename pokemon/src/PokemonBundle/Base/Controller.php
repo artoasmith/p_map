@@ -17,6 +17,35 @@ use Symfony\Component\Yaml\Parser;
 
 class Controller extends BaseController
 {
+    //generation on ratio 0,002 ~ 220m in range 0.1 ~10 km
+    public $areaSide = 0.02;
+    public $side = 0.002;
+    public $tailLength = 4; //google maps need 7 numbers after point. $side is first 3, left 4 for "tail"
+    public $pokemonsOnSector = 4;
+
+    public function resetSectorCache(Point $point){
+        $x = $point->getLocationX();
+        $y = $point->getLocationY();
+
+        //normalization
+        $x = round($x,3)-$this->side/2;
+        $y = round($y,3)-$this->side/2;
+
+        $iterations = ($this->side/0.001)+1;
+
+        for($i=0; $i<$iterations; $i++){
+            for($j=0; $j<$iterations; $j++){
+                $this->sectorPokemon(
+                    ($x+$i*0.001),
+                    ($y+$j*0.001),
+                    $this->pokemonsOnSector,
+                    $this->side,
+                    $this->tailLength,
+                    true
+                );
+            }
+        }
+    }
 
     /**
      * @param User $user
@@ -107,10 +136,10 @@ class Controller extends BaseController
         $y = round($y,3);
 
         //generation on ratio 0,002 ~ 220m in range 0.1 ~10 km
-        $areaSide = 0.02;
-        $side = 0.002;
-        $tailLength = 4; //google maps need 7 numbers after point. $side is first 3, left 4 for "tail"
-        $pokemonsOnSector = 4;
+        $areaSide = $this->areaSide;
+        $side = $this->side;
+        $tailLength = $this->tailLength; //google maps need 7 numbers after point. $side is first 3, left 4 for "tail"
+        $pokemonsOnSector = $this->pokemonsOnSector;
 
         $delimeter = $areaSide/2;
         $startX = $x-$delimeter;
@@ -143,7 +172,7 @@ class Controller extends BaseController
      * @param $tailLength
      * @return array
      */
-    public function sectorPokemon($x, $y,$count,$side,$tailLength){
+    public function sectorPokemon($x, $y,$count,$side,$tailLength,$ignoreCache = false){
         //normalization
         $x = round($x,3);
         $y = round($y,3);
@@ -153,7 +182,7 @@ class Controller extends BaseController
         $cache = $this->get('cache');
         $cache->setNamespace('pointLocation.cache');
 
-        if(false === ($response = $cache->fetch($cacheKey))) {
+        if(false === ($response = $cache->fetch($cacheKey)) || $ignoreCache) {
             //check if already generated
             $res = $this->getSectorPoints($x, $y, $side);
 

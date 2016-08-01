@@ -83,7 +83,7 @@ class DefaultController extends Controller
 
         $formater = $this->getSerializePointCallback();
         $response = array_map($formater,[$point]);
-
+        $this->resetSectorCache($point);
         $cache->save($cacheKey,'1',60); // 1 min
 
         $this->renderApiJson(['success'=>true, 'point'=>array_shift($response)]);
@@ -134,7 +134,7 @@ class DefaultController extends Controller
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($point);
         $manager->flush();
-
+        $this->resetSectorCache($point);
         $formater = $this->getSerializePointCallback();
         $response = array_map($formater,[$point]);
 
@@ -185,7 +185,7 @@ class DefaultController extends Controller
             $manager->remove($point);
         }
         $manager->flush();
-
+        $this->resetSectorCache($point);
         $this->renderApiJson(['success'=>true]);
     }
 }
