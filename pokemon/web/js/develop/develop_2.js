@@ -3,19 +3,23 @@
     var googleText = 'pockemon here';
 
 var currentPosition;
-var stack;
+var stack = [];
 var stashNames = [];
+var markers = [];
 
 function onLoadStartData(){
 
     currentPosition = [ 55.807398 , 37.432006 ] ;
-    /* визов геолокації */
+
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
         flagShtock= true ; 
     } else {
         console.log("Geolocation is not supported by this browser.");
+
+        alert( " select your position " );
+
     }
 
     /* обробка помилок */
@@ -23,8 +27,8 @@ function onLoadStartData(){
     function showError(error) {
         switch(error.code) {
             case error.PERMISSION_DENIED:
-                alert("Please open in mozilla");
-                superAjax();
+                alert( " select your position " );
+                 superAjax();
                 break;
             case error.POSITION_UNAVAILABLE:
                  console.log("Location information is unavailable.");
@@ -48,18 +52,20 @@ function onLoadStartData(){
 
 function superAjax(){
 
+    console.log( currentPosition );
+
     $.ajax({
-        url : '/location/'+currentPosition[0]+'/'+ currentPosition[1],
+        url : '/app_dev.php/location/'+currentPosition[0]+'/'+ currentPosition[1],
         // data: formSur,
         method:'POST',
         success : function(data){
             
-         //   console.log(data);
+           console.log(data);
 
             stack = data ;
 
             /* map init */
-                if ( $('body').find('#map').length == 1 ){
+                if ( ($('body').find('#map').length == 1) && !$('#map').hasClass('map-is-init') ){
                     google.maps.event.addDomListener(window, "load", googleMap('map'));
                 }
             /* map init */
@@ -73,6 +79,7 @@ function superAjax(){
         }
     });
 }
+
 
 function addContentToHell(){
 
@@ -101,23 +108,15 @@ function addContentToHell(){
 
     /* end compose */ 
 }
-/*
-    function forSortAdd(){
-
-        for (var i = 0; i < stack.length; i++) {
-            stashNames[i] = stack[i].name;
-        };
-
-    }
-    
-*/  
+  
 
 function googleMap(mapWrap) {
     function initialize() {
 
+        $('#map').addClass('map-is-init');
         var myLatlng = new google.maps.LatLng(currentPosition[0] , currentPosition[1]);
         var myOptions = {
-            zoom: 17,
+            zoom: 3,
             center: myLatlng,
             disableDefaultUI: false, //без управляющих елементов
             mapTypeId: google.maps.MapTypeId.ROADMAP, // SATELLITE - снимки со спутника,
@@ -131,20 +130,7 @@ function googleMap(mapWrap) {
             }
         }
         map = new google.maps.Map(document.getElementById(mapWrap), myOptions);
-        /*
-        var contentString = '<div class="marker-test">' + googleText + '</div>';
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString
-        });
-        */
 
-
-        /*маркер на svg*/
-        //  var SQUARE_PIN = 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z';
-        //больше - http://map-icons.com/
-        /*/маркер на svg*/
-
-           // иконка картинкой
 
         for ( var i = 0;  i < stack.length; i++ ){
 
@@ -161,25 +147,17 @@ function googleMap(mapWrap) {
                 title: stack[i].name,
                 animation: google.maps.Animation.DROP, // анимация при загрузке карты
                 icon: image //  иконка картинкой
-                /* icon: {                               //маркер на svg
-                    path: SQUARE_PIN,
-                    fillColor: '#fff',
-                    fillOpacity: 0.7,
-                    strokeColor: '#FF3232',
-                    strokeWeight: 5
-                },
-                */
             });
 
+            markers.push(marker);
             makeInfoWindowEvent(map, infowindow, marker);
         }
 
         function makeInfoWindowEvent(map, infowindow, marker) {
-            //Привязываем событие КЛИК к маркеру
+
             google.maps.event.addListener(marker, 'click', function() {
                 
                 infowindow.open(map, marker);
-               // console.log( marker.getPosition() );
                 map.panTo( marker.getPosition() );
 
                 setTimeout(function () { infowindow.close(); }, 5000);
@@ -187,23 +165,48 @@ function googleMap(mapWrap) {
         }
 
         /*анимация при клике на маркер*/
-        marker.addListener('click', toggleBounce);
-        function toggleBounce() {
-            if (marker.getAnimation() !== null) {
-                marker.setAnimation(null);
-            } else {
-                marker.setAnimation(google.maps.Animation.BOUNCE);
+            
+            marker.addListener('click', toggleBounce);
+            function toggleBounce() {
+                if (marker.getAnimation() !== null) {
+                    marker.setAnimation(null);
+                } else {
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                }
+            }
+
+        /*/анимация при клике на маркер*/
+        
+
+        function addMarker(location) {
+            var markerA = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+            map.panTo( markerA.getPosition() );
+
+           // map.setZoom( Math.round( (map.zoom  + 1/map.zoom )* 1.1)  );
+            markers.push(markerA);
+        }
+
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
             }
         }
-        /*/анимация при клике на маркер*/
 
-        /*По клику открываеться инфоблок*/
-        /*
-        google.maps.event.addListener( marker, 'click', function() {
-            infowindow.open(map,marker);
-            
+          map.addListener('click', function(e) {
+
+            addMarker(e.latLng);
+
+           console.log( e.ca.x , e.ca.y  );
+
+           currentPosition = [ e.ca.x , e.ca.y ] ;
+
+           superAjax();
+           console.log( currentPosition );
+
         });
-        */
         
     }
     initialize();
