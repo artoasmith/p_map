@@ -39,6 +39,7 @@ class PointAdmin extends AbstractAdmin
 
         $listMapper
             ->add('id')
+            ->add('createAt', null, array('format' => 'Y-m-d H:i'))
             ->add('locationX')
             ->add('locationY')
             ->add('pokemon')
@@ -72,9 +73,26 @@ class PointAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
+            ->add('id')
+            ->add('createAt', null, array('format' => 'Y-m-d H:i'))
             ->add('locationX')
             ->add('locationY')
             ->add('pokemon')
         ;
+    }
+
+    public function prePersist($pm) {
+        /**
+         * @var Point $pm
+         */
+        $this->upCreateAt($pm);
+    }
+
+    public function preUpdate($pm) {
+        $this->upCreateAt($pm);
+    }
+
+    public function upCreateAt(Point $pm) {
+        $pm->setCreateAt(new \DateTime());
     }
 }

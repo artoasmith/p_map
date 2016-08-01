@@ -31,6 +31,7 @@ class PokemonAdmin extends AbstractAdmin
         $listMapper
             ->add('id')
             ->add('name')
+            ->add('rare')
             ->add('image', 'image', array(
                 'template' => 'PokemonBundle:Default:image_value.html.twig'
             ))
@@ -60,6 +61,7 @@ class PokemonAdmin extends AbstractAdmin
         $formMapper
             ->with('Основная информация')
                 ->add('name',null,['label'=>'Название'])
+                ->add('rare')
                 ->add('fileImage','file',$fileImageOptions)
             ->end()
         ;
@@ -72,7 +74,9 @@ class PokemonAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
-            ->add('name');
+            ->add('name')
+            ->add('rare')
+        ;
     }
 
     public function prePersist($pm) {

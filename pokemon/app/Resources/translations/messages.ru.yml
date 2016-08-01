@@ -15,10 +15,17 @@ list.label_enabled: Доступен
 list.label_locked: Заблокирован
 list.label_created_at: Дата регистрации
 list.label_impersonating: Персонализация
+list.label_rare: Редкость
 filter.label_username: Имя пользователя
 filter.label_locked: Заблокирован
 filter.label_email: Email
+filter.label_rare: Редкость
+show.label_rare: Редкость
+form.label_rare: Редкость
 breadcrumb.link_user_list: Список пользователей
+
+list.label_create_at: Дата модификации
+show.label_create_at: Дата модификации
 
 User: Пользователь
 Security: Безопасность

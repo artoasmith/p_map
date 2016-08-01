@@ -73,6 +73,22 @@ class Point
      */
     private $jsonInfo;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="author", referencedColumnName="id", onDelete="SET NULL", nullable=true)
+     * })
+     * @Exclude
+     */
+    private $author;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="confirm", type="boolean")
+     */
+    private $confirm=false;
 
     /**
      * Get id
@@ -197,6 +213,51 @@ class Point
         return $this;
     }
 
+    /**
+     * Set author
+     *
+     * @param \PokemonBundle\Entity\User $author
+     * @return Point
+     */
+    public function setAuthor(\PokemonBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \PokemonBundle\Entity\User
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set confirm
+     *
+     * @param boolean $confirm
+     * @return Point
+     */
+    public function setConfirm($confirm)
+    {
+        $this->confirm = $confirm;
+
+        return $this;
+    }
+
+    /**
+     * Get confirm
+     *
+     * @return boolean
+     */
+    public function getConfirm()
+    {
+        return $this->confirm;
+    }
 
     public function __toString()
     {
