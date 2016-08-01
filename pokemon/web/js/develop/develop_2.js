@@ -6,6 +6,8 @@ var currentPosition;
 var stack = [];
 var stashNames = [];
 var markers = [];
+var markersNew = [] ;
+var map ;
 
 function onLoadStartData(){
 
@@ -53,21 +55,53 @@ function onLoadStartData(){
 function superAjax(){
 
     console.log( currentPosition );
-
+    console.log('start ');
     $.ajax({
-        url : '/app_dev.php/location/'+currentPosition[0]+'/'+ currentPosition[1],
+        url : '/app_dev.php/location/'+currentPosition[1]+'/'+ currentPosition[0],
         // data: formSur,
         method:'POST',
-        success : function(data){
-            
-           console.log(data);
+        success : function( data ){
+            console.log(' end ');
 
-            stack = data ;
+           var st = data.length ;
+           var dataSt = data ;
+
+           if ( stack.length == 0 ){
+               stack = dataSt ;
+           }
 
             /* map init */
                 if ( ($('body').find('#map').length == 1) && !$('#map').hasClass('map-is-init') ){
+
                     google.maps.event.addDomListener(window, "load", googleMap('map'));
+
+                } else {
+
+                    for ( var i = 0;  i < dataSt.length; i++ ){
+
+                        stack[ stack.length ] = dataSt[i];
+
+                        var infowindow = new google.maps.InfoWindow({
+                            content: '<h1>' + dataSt[i].name + '</h1>'
+                        });
+
+                        var myLatlng2 = new google.maps.LatLng( dataSt[i].locationY, dataSt[i].locationX );
+                        var image = dataSt[i].image ;
+
+                        var marker = new google.maps.Marker({
+                            position: myLatlng2,
+                            map: map,
+                            title: dataSt[i].name,
+                            animation: google.maps.Animation.DROP, // анимация при загрузке карты
+                            icon: image //  иконка картинкой
+                        });
+
+                        markers.push(marker);
+                        makeInfoWindowEvent( map, infowindow, marker) ;
+                    }
+
                 }
+
             /* map init */
 
             /* content init */
@@ -76,39 +110,54 @@ function superAjax(){
 
             /* content init */
 
+            console.log('done');
+
         }
     });
 }
 
 
-function addContentToHell(){
+    function addContentToHell(){
 
-    var htmlStack='';
+        var htmlStack='';
 
-    for ( var i = 0;  i < stack.length; i++ ){
-        htmlStack += "<div class='item' data-names='" + stack[i].name + "'>" +
-                "<div class='num'> #" + stack[i].pokemon +"</div>" +
-                "<div class='look'>" +
-                "<img src='"+ stack[i].image +"' "+
-                "alt='" + stack[i].name + "' title='" + stack[i].name +"'>" +
-            "</div>" +
-            "<div class='name'>" + stack[i].name + "</div>" +
-            "<div class='disance'> " + stack[i].distance + " км </div>" +
-            "<div class='button'>"+
-                "<a href='" + stack[i].id + "' data-locationx='" + stack[i].locationX + 
-                "' data-locationy='" + stack[i].locationY + "' > <span>ПОКАЗАТЬ</span> </a>" +
-            "</div>" +
-        "</div>";
+        for ( var i = 0;  i < stack.length; i++ ){
+            htmlStack += "<div class='item' data-names='" + stack[i].name + "'>" +
+                    "<div class='num'> #" + stack[i].pokemon +"</div>" +
+                    "<div class='look'>" +
+                    "<img src='"+ stack[i].image +"' "+
+                    "alt='" + stack[i].name + "' title='" + stack[i].name +"'>" +
+                "</div>" +
+                "<div class='name'>" + stack[i].name + "</div>" +
+                "<div class='disance'> " + stack[i].distance + " км </div>" +
+                "<div class='button'>"+
+                    "<a href='" + stack[i].id + "' data-locationx='" + stack[i].locationX + 
+                    "' data-locationy='" + stack[i].locationY + "' > <span>ПОКАЗАТЬ</span> </a>" +
+                "</div>" +
+            "</div>";
+        }
+            
+        $('.sorting-wrap .items-wrap').html(htmlStack);
+
+            /* tyt sort add */
+        // forSortAdd();
+
+        /* end compose */ 
     }
-        
-    $('.sorting-wrap .items-wrap').html(htmlStack);
-
-        /* tyt sort add */
-       // forSortAdd();
-
-    /* end compose */ 
-}
   
+
+    function makeInfoWindowEvent(map, infowindow, marker) {
+
+        google.maps.event.addListener(marker, 'click', function() {
+            
+            infowindow.open(map, marker);
+            map.panTo( marker.getPosition() );
+
+            setTimeout(function () { infowindow.close(); }, 5000);
+        });
+    }
+
+    
 
 function googleMap(mapWrap) {
     function initialize() {
@@ -116,12 +165,12 @@ function googleMap(mapWrap) {
         $('#map').addClass('map-is-init');
         var myLatlng = new google.maps.LatLng(currentPosition[0] , currentPosition[1]);
         var myOptions = {
-            zoom: 3,
+            zoom: 15,
             center: myLatlng,
             disableDefaultUI: false, //без управляющих елементов
             mapTypeId: google.maps.MapTypeId.ROADMAP, // SATELLITE - снимки со спутника,
             scaleControl: false,
-            scrollwheel: false,
+            scrollwheel: true,
             navigationControl: false,
             mapTypeControl: false,
             styles: [{"featureType":"administrative","elementType":"all","stylers":[{"visibility":"on"},{"lightness":33}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#c5dac6"}]},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":20}]},{"featureType":"road","elementType":"all","stylers":[{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#c5c6c6"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#e4d7c6"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#fbfaf7"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#9ea7b2"}]}],
@@ -131,6 +180,11 @@ function googleMap(mapWrap) {
         }
         map = new google.maps.Map(document.getElementById(mapWrap), myOptions);
 
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
 
         for ( var i = 0;  i < stack.length; i++ ){
 
@@ -138,7 +192,7 @@ function googleMap(mapWrap) {
                 content: '<h1>' + stack[i].name + '</h1>'
             });
 
-            var myLatlng2 = new google.maps.LatLng( stack[i].locationX, stack[i].locationY );
+            var myLatlng2 = new google.maps.LatLng( stack[i].locationY, stack[i].locationX );
             var image = stack[i].image ;
 
             var marker = new google.maps.Marker({
@@ -153,6 +207,9 @@ function googleMap(mapWrap) {
             makeInfoWindowEvent(map, infowindow, marker);
         }
 
+        makeInfoWindowEvent(map, infowindow, marker) ;
+
+        /*
         function makeInfoWindowEvent(map, infowindow, marker) {
 
             google.maps.event.addListener(marker, 'click', function() {
@@ -163,7 +220,7 @@ function googleMap(mapWrap) {
                 setTimeout(function () { infowindow.close(); }, 5000);
             });
         }
-
+        */
         /*анимация при клике на маркер*/
             
             marker.addListener('click', toggleBounce);
@@ -185,26 +242,21 @@ function googleMap(mapWrap) {
             });
             map.panTo( markerA.getPosition() );
 
-           // map.setZoom( Math.round( (map.zoom  + 1/map.zoom )* 1.1)  );
             markers.push(markerA);
         }
 
-        function setMapOnAll(map) {
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(map);
-            }
-        }
+
 
           map.addListener('click', function(e) {
 
             addMarker(e.latLng);
+            console.log( e.latLng.lat(),  e.latLng.lng() )
 
-           console.log( e.ca.x , e.ca.y  );
+           currentPosition = [  e.latLng.lat() , e.latLng.lng() ] ;
 
-           currentPosition = [ e.ca.x , e.ca.y ] ;
+          // currentPosition = [  1 , 1 ] ;
 
            superAjax();
-           console.log( currentPosition );
 
         });
         
@@ -274,21 +326,23 @@ $(document).ready(function(){
         });
     /* sorting */
 
-    /*  */
-    $('.sorting-wrap').on('click', '.item>.button>a', function(e){
-        e.preventDefault();
+    /* some */
+        $('.sorting-wrap').on('click', '.item>.button>a', function(e){
+            e.preventDefault();
 
-        var target = $('.map').offset().top;
+            var target = $('.map').offset().top;
 
-        $(scroller).stop().animate({scrollTop:target},800);
+            $(scroller).stop().animate({scrollTop:target},800);
 
-        $(this).attr('data-locationy')
+            $(this).attr('data-locationy')
 
-        map.panTo( new google.maps.LatLng( $(this).attr('data-locationx') , $(this).attr('data-locationy') ) );
+            map.panTo( new google.maps.LatLng( $(this).attr('data-locationx') , $(this).attr('data-locationy') ) );
 
-        return false;
+            return false;
 
-    })
+        })
+
+    /* some */
 });
 
 $(window).load(function(){
