@@ -23,7 +23,16 @@ class DefaultController extends Controller
         $x = 44.442;
         $y = 35.504;
         $params['items'] = [];
-
+        $params['pokemon'] = array_map(
+            function($a){
+                return [
+                    'id'=>$a->getId(),
+                    'name'=>$a->getName(),
+                    'image'=>$a->getImageUrl()
+                ];
+            },
+            $this->getDoctrine()->getRepository('PokemonBundle:Pokemon')->findAll()
+        );
         return $this->render('PokemonBundle:Front:main.html.twig',$params);
     }
 

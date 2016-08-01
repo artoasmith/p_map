@@ -224,9 +224,10 @@ class Controller extends BaseController
         return function(Point $a){
             return [
                 'id'=>$a->getId(),
-                'pokemon'=>str_pad(strval($a->getPokemon()->getId()), 3, '0', STR_PAD_LEFT),
-                'name'=>$a->getPokemon()->getName(),
-                'image'=>$a->getPokemon()->getImageUrl(),
+                'pokemon'=>$a->getPokemon()->getId(),
+                //'pokemon'=>str_pad(strval($a->getPokemon()->getId()), 3, '0', STR_PAD_LEFT),
+                //'name'=>$a->getPokemon()->getName(),
+                //'image'=>$a->getPokemon()->getImageUrl(),
                 'confirmed'=>$a->getConfirm(),
                 'locationX'=>$a->getLocationX(),
                 'locationY'=>$a->getLocationY(),

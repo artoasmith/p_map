@@ -1,5 +1,19 @@
 {% extends 'PokemonBundle:Front:Base.html.twig' %}
+
 {% block content %}
+    <script>
+        var pokemon = [
+            {% if pokemon is defined and pokemon is not empty %}
+                {% for item in pokemon %}
+                    {
+                        id: {{ item.id }},
+                        name: '{{ item.name }}',
+                        image: '{{ item.image }}'
+                    },
+                {% endfor %}
+            {% endif %}
+        ];
+    </script>
     <div class="sorting-wrap">
             <div class="top-row">
                 <div class="mbox">
