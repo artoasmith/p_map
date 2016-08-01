@@ -83,6 +83,34 @@ form.label_pokemon: Покемон
 pokemon.admin.model.point: Позиция
 breadcrumb.link_point_list: Позиции
 
+pokemon.admin.model.email: Шаблоны писем
+breadcrumb.link_email_template_list: Шаблоны писем
+
+form.label_name: Название
+filter.label_name: Название
+list.label_name: Название
+show.label_name: Название
+
+form.label_code: Код
+filter.label_code: Код
+list.label_code: Код
+show.label_code: Код
+
+form.label_subject: Тема письма
+filter.label_subject: Тема письма
+list.label_subject: Тема письма
+show.label_subject: Тема письма
+
+form.label_from_name: Название отправителя
+filter.label_from_name: Название отправителя
+list.label_from_name: Название отправителя
+show.label_from_name: Название отправителя
+
+form.label_text: Текст
+filter.label_text: Текст
+list.label_text: Текст
+show.label_text: Текст
+
 =: =
 >=: >=
 >: >

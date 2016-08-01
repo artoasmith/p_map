@@ -43,10 +43,11 @@ class Controller extends BaseController
         //get info
         $response = [
             'firstName'=>$user->getFirstname(),
-
+            'lastName'=>$user->getLastname(),
             'rate'=>$user->getRate(),
             'point'=>[]
         ];
+
         //points
         $point = $this->getDoctrine()
              ->getRepository('PokemonBundle:Point')
@@ -55,6 +56,7 @@ class Controller extends BaseController
             $formater = $this->getSerializePointCallback();
             $response['point'] = array_map($formater, $point);
         }
+
         //save cache
         $responseJson = json_encode($response);
         $cache->save($cacheKey,$responseJson,43200); //12 hour
@@ -196,6 +198,7 @@ class Controller extends BaseController
                 'pokemon'=>str_pad(strval($a->getPokemon()->getId()), 3, '0', STR_PAD_LEFT),
                 'name'=>$a->getPokemon()->getName(),
                 'image'=>$a->getPokemon()->getImageUrl(),
+                'confirmed'=>$a->getConfirm(),
                 'locationX'=>$a->getLocationX(),
                 'locationY'=>$a->getLocationY(),
                 'distance'=>false

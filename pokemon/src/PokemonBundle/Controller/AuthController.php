@@ -25,11 +25,8 @@ class AuthController extends Controller
         if(!$a)
             return $this->redirect('/login');
 
-
-        print_r($a);
-        exit();
+        $this->renderApiJson($this->getProfileInfo($a));
         //->setSharedMaxAge(600);
-
     }
 
     /**
