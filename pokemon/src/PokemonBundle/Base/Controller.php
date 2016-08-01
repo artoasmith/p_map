@@ -12,10 +12,56 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use PokemonBundle\Entity\Pokemon;
 use PokemonBundle\Entity\Point;
+use PokemonBundle\Entity\User;
 use Symfony\Component\Yaml\Parser;
 
 class Controller extends BaseController
 {
+
+    /**
+     * @param User $user
+     * @param bool $rewriteCathe
+     * @return bool
+     */
+    public function getProfileInfo($user,$rewriteCathe = false){
+        if(!is_object($user))
+            $user = $this->getDoctrine()
+                         ->getRepository('PokemonBundle:User')
+                         ->getOneById($user);
+
+        if(!$user)
+            return false;
+
+        //cache
+        $cacheKey = 'user_'.$user->getId();
+        $cache = $this->get('cache');
+        $cache->setNamespace('profileUser.cache');
+
+        if(false !== ($response = $cache->fetch($cacheKey)) && !$rewriteCathe)
+            return json_decode($response,true);
+
+        //get info
+        $response = [
+            'firstName'=>$user->getFirstname(),
+
+            'rate'=>$user->getRate(),
+            'point'=>[]
+        ];
+        //points
+        $point = $this->getDoctrine()
+             ->getRepository('PokemonBundle:Point')
+             ->findBy(['author'=>$user->getId()]);
+        if($point) {
+            $formater = $this->getSerializePointCallback();
+            $response['point'] = array_map($formater, $point);
+        }
+        //save cache
+        $responseJson = json_encode($response);
+        $cache->save($cacheKey,$responseJson,43200); //12 hour
+
+        return $response;
+    }
+
     public function getDefaultTemplateParams(){
         $yaml = new Parser();
         $a = $yaml->parse(file_get_contents(__DIR__ . '/../../../app/config/params.yml'));
@@ -134,17 +180,7 @@ class Controller extends BaseController
             }
 
             //format $res
-            $formater = function(Point $a){
-                return [
-                    'id'=>$a->getId(),
-                    'pokemon'=>str_pad(strval($a->getPokemon()->getId()), 3, '0', STR_PAD_LEFT),
-                    'name'=>$a->getPokemon()->getName(),
-                    'image'=>$a->getPokemon()->getImageUrl(),
-                    'locationX'=>$a->getLocationX(),
-                    'locationY'=>$a->getLocationY(),
-                    'distance'=>false
-                ];
-            };
+            $formater = $this->getSerializePointCallback();
             $response = array_map($formater,$res);
             $response = json_encode($response);
             //save cache
@@ -152,6 +188,21 @@ class Controller extends BaseController
         }
         return json_decode($response,true);
     }
+
+    public function getSerializePointCallback(){
+        return function(Point $a){
+            return [
+                'id'=>$a->getId(),
+                'pokemon'=>str_pad(strval($a->getPokemon()->getId()), 3, '0', STR_PAD_LEFT),
+                'name'=>$a->getPokemon()->getName(),
+                'image'=>$a->getPokemon()->getImageUrl(),
+                'locationX'=>$a->getLocationX(),
+                'locationY'=>$a->getLocationY(),
+                'distance'=>false
+            ];
+        };
+    }
+
     public function getSectorPoints($x, $y, $side){
         $query = sprintf('SELECT p.id FROM point as p WHERE p.`locationX` >= %f AND p.`locationX` < %f AND p.`locationY` >= %f AND p.`locationY` < %f', $x,($x+$side),$y,($y+$side));
 
