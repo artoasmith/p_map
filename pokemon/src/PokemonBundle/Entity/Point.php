@@ -58,7 +58,7 @@ class Point
 
     /**
      * @var Pokemon
-     *
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Pokemon")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="pokemon", referencedColumnName="id", onDelete="CASCADE")

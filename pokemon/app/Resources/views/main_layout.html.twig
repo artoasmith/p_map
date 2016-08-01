@@ -1,16 +1,26 @@
 {% extends 'SonataAdminBundle::standard_layout.html.twig' %}
+
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     <script>
 
     </script>
 {% endblock %}
+
 {% block side_bar_before_nav %}
     {{ parent() }}
 {% endblock %}
+
+{% block sonata_sidebar_search %}
+{% endblock %}
+
+{% block side_bar_after_nav %}
+{% endblock %}
+
 {% block sonata_top_nav_menu %}
     <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
