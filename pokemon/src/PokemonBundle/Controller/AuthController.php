@@ -102,7 +102,7 @@ class AuthController extends Controller
                     EmailTemplate::sendEmail('reg_confirm',[
                         'emailFrom'=>'ua567@mail.ru',
                         'emailTo'=>$formdata['email'],
-                        '%link%'=>$params.'/confirmRegistration?token='.$confirmToken
+                        '%link%'=>$params['site'].'/confirmRegistration?token='.$confirmToken
                     ]);
 
                 }
