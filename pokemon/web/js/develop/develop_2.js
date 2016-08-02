@@ -206,6 +206,24 @@ function googleMap(mapWrap) {
         }
         map = new google.maps.Map(document.getElementById(mapWrap), myOptions);
 
+
+        /* тут точка покемейстра */ 
+
+            var myLatlng2 = new google.maps.LatLng(currentPosition[0] , currentPosition[1]);
+            var image = 'images/pock.png' ;
+
+            var marker = new google.maps.Marker({
+                position: myLatlng2,
+                map: map,
+                animation: google.maps.Animation.DROP, // анимация при загрузке карты
+                icon: image //  иконка картинкой
+            });
+
+            markers.push(marker);
+            makeInfoWindowEvent(map, infowindow, marker);
+
+        /* точка покемейстра */
+
         for ( var i = 0;  i < stack.length; i++ ){
 
             var infowindow = new google.maps.InfoWindow({
@@ -237,14 +255,15 @@ function googleMap(mapWrap) {
                     marker.setAnimation(google.maps.Animation.BOUNCE);
                 }
             }
-
-        /*/анимация при клике на маркер*/
         
 
         function addMarker(location) {
+
+            var image = 'images/pock.png' ;
             var markerA = new google.maps.Marker({
                 position: location,
-                map: map
+                map: map,
+                icon: image
             });
             map.panTo( markerA.getPosition() );
 
@@ -253,14 +272,11 @@ function googleMap(mapWrap) {
 
 
 
-          map.addListener('click', function(e) {
+        map.addListener('click', function(e) {
 
             addMarker(e.latLng);
-            console.log( e.latLng.lat(),  e.latLng.lng() )
-
-           currentPosition = [  e.latLng.lat() , e.latLng.lng() ] ;
-
-           superAjax();
+            currentPosition = [  e.latLng.lat() , e.latLng.lng() ] ;
+            superAjax();
 
         });
         
