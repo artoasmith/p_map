@@ -395,8 +395,11 @@ $(document).ready(function(){
 });
 
 $(window).load(function(){
-
     if( $('body').find('.map-page').length == 1 ){
+<<<<<<< HEAD
+        console.log('opa');
+=======
+>>>>>>> 3292955b3e3a598874bd0e963ab2c418eef6a0cb
         onLoadStartData();
     }
     

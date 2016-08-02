@@ -1,0 +1,30 @@
+{% extends 'PokemonBundle:Front:Base.html.twig' %}
+
+{% block content %}
+    {% if message is defined and message is not empty %}
+        true
+    {% else %}
+        <form method="post">
+            <div>
+                login
+                <input type="text" minlength="5" required="required" name="{{ reg_form.key }}[login]" value="{{ reg_form.fields.login.value }}">
+                <p>{{ reg_form.fields.login.error }}</p>
+            </div>
+            <div>
+                email
+                <input type="email" required="required" name="{{ reg_form.key }}[email]" value="{{ reg_form.fields.email.value }}">
+                <p>{{ reg_form.fields.email.error }}</p>
+            </div>
+            <div>
+                password
+                <input type="password" minlength="8" required="required" name="{{ reg_form.key }}[password]" value="{{ reg_form.fields.password.value }}">
+                <p>{{ reg_form.fields.password.error }}</p>
+            </div>
+            <div>
+                repassword
+                <input type="password" minlength="8" required="required" name="{{ reg_form.key }}[repassword]">
+            </div>
+            <input type="submit" value="GO!">
+        </form>
+    {% endif %}
+{% endblock %}

@@ -16,6 +16,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Doctrine\ORM\EntityManager;
+use PokemonBundle;
 
 /**
  * EmailTemplate
