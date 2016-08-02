@@ -117,54 +117,31 @@ function validationCall(form){
     });
 }
 
-/* Отправка формы с файлом */
-/* не использовать input[type="file"] в форме и не забыть дописать форме enctype="multipart/form-data" */
-function validationCallDocument(form){
 
-    var thisForm = $(form);
-    var formData = new FormData($(form)[0]);
 
-    formData.append('file', thisForm.find('input[type=file]')[0].files[0]);
+function sendToSerwer( data, what ){
 
-    $.ajax({
-        url: thisForm.attr('action'),
-        type: "POST",
-        data: formData,
-        contentType:false,
-        processData:false,
-        cache:false,
-        success: function(response) {
-            thisForm.trigger("reset");
-            popNext("#call_success", "call-popup");
-        }
-    });
-
-}
-
-/* Отправка формы с файлaми */
-/* не использовать input[type="file"] в форме и не забыть дописать форме enctype="multipart/form-data" */
-function validationCallDocuments(form){
-
-    var thisForm = $(form);
-    var formData = new FormData($(form)[0]);
-
-    $.each(thisForm.find('input[type="file"]')[0].files, function(index, file){
-        formData.append('file['+index+']', file);
-    });
+  var formSur = {
+      "action" : "confirm",
+      "pokemonState": data,
+      "confirm" : what
+  };
 
     $.ajax({
-        url: thisForm.attr('action'),
-        type: "POST",
-        data: formData,
-        contentType:false,
-        processData:false,
-        cache:false,
-        success: function(response) {
-            thisForm.trigger("reset");
-            popNext("#call_success", "call-popup");
+        url : '/ajax.php',
+        data: formSur,
+        method:'POST',
+        success : function(data){
+            if ( data.trim() == 'true') {
+                thisForm.trigger("reset");
+                popNext("#call_success", "call-popup");
+            }
+            else {
+               thisForm.trigger('reset');
+            }
+
         }
     });
-
 }
 
 function popNext(popupId, popupWrap){
@@ -197,76 +174,39 @@ function Maskedinput(){
     }
 }
 
-/*fansybox на форме*/
-function fancyboxForm(){
-  $('.fancybox-form').fancybox({
-    openEffect  : 'fade',
-    closeEffect : 'fade',
-    autoResize:true,
-    wrapCSS:'fancybox-form',
-    'closeBtn' : true,
-    fitToView:true,
-    padding:'0'
-  })
-}
 
-//ajax func for programmer
 
-function someAjax(item, someUrl, successFunc, someData){
-
-    $(document).on('click', item, function(e){
-
-        e.preventDefault();
-
-        var itemObject = $(this);
-        var ajaxData = null;
-
-        if(typeof someData == 'function'){
-            ajaxData = someData(itemObject);
-        }else{
-            ajaxData = someData;
-        }
-
-        console.log(ajaxData);
-
-        $.ajax({
-            url:someUrl,
-            data:ajaxData,
-            method:'POST',
-            success : function(data){
-                successFunc(data, itemObject);
-            }
-        });
-
-    });
-
-}
-
-/* example for someAjax func
-
-    write like this
-    someAjax('.link', '/programer_item.php', someFuncName, {action:'someAction', item_id:id});
-
-    or
-
-    someAjax('.link','/programer_item.php', someFuncName, someDataFuncName);
-
-    where
-
-    function someDataFuncName(itemObject){
-
-        return {id:itemObject.data('id'), text:itemObject.parents('.parentOfItemObject').data('text')};
-
-        // where itemObject = $('.link') in someAjax func
-
-    }
-
-*/
 
 $(document).ready(function(){
 
-   validate('#call-popup .contact-form', {submitFunction:validationCall});
-   Maskedinput();
-   fancyboxForm();
+   /* send data to server */ 
+
+   $('.hide-content .button-block>.butt').click( function(){
+
+       if ( $('.hide-content').hasClass('activate') ) {
+           var isLogin = true ;
+
+            if( !isLogin ){
+
+                location.replace("sheep.fish");
+
+            } else {
+
+                if( $(this).hasClass('confirm') ){
+
+                    sendToSerwer( $('.hide-content').attr('data-pokemon-id') , true );
+
+                }
+
+                if( $(this).hasClass('not-confirm') ){
+
+                    sendToSerwer( $('.hide-content').attr('data-pokemon-id') , false );
+                    
+                }     
+
+            }
+        }
+       
+   });
 
 });

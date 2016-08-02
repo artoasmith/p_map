@@ -118,6 +118,7 @@ function superAjax() {
                         position: myLatlng2,
                         map: map,
                         title: dataSt[i].name,
+                        dataSum: stack[i].id,
                         animation: google.maps.Animation.DROP, // анимация при загрузке карты
                         icon: image //  иконка картинкой
                     });
@@ -143,45 +144,70 @@ function superAjax() {
 }
 
 
-    function addContentToHell(){
+function addContentToHell(){
 
-        var htmlStack='';
+    var htmlStack='';
 
-        for ( var i = 0;  i < stack.length; i++ ){
-            htmlStack += "<div class='item' data-names='" + stack[i].name + "'>" +
-                    "<div class='num'> #" + stack[i].pokemon +"</div>" +
-                    "<div class='look'>" +
-                    "<img src='"+ stack[i].image +"' "+
-                    "alt='" + stack[i].name + "' title='" + stack[i].name +"'>" +
-                "</div>" +
-                "<div class='name'>" + stack[i].name + "</div>" +
-                "<div class='disance'> " + stack[i].distance + " км </div>" +
-                "<div class='button'>"+
-                    "<a href='" + stack[i].id + "' data-locationx='" + stack[i].locationX + 
-                    "' data-locationy='" + stack[i].locationY + "' > <span>ПОКАЗАТЬ</span> </a>" +
-                "</div>" +
-            "</div>";
+    for ( var i = 0;  i < stack.length; i++ ){
+        htmlStack += "<div class='item' data-names='" + stack[i].name + "'>" +
+                        "<div class='num'> #" + stack[i].pokemon +"</div>" +
+                        "<div class='look'>" +
+                            "<img src='"+ stack[i].image +"' "+
+                                "alt='" + stack[i].name + "' title='" + stack[i].name +"'>" +
+                        "</div>" +
+                        "<div class='name'>" + stack[i].name + "</div>" +
+                        "<div class='disance'> " + stack[i].distance + " км </div>" +
+                        "<div class='button'>"+
+                            "<a href='" + stack[i].id + "' data-locationx='" + stack[i].locationX + 
+                         "' data-locationy='" + stack[i].locationY + "' > <span>ПОКАЗАТЬ</span> </a>" +
+                        "</div>" +
+                    "</div>";
         }
-            
-        $('.sorting-wrap .items-wrap').html(htmlStack);
+        
+    $('.sorting-wrap .items-wrap').html(htmlStack);
 
-            /* tyt sort add */
-        // forSortAdd();
+        /* tyt sort add */
+    // forSortAdd();
 
-        /* end compose */ 
+    /* end compose */ 
+}
+
+function showMeThisPockemon( whatPockemonIWillShow ){
+
+    var curent ;
+
+    for(var i = 0; i<stack.length; i++){
+        
+        if (stack[i].id == whatPockemonIWillShow ){
+            curent = stack[i] ;
+        }
     }
+
+    if( curent.confirmed ){
+        $('.map').find('.hide-content').addClass('confirm-pokemon');
+    }
+    $('.hide-content').addClass('activate').attr('data-pokemon-id', curent.id );
+    
+    $('.map').find('.topper>.con>img').attr( 'src', curent.image );
+    $('.map').find('.after-all>.top-name').html( curent.name );
+    $('.map').find('.after-all>.distance>span').html( curent.distance );
+    console.log( curent );
+}
   
 
-    function makeInfoWindowEvent(map, infowindow, marker) {
+function makeInfoWindowEvent(map, infowindow, marker) {
 
-        google.maps.event.addListener(marker, 'click', function() {
-            
-            infowindow.open(map, marker);
-            map.panTo( marker.getPosition() );
+    google.maps.event.addListener(marker, 'click', function() {
+        
+        infowindow.open(map, marker);
 
-            setTimeout(function () { infowindow.close(); }, 5000);
-        });
-    }
+        map.panTo( marker.getPosition() );
+
+        showMeThisPockemon( marker.dataSum ) ;
+
+        setTimeout(function () { infowindow.close(); }, 3000);
+    });
+}
 
     
 
@@ -237,6 +263,7 @@ function googleMap(mapWrap) {
                 position: myLatlng2,
                 map: map,
                 title: stack[i].name,
+                dataSum: stack[i].id,
                 animation: google.maps.Animation.DROP, // анимация при загрузке карты
                 icon: image //  иконка картинкой
             });
@@ -247,14 +274,17 @@ function googleMap(mapWrap) {
 
         makeInfoWindowEvent(map, infowindow, marker) ;
             
-            marker.addListener('click', toggleBounce);
-            function toggleBounce() {
-                if (marker.getAnimation() !== null) {
-                    marker.setAnimation(null);
-                } else {
-                    marker.setAnimation(google.maps.Animation.BOUNCE);
-                }
+        marker.addListener('click', toggleBounce);
+            
+        function toggleBounce() {
+
+            if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
             }
+            
+        }
         
 
         function addMarker(location) {
@@ -277,9 +307,8 @@ function googleMap(mapWrap) {
             addMarker(e.latLng);
             currentPosition = [  e.latLng.lat() , e.latLng.lng() ] ;
             superAjax();
-
         });
-        
+     
     }
     initialize();
 }
