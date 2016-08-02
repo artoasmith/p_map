@@ -86,6 +86,8 @@ function superAjax() {
 
                 }
 
+                stack = _.uniqBy(stack, "id" );
+
             }
 
             /* map init */
@@ -129,6 +131,8 @@ function superAjax() {
                     makeInfoWindowEvent(map, infowindow, marker);
                 }
 
+                stack = _.uniqBy(stack, "id" );
+
             }
 
             /* map init */
@@ -148,6 +152,7 @@ function superAjax() {
 
 function addContentToHell(){
 
+     
     var htmlStack='';
 
     for ( var i = 0;  i < stack.length; i++ ){
@@ -180,20 +185,25 @@ function showMeThisPockemon( whatPockemonIWillShow ){
 
     for(var i = 0; i<stack.length; i++){
         
-        if (stack[i].id == whatPockemonIWillShow ){
+        if ( stack[i].id == whatPockemonIWillShow ){
             curent = stack[i] ;
         }
     }
 
+    console.log( curent ); 
+
+
     if( curent.confirmed ){
         $('.map').find('.hide-content').addClass('confirm-pokemon');
     }
+
     $('.hide-content').addClass('activate').attr('data-pokemon-id', curent.id );
     
     $('.map').find('.topper>.con>img').attr( 'src', curent.image );
     $('.map').find('.after-all>.top-name').html( curent.name );
     $('.map').find('.after-all>.distance>span').html( curent.distance );
     console.log( curent );
+
 }
   
 
@@ -401,21 +411,66 @@ $(document).ready(function(){
     /* road */ 
 
     $('.road-is-so-far').click(function () {
-        function calcRoute() {
+        function calcRoute( startPath , endPath ) {
            // var start = document.getElementById("start").value;
            // var end = document.getElementById("end").value;
             var request = {
-                origin: "st louis, mo",
-                destination: "joplin, mo",
-                travelMode: google.maps.TravelMode.DRIVING
+                origin: startPath ,
+                destination: endPath,
+                travelMode: google.maps.TravelMode.WALKING
             };
             directionsService.route(request, function(result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(result);
+                    directionsDisplay.setDirections(response);
                 }
+
+                markers = [];
+                for (var i = 0; i < stack.length; i++) {
+
+
+                    var infowindow = new google.maps.InfoWindow({
+                        content: '<h1>' + stack[i].name + '</h1>'
+                    });
+
+                    var myLatlng2 = new google.maps.LatLng(stack[i].locationY, stack[i].locationX);
+                    var image = stack[i].image;
+
+                    var marker = new google.maps.Marker({
+                        position: myLatlng2,
+                        map: map,
+                        title: stack[i].name,
+                        dataSum: stack[i].id,
+                        animation: google.maps.Animation.DROP, // анимация при загрузке карты
+                        icon: image //  иконка картинкой
+                    });
+
+                    markers.push(marker);
+                    makeInfoWindowEvent(map, infowindow, marker);
+                }
+
             });
         }
-        calcRoute() ;
+
+        if ( $('.hide-content').hasClass('activate') ) {
+
+            var wereIGO =  $('.hide-content').attr('data-pokemon-id');
+            var points = [];
+
+            for (var i = 0; i < stack.length; i++ ){
+
+                if ( stack[i].id = wereIGO ){
+
+                    point = [ stack[i].locationX , stack[i].locationY ]
+                    
+                }
+
+            }
+
+            var startPath = new google.maps.LatLng( currentPosition[0], currentPosition[1] ) ;
+            var endPath = new google.maps.LatLng( point[1] , point[0] );
+
+            calcRoute( startPath , endPath );
+        }
     })
 
 
