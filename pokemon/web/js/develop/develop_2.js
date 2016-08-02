@@ -8,6 +8,8 @@ var stashNames = [];
 var markers = [];
 var markersNew = [] ;
 var map ;
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
 
 function onLoadStartData(){
 
@@ -216,6 +218,7 @@ function googleMap(mapWrap) {
 
         $('#map').addClass('map-is-init');
         var myLatlng = new google.maps.LatLng(currentPosition[0] , currentPosition[1]);
+        directionsDisplay = new google.maps.DirectionsRenderer();
         var myOptions = {
             zoom: 15,
             center: myLatlng,
@@ -308,7 +311,9 @@ function googleMap(mapWrap) {
             currentPosition = [  e.latLng.lat() , e.latLng.lng() ] ;
             superAjax();
         });
-     
+
+     directionsDisplay.setMap(map);
+
     }
     initialize();
 }
@@ -392,14 +397,33 @@ $(document).ready(function(){
         })
 
     /* some */
+
+    /* road */ 
+
+    $('.road-is-so-far').click(function () {
+        function calcRoute() {
+           // var start = document.getElementById("start").value;
+           // var end = document.getElementById("end").value;
+            var request = {
+                origin: "st louis, mo",
+                destination: "joplin, mo",
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+            directionsService.route(request, function(result, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(result);
+                }
+            });
+        }
+        calcRoute() ;
+    })
+
+
+    /* road */
 });
 
 $(window).load(function(){
     if( $('body').find('.map-page').length == 1 ){
-<<<<<<< HEAD
-        console.log('opa');
-=======
->>>>>>> 3292955b3e3a598874bd0e963ab2c418eef6a0cb
         onLoadStartData();
     }
     
