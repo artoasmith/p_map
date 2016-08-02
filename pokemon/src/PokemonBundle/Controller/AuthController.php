@@ -25,8 +25,9 @@ class AuthController extends Controller
         if(!$a)
             return $this->redirect('/login');
 
-        $this->renderApiJson($this->getProfileInfo($a));
-        //->setSharedMaxAge(600);
+        $params = array_merge($this->getProfileInfo($a),$this->getDefaultTemplateParams());
+        /////
+        return $this->render('PokemonBundle:Front:profile.html.twig',$params)->setSharedMaxAge(0);
     }
 
     /**
