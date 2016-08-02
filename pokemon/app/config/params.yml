@@ -1,5 +1,6 @@
 document_root: /Users/N1/Sites/pokemon/pokemon/web
 document_root2: D:/OpenServer/domains/pokemon/pokemon/web
+site: http://test1.sheepfish.pro
 # 1 = 111 km
 # 0.01 = 1.11 km
 # 0.001 = 0.111 km
@@ -18,4 +19,4 @@ main_menu:
     contacts:
         title:    Контакты
         link:     /contacts
-copi_right: &copy; 2016 Copyright All right reserved
+copi_right: 2016 Copyright All right reserved

@@ -56,7 +56,7 @@ form.label_gplus_name:
 Status: Статус
 form.label_locked: Заблокирован
 form.label_expired: Устарел
-form.label_enabled: Боступен
+form.label_enabled: Доступен
 form.label_credentials_expired: Устарели учетные данные
 Keys: Ключи
 form.label_token: Токен

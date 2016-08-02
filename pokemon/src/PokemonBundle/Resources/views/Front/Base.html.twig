@@ -140,7 +140,11 @@
         <!-- FOOTER -->
         <div class="footer_placeholder"></div>
         <footer class="footer">
-            <div class="row">{{ copi_right }}</div>
+            <div class="row">
+                {% if copi_right is not empty %}
+                &copy; {{ copi_right }}
+                {% endif+ %}
+            </div>
         </footer>
         <!-- FOOTER -->
     {% endblock %}

@@ -354,10 +354,9 @@ $(document).ready(function(){
 });
 
 $(window).load(function(){
-
     if( $('body').find('.map-page').length == 1 ){
-        onLoadStartData();
         console.log('opa');
+        onLoadStartData();
     }
     
 
