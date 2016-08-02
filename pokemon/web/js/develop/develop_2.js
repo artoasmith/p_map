@@ -79,6 +79,14 @@ function superAjax(){
 
                     for ( var i = 0;  i < dataSt.length; i++ ){
 
+                        for( var j =0; j< pokemon.length; j++ ){
+
+                            if ( pokemon[j].id == dataSt ){
+
+                            }
+
+                        } 
+
                         stack[ stack.length ] = dataSt[i];
 
                         var infowindow = new google.maps.InfoWindow({
@@ -347,6 +355,10 @@ $(document).ready(function(){
 
 $(window).load(function(){
 
-    onLoadStartData();
+    if( $('body').find('.map-page').length == 1 ){
+        onLoadStartData();
+        console.log('opa');
+    }
+    
 
 });
