@@ -32,7 +32,7 @@ function onLoadStartData(){
         switch(error.code) {
             case error.PERMISSION_DENIED:
                 alert( " select your position " );
-                 superAjax();
+                 superAjax( 1 );
                 break;
             case error.POSITION_UNAVAILABLE:
                  console.log("Location information is unavailable.");
@@ -49,24 +49,24 @@ function onLoadStartData(){
     /* коли все добре */
     function showPosition(position) {
         currentPosition = [ position.coords.latitude , position.coords.longitude ] ;
-        superAjax();
+        superAjax( 1 );
     };
 
 }
 
-function superAjax() {
+function superAjax( page ) {
 
-    console.log(currentPosition);
     console.log('start ');
+
     $.ajax({
-        url: '/app_dev.php/location/' + currentPosition[1] + '/' + currentPosition[0],
+        url: '/app_dev.php/location/' + currentPosition[1] + '/' + currentPosition[0] + '?page='+ page,
         // data: formSur,
         method: 'POST',
         success: function (data) {
             console.log(' end ');
 
-            var st = data.length;
-            var dataSt = data;
+            var st = data.points.length;
+            var dataSt = data.points;
 
             if (stack.length == 0) {
                // stack = dataSt;
@@ -122,8 +122,8 @@ function superAjax() {
                         position: myLatlng2,
                         map: map,
                         title: dataSt[i].name,
-                        dataSum: stack[i].id,
-                        animation: google.maps.Animation.DROP, // анимация при загрузке карты
+                        dataSum: dataSt[i].id,
+                      //  animation: google.maps.Animation.DROP, // анимация при загрузке карты
                         icon: image //  иконка картинкой
                     });
 
@@ -142,6 +142,14 @@ function superAjax() {
             addContentToHell();
 
             /* content init */
+
+            if( (data.meta.totalCount - data.meta.page) >0 ){
+
+                superAjax( data.meta.page + 1 );
+
+            } else {
+                console.log(' end upload ');
+            }
 
             console.log('done');
 
@@ -173,25 +181,13 @@ function addContentToHell(){
         
     $('.sorting-wrap .items-wrap').html(htmlStack);
 
-        /* tyt sort add */
-    // forSortAdd();
-
-    /* end compose */ 
 }
 
 function showMeThisPockemon( whatPockemonIWillShow ){
 
-    var curent ;
+    var curent =  _.find(stack, { 'id': whatPockemonIWillShow }); ;
 
-    for(var i = 0; i<stack.length; i++){
-        
-        if ( stack[i].id == whatPockemonIWillShow ){
-            curent = stack[i] ;
-        }
-    }
-
-    console.log( curent ); 
-
+    console.log( curent );
 
     if( curent.confirmed ){
         $('.map').find('.hide-content').addClass('confirm-pokemon');
@@ -202,7 +198,6 @@ function showMeThisPockemon( whatPockemonIWillShow ){
     $('.map').find('.topper>.con>img').attr( 'src', curent.image );
     $('.map').find('.after-all>.top-name').html( curent.name );
     $('.map').find('.after-all>.distance>span').html( curent.distance );
-    console.log( curent );
 
 }
   
@@ -254,7 +249,7 @@ function googleMap(mapWrap) {
             var marker = new google.maps.Marker({
                 position: myLatlng2,
                 map: map,
-                animation: google.maps.Animation.DROP, // анимация при загрузке карты
+               // animation: google.maps.Animation.BOUNCE, // анимация при загрузке карты
                 icon: image //  иконка картинкой
             });
 
@@ -277,7 +272,7 @@ function googleMap(mapWrap) {
                 map: map,
                 title: stack[i].name,
                 dataSum: stack[i].id,
-                animation: google.maps.Animation.DROP, // анимация при загрузке карты
+               // animation: google.maps.Animation.DROP, // анимация при загрузке карты
                 icon: image //  иконка картинкой
             });
 
@@ -411,6 +406,7 @@ $(document).ready(function(){
     /* road */ 
 
     $('.road-is-so-far').click(function () {
+       
         function calcRoute( startPath , endPath ) {
            // var start = document.getElementById("start").value;
            // var end = document.getElementById("end").value;
@@ -421,10 +417,12 @@ $(document).ready(function(){
             };
             directionsService.route(request, function(result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
+                    directionsDisplay.setDirections(result);
                 }
+            });
 
-                markers = [];
+            markers = [];
+                console.log(stack);
                 for (var i = 0; i < stack.length; i++) {
 
 
@@ -440,15 +438,13 @@ $(document).ready(function(){
                         map: map,
                         title: stack[i].name,
                         dataSum: stack[i].id,
-                        animation: google.maps.Animation.DROP, // анимация при загрузке карты
+                       // animation: google.maps.Animation.DROP, // анимация при загрузке карты
                         icon: image //  иконка картинкой
                     });
 
                     markers.push(marker);
                     makeInfoWindowEvent(map, infowindow, marker);
                 }
-
-            });
         }
 
         if ( $('.hide-content').hasClass('activate') ) {
@@ -458,7 +454,7 @@ $(document).ready(function(){
 
             for (var i = 0; i < stack.length; i++ ){
 
-                if ( stack[i].id = wereIGO ){
+                if ( stack[i].id == wereIGO ){
 
                     point = [ stack[i].locationX , stack[i].locationY ]
                     
@@ -470,6 +466,7 @@ $(document).ready(function(){
             var endPath = new google.maps.LatLng( point[1] , point[0] );
 
             calcRoute( startPath , endPath );
+            
         }
     })
 
