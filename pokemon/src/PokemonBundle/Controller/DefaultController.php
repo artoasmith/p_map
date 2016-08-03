@@ -36,6 +36,25 @@ class DefaultController extends Controller
         return $this->render('PokemonBundle:Front:main.html.twig',$params);
     }
 
+    /**
+     * @Route("/about")
+     */
+    public function aboutAction()
+    {
+        $params = $this->getDefaultTemplateParams();
+
+        return $this->render('PokemonBundle:Front:about.html.twig',$params);
+    }
+
+    /**
+     * @Route("/contacts")
+     */
+    public function contactsAction()
+    {
+        $params = $this->getDefaultTemplateParams();
+
+        return $this->render('PokemonBundle:Front:contacts.html.twig',$params);
+    }
 
     /**
      * @Route("/location/{locX}/{locY}")
