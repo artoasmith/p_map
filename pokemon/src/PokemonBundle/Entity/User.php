@@ -29,6 +29,13 @@ class User extends BaseUser
      */
     private $rate;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createTokenAt", type="datetime")
+     */
+    private $createTokenAt;
+
     public function __construct()
     {
         parent::__construct();
@@ -60,5 +67,29 @@ class User extends BaseUser
     {
         $this->rate = $rate;
         return $this;
+    }
+
+
+    /**
+     * Set createTokenAt
+     *
+     * @param \DateTime $createTokenAt
+     * @return User
+     */
+    public function setCreateTokenAt($createTokenAt)
+    {
+        $this->createTokenAt = $createTokenAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createTokenAt
+     *
+     * @return \DateTime
+     */
+    public function getCreateTokenAt()
+    {
+        return $this->createTokenAt;
     }
 }

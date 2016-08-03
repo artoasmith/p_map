@@ -181,16 +181,19 @@ class Controller extends BaseController
             foreach ($this->sectorPokemon($xPoint,$yPoint,$pokemonsOnSector,$side,$tailLength) as $a)
                 $response['points'][] = $a;
 
+            if($mPoint[0] == 0 && $mPoint[1]==0)
+                continue;
+
+            $xPoint = $x-$mPoint[0]*$side;
+            $yPoint = $y-$mPoint[1]*$side;
+            foreach ($this->sectorPokemon($xPoint,$yPoint,$pokemonsOnSector,$side,$tailLength) as $a)
+                $response['points'][] = $a;
+
             if($mPoint[0] == 0 || $mPoint[1]==0)
                 continue;
 
             $xPoint = $x-$mPoint[0]*$side;
             $yPoint = $y+$mPoint[1]*$side;
-            foreach ($this->sectorPokemon($xPoint,$yPoint,$pokemonsOnSector,$side,$tailLength) as $a)
-                $response['points'][] = $a;
-
-            $xPoint = $x-$mPoint[0]*$side;
-            $yPoint = $y-$mPoint[1]*$side;
             foreach ($this->sectorPokemon($xPoint,$yPoint,$pokemonsOnSector,$side,$tailLength) as $a)
                 $response['points'][] = $a;
 

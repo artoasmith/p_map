@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if message is defined and message is not empty %}
-        true
+        {{ message }}
     {% else %}
         <form method="post">
             <div>
