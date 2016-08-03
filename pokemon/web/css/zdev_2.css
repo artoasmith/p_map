@@ -601,6 +601,12 @@
   .map .hide-content .convert .after-all {
     width: 260px;
     margin: 0 auto; }
+
+    .map .hide-content.not-login .convert .after-all .distance{display: none;}
+    .map .hide-content.not-login .convert .after-all .button-block{display: none; }
+    .map .hide-content.not-login .convert .after-all .road-is-so-far{ display:  none; }
+    
+
     .map .hide-content .convert .after-all .top-name {
       padding-top: 35px;
       padding-bottom: 25px;

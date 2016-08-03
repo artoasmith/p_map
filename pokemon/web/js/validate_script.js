@@ -97,7 +97,7 @@ function validate(form, options){
 
 function sendToSerwer( data, what ){
 
-
+    console.log( what + data );
 
     $.ajax({
         url : what + data,
@@ -167,13 +167,13 @@ $(document).ready(function(){
                 if( $(this).hasClass('confirm') ){
 
                     
-                    sendToSerwer( $('.hide-content').attr('data-pokemon-id') , '/pointsConfirm/' );
+                    sendToSerwer( $('.hide-content').attr('data-pokemon-id') , '/app_dev.php/pointsConfirm/' );
 
                 }
 
                 if( $(this).hasClass('not-confirm') ){
 
-                    sendToSerwer( $('.hide-content').attr('data-pokemon-id') , '/pointsReject/' );
+                    sendToSerwer( $('.hide-content').attr('data-pokemon-id') , '/app_dev.php/pointsReject/' );
                     
                 }     
 
