@@ -1,15 +1,17 @@
 // <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
+/* я бачу це всюди */
     var googleText = 'pockemon here';
+    var currentPosition;
+    var stack = [];
+    var stashNames = [];
+    var markers = [];
+    var markersNew = [] ;
+    var map ;
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
 
-var currentPosition;
-var stack = [];
-var stashNames = [];
-var markers = [];
-var markersNew = [] ;
-var map ;
-var directionsDisplay;
-var directionsService = new google.maps.DirectionsService();
+/* я око саурона */
 
 function onLoadStartData(){
 
@@ -52,6 +54,74 @@ function onLoadStartData(){
         superAjax( 1 );
     };
 
+}
+
+
+function makeRoadToPockemon(){
+    $('.road-is-so-far').click(function () {
+    
+    function calcRoute( startPath , endPath ) {
+        // var start = document.getElementById("start").value;
+        // var end = document.getElementById("end").value;
+        var request = {
+            origin: startPath ,
+            destination: endPath,
+            travelMode: google.maps.TravelMode.WALKING
+        };
+        directionsService.route(request, function(result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(result);
+            }
+        });
+
+        markers = [];
+            console.log(stack);
+            for (var i = 0; i < stack.length; i++) {
+
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: '<h1>' + stack[i].name + '</h1>'
+                });
+
+                var myLatlng2 = new google.maps.LatLng(stack[i].locationY, stack[i].locationX);
+                var image = stack[i].image;
+
+                var marker = new google.maps.Marker({
+                    position: myLatlng2,
+                    map: map,
+                    title: stack[i].name,
+                    dataSum: stack[i].id,
+                    // animation: google.maps.Animation.DROP, // анимация при загрузке карты
+                    icon: image //  иконка картинкой
+                });
+
+                markers.push(marker);
+                makeInfoWindowEvent(map, infowindow, marker);
+            }
+        }
+
+        if ( $('.hide-content').hasClass('activate') ) {
+
+            var wereIGO =  $('.hide-content').attr('data-pokemon-id');
+            var points = [];
+
+            for (var i = 0; i < stack.length; i++ ){
+
+                if ( stack[i].id == wereIGO ){
+
+                    point = [ stack[i].locationX , stack[i].locationY ]
+                    
+                }
+
+            }
+
+            var startPath = new google.maps.LatLng( currentPosition[0], currentPosition[1] ) ;
+            var endPath = new google.maps.LatLng( point[1] , point[0] );
+
+            calcRoute( startPath , endPath );
+            
+        }
+    })
 }
 
 function superAjax( page ) {
@@ -216,8 +286,6 @@ function makeInfoWindowEvent(map, infowindow, marker) {
     });
 }
 
-    
-
 function googleMap(mapWrap) {
     function initialize() {
 
@@ -323,8 +391,6 @@ function googleMap(mapWrap) {
     initialize();
 }
 
-
-
 $(document).ready(function(){
 
     /* tabs */
@@ -403,78 +469,17 @@ $(document).ready(function(){
 
     /* some */
 
-    /* road */ 
+    /* road */
 
-    $('.road-is-so-far').click(function () {
-       
-        function calcRoute( startPath , endPath ) {
-           // var start = document.getElementById("start").value;
-           // var end = document.getElementById("end").value;
-            var request = {
-                origin: startPath ,
-                destination: endPath,
-                travelMode: google.maps.TravelMode.WALKING
-            };
-            directionsService.route(request, function(result, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(result);
-                }
-            });
-
-            markers = [];
-                console.log(stack);
-                for (var i = 0; i < stack.length; i++) {
-
-
-                    var infowindow = new google.maps.InfoWindow({
-                        content: '<h1>' + stack[i].name + '</h1>'
-                    });
-
-                    var myLatlng2 = new google.maps.LatLng(stack[i].locationY, stack[i].locationX);
-                    var image = stack[i].image;
-
-                    var marker = new google.maps.Marker({
-                        position: myLatlng2,
-                        map: map,
-                        title: stack[i].name,
-                        dataSum: stack[i].id,
-                       // animation: google.maps.Animation.DROP, // анимация при загрузке карты
-                        icon: image //  иконка картинкой
-                    });
-
-                    markers.push(marker);
-                    makeInfoWindowEvent(map, infowindow, marker);
-                }
-        }
-
-        if ( $('.hide-content').hasClass('activate') ) {
-
-            var wereIGO =  $('.hide-content').attr('data-pokemon-id');
-            var points = [];
-
-            for (var i = 0; i < stack.length; i++ ){
-
-                if ( stack[i].id == wereIGO ){
-
-                    point = [ stack[i].locationX , stack[i].locationY ]
-                    
-                }
-
-            }
-
-            var startPath = new google.maps.LatLng( currentPosition[0], currentPosition[1] ) ;
-            var endPath = new google.maps.LatLng( point[1] , point[0] );
-
-            calcRoute( startPath , endPath );
-            
-        }
-    })
-
+        makeRoadToPockemon();
 
     /* road */
+    
 });
 
 $(window).load(function(){
+
+
     if( $('body').find('.map-page').length == 1 ){
         onLoadStartData();
     }
