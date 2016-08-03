@@ -1,0 +1,27 @@
+{% extends 'PokemonBundle:Front:Base.html.twig' %}
+
+{% block content %}
+    {% if form_pass is defined %}
+        {% if form_pass.ms is not empty %}
+            {{ form_pass.ms }}
+        {% else %}
+            {{ form_pass.error }}
+            <form method="post">
+                <input type="hidden" name="{{ form_pass.key }}[token]" value="{{ form_pass.token }}" />
+                pass
+                <input type="password" minlength="8" name="{{ form_pass.key }}[password]" />
+                confirm pass
+                <input type="password" minlength="8" name="{{ form_pass.key }}[repassword]" />
+                <input type="submit" value="GO">
+            </form>
+        {% endif %}
+    {% else %}
+        <form method="post">
+            login or email
+            <input type="text" minlength="5" required="required" name="{{ form_user.key }}[user]" value="{{ form_user.fields.user.value }}">
+            {{ form_user.fields.user.error }}
+            {{ form_user.ms }}
+            <input type="submit" value="GO">
+        </form>
+    {% endif %}
+{% endblock %}

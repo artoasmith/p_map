@@ -36,6 +36,25 @@ class DefaultController extends Controller
         return $this->render('PokemonBundle:Front:main.html.twig',$params);
     }
 
+    /**
+     * @Route("/about")
+     */
+    public function aboutAction()
+    {
+        $params = $this->getDefaultTemplateParams();
+
+        return $this->render('PokemonBundle:Front:about.html.twig',$params);
+    }
+
+    /**
+     * @Route("/contacts")
+     */
+    public function contactsAction()
+    {
+        $params = $this->getDefaultTemplateParams();
+
+        return $this->render('PokemonBundle:Front:contacts.html.twig',$params);
+    }
 
     /**
      * @Route("/location/{locX}/{locY}")
@@ -67,6 +86,8 @@ class DefaultController extends Controller
     }
 
     /**
+     * Установить точку на карте
+     *
      * @POST("/points")
      */
     public function pointsAction(Request $request){
@@ -106,6 +127,8 @@ class DefaultController extends Controller
     }
 
     /**
+     * Подтверждение точки на карте
+     *
      * @POST("/pointsConfirm/{id}")
      */
     public function pointsConfirmAction($id){
@@ -158,6 +181,8 @@ class DefaultController extends Controller
     }
 
     /**
+     * Отрицание существования точки
+     *
      * @POST("/pointsReject/{id}")
      */
     public function pointsRejectAction($id){
