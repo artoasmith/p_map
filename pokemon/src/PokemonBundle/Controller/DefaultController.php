@@ -147,7 +147,7 @@ class DefaultController extends Controller
 
         $point = $this->getDoctrine()
                       ->getRepository('PokemonBundle:Point')
-                      ->getOneBy(['id'=>$id]);
+                      ->find($id);
         if(!$point)
             $this->renderApiJson(['error'=>'Точка была удалена или отсутствует']);
 
@@ -201,7 +201,7 @@ class DefaultController extends Controller
 
         $point = $this->getDoctrine()
                       ->getRepository('PokemonBundle:Point')
-                      ->getOneBy(['id'=>$id]);
+                      ->find($id);
         if(!$point)
             $this->renderApiJson(['error'=>'Точка была удалена или отсутствует']);
 
