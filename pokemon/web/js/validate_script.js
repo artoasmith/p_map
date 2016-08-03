@@ -94,51 +94,23 @@ function validate(form, options){
     }
 }
 
-/*Отправка формы с вызовом попапа*/
-function validationCall(form){
-
-  var thisForm = $(form);
-  var formSur = thisForm.serialize();
-
-    $.ajax({
-        url : thisForm.attr('action'),
-        data: formSur,
-        method:'POST',
-        success : function(data){
-            if ( data.trim() == 'true') {
-                thisForm.trigger("reset");
-                popNext("#call_success", "call-popup");
-            }
-            else {
-               thisForm.trigger('reset');
-            }
-
-        }
-    });
-}
-
-
 
 function sendToSerwer( data, what ){
 
-  var formSur = {
-      "action" : "confirm",
-      "pokemonState": data,
-      "confirm" : what
-  };
+
 
     $.ajax({
-        url : '/ajax.php',
-        data: formSur,
+        url : what + data,
+     //   data: formSur,
         method:'POST',
         success : function(data){
-            if ( data.trim() == 'true') {
-                thisForm.trigger("reset");
-                popNext("#call_success", "call-popup");
+            
+            if( data.error == 'Ошибка авторизации'){
+                location.replace( "/404" );
+            } else {
+                console.log( data );
             }
-            else {
-               thisForm.trigger('reset');
-            }
+            
 
         }
     });
@@ -194,13 +166,14 @@ $(document).ready(function(){
 
                 if( $(this).hasClass('confirm') ){
 
-                    sendToSerwer( $('.hide-content').attr('data-pokemon-id') , true );
+                    
+                    sendToSerwer( $('.hide-content').attr('data-pokemon-id') , '/pointsConfirm/' );
 
                 }
 
                 if( $(this).hasClass('not-confirm') ){
 
-                    sendToSerwer( $('.hide-content').attr('data-pokemon-id') , false );
+                    sendToSerwer( $('.hide-content').attr('data-pokemon-id') , '/pointsReject/' );
                     
                 }     
 
