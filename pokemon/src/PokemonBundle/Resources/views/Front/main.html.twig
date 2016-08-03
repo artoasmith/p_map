@@ -93,7 +93,12 @@
                         </div>
                     </div>
                     <div class="after-all">
-                        <div class="top-name"> Бульбазавр</div>
+                        {% if user_login is defined %}
+                            <div class="top-name"> {{ user_login }}</div>
+                        {% else %}
+                            Зарегистрируйтесь
+                        {% endif %}
+                        <!--
                         <div class="distance"> Растояние до покемона <span>5</span> км </div>
                         <div class="button-block">
                             <div class="butt confirm">
@@ -108,6 +113,7 @@
                                 <span>Проложить путь</span>
                             </div>
                         </div>
+                        -->
                     </div>
                 </div>
             </div>

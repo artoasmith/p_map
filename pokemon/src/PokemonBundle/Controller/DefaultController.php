@@ -19,6 +19,11 @@ class DefaultController extends Controller
     {
         $params = $this->getDefaultTemplateParams();
 
+        //user info
+        $u = $this->getUser();
+        if($u)
+            $params['user_login'] = $u->getUsername();
+
         //demo params
         $x = 44.442;
         $y = 35.504;
