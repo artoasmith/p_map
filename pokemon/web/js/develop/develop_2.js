@@ -227,7 +227,6 @@ function superAjax( page ) {
     });
 }
 
-
 function addContentToHell(){
 
      
@@ -277,6 +276,8 @@ function makeInfoWindowEvent(map, infowindow, marker) {
     google.maps.event.addListener(marker, 'click', function() {
         
         infowindow.open(map, marker);
+
+        $('.hide-content').removeClass('not-login');
 
         map.panTo( marker.getPosition() );
 
@@ -474,7 +475,7 @@ $(document).ready(function(){
         makeRoadToPockemon();
 
     /* road */
-    
+
 });
 
 $(window).load(function(){
