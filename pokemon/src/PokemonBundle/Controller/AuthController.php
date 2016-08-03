@@ -55,13 +55,14 @@ class AuthController extends Controller
                 $params['form_pass'] = $form_pass;
                 $params['form_pass']['error'] = 'Ошибка передачи данных';
                 if(isset($userPass['token']) && isset($userPass['password']) && isset($userPass['repassword'])){
+                    $params['form_pass']['token'] = $userPass['token'];
                     $pass = $userPass['password'];
                     if($userPass['password'] != $userPass['repassword']) {
                         $params['form_pass']['error'] = 'Пароли не совкадают';
                         $pass = false;
                     }
 
-                    if(!$pass && strlen($pass)<8){
+                    if($pass && strlen($pass)<8){
                         $pass = false;
                         $params['form_pass']['error'] = 'Пароль должен быть не меньше 8 сымволов';
                     }

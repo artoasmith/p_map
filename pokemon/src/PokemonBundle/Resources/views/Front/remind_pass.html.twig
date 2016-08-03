@@ -20,6 +20,7 @@
             login or email
             <input type="text" minlength="5" required="required" name="{{ form_user.key }}[user]" value="{{ form_user.fields.user.value }}">
             {{ form_user.fields.user.error }}
+            {{ form_user.ms }}
             <input type="submit" value="GO">
         </form>
     {% endif %}
