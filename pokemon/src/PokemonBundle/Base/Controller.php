@@ -99,7 +99,7 @@ class Controller extends BaseController
         return (is_array($a)?$a:[]);
     }
 
-    public function renderApiJson($value, $httpStatus = 204, $httpMessage = 'Message', $contentType = 'application/json'){
+    public function renderApiJson($value, $isJson=false, $httpMessage = 'Message', $contentType = 'application/json'){
         @ob_clean(); // clear output buffer to avoid rendering anything else
         @header("Content-type: $contentType");
        // @header('HTTP/1.1 '.$httpStatus.' '.$httpMessage);
@@ -107,7 +107,7 @@ class Controller extends BaseController
         @header("Access-Control-Allow-Origin: *");
         @header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE, PATCH, OPTIONS");
 
-        echo json_encode($value);
+        echo ($isJson?$value:json_encode($value));
         exit();
     }
 
@@ -130,7 +130,7 @@ class Controller extends BaseController
      * @param $y
      * @return array
      */
-    public function areaPokemon($x,$y){
+    public function areaPokemon($x,$y,$page){
         //normalization
         $x = round($x,3);
         $y = round($y,3);
@@ -142,23 +142,63 @@ class Controller extends BaseController
         $pokemonsOnSector = $this->pokemonsOnSector;
 
         $delimeter = $areaSide/2;
-        $startX = $x-$delimeter;
-        $startY = $y-$delimeter;
-
-        $response = [];
         $iterator = $areaSide/$side;
-        for($i=0;$i<$iterator;$i++){
-            for($j=0;$j<$iterator;$j++){
-                $timeY = $startY+$j*$side;
-                if(!$this->pointInCircle($x,$y,$startX,$timeY,$delimeter))
-                    continue;
+        $iterator = ceil($iterator/2);
+        $page = ($page<=$iterator?$page:1);
 
-                foreach ($this->sectorPokemon($startX,$timeY,$pokemonsOnSector,$side,$tailLength) as $a)
-                   $response[] = $a;
-            }
-            $startX += $side;
+        $response = [
+            'points'=>[],
+            'meta'=>[
+                'page'=>$page,
+                'totalCount'=>$iterator
+            ]
+        ];
+
+        $page--;
+        $magic = [];
+        for($i=0; $i<=$page; $i++){
+            $magic[] = $i.'_'.$page;
+            $magic[] = $page.'_'.$i;
         }
+        $magic = array_map(
+            function($a){
+                return array_map(
+                    function($a){
+                        return floatval($a);
+                    },
+                    explode('_',$a)
+                );
+            },
+            array_unique($magic)
+        );
 
+        foreach ($magic as $mPoint){
+            $xPoint = $x+$mPoint[0]*$side;
+            $yPoint = $y+$mPoint[1]*$side;
+            if(!$this->pointInCircle($x,$y,$xPoint,$yPoint,$delimeter))
+                continue;
+
+            foreach ($this->sectorPokemon($xPoint,$yPoint,$pokemonsOnSector,$side,$tailLength) as $a)
+                $response['points'][] = $a;
+
+            if($mPoint[0] == 0 || $mPoint[1]==0)
+                continue;
+
+            $xPoint = $x-$mPoint[0]*$side;
+            $yPoint = $y+$mPoint[1]*$side;
+            foreach ($this->sectorPokemon($xPoint,$yPoint,$pokemonsOnSector,$side,$tailLength) as $a)
+                $response['points'][] = $a;
+
+            $xPoint = $x-$mPoint[0]*$side;
+            $yPoint = $y-$mPoint[1]*$side;
+            foreach ($this->sectorPokemon($xPoint,$yPoint,$pokemonsOnSector,$side,$tailLength) as $a)
+                $response['points'][] = $a;
+
+            $xPoint = $x+$mPoint[0]*$side;
+            $yPoint = $y-$mPoint[1]*$side;
+            foreach ($this->sectorPokemon($xPoint,$yPoint,$pokemonsOnSector,$side,$tailLength) as $a)
+                $response['points'][] = $a;
+        }
         return $response;
     }
 

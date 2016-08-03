@@ -142,7 +142,7 @@
         <footer class="footer">
             <div class="row">
                 {% if copi_right is not empty %}
-                &copy; {{ copi_right }}
+                    &copy; {{ copi_right | raw }}
                 {% endif %}
             </div>
         </footer>

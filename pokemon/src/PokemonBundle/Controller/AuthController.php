@@ -21,6 +21,41 @@ use Symfony\Component\HttpFoundation\Request;
 class AuthController extends Controller
 {
     /**
+     * @Route("/confirmRegistration")
+     */
+    public function confirmRegistrationAction(Request $request)
+    {
+        $user = $this->getUser();
+        if($user)
+            return $this->redirect('/profile');
+
+        $token = $request->query->get('token');
+        $errorMessage = 'Неверный код активации';
+
+        $params = $this->getDefaultTemplateParams();
+
+        if(empty($token)) {
+            $params['message_error'] = $errorMessage;
+            return $this->render('PokemonBundle:Front:confirm_reg.html.twig',$params);
+        }
+
+        /**
+         * @var UserManager $userManager
+         */
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserByConfirmationToken($token);
+        if(!$user || $user->isEnabled()) {
+            $params['message_error'] = $errorMessage;
+            return $this->render('PokemonBundle:Front:confirm_reg.html.twig',$params);
+        }
+
+        $user->setEnabled(true);
+        $userManager->updateUser($user);
+        $params['message'] = 'Активация пройшла успешно, можете авторизироватся на сайте';
+        return $this->render('PokemonBundle:Front:confirm_reg.html.twig',$params);
+    }
+
+    /**
      * @Route("/registration")
      */
     public function RegistrationAction(Request $request)
@@ -103,8 +138,9 @@ class AuthController extends Controller
                         'emailFrom'=>'ua567@mail.ru',
                         'emailTo'=>$formdata['email'],
                         '%link%'=>$params['site'].'/confirmRegistration?token='.$confirmToken
-                    ]);
+                    ], $this);
 
+                    $params['message'] = sprintf("Для подтверждения регистрации перейдите по ссылке отправленой в письме на адрес %s",$formdata['email']);
                 }
             }
         }
@@ -121,6 +157,7 @@ class AuthController extends Controller
             return $this->redirect('/login');
 
         $params = array_merge($this->getProfileInfo($a),$this->getDefaultTemplateParams());
+        $params['test'] = '<script>alert("80085");</script>';
         /////
         return $this->render('PokemonBundle:Front:profile.html.twig',$params)->setSharedMaxAge(0);
     }

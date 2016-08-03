@@ -40,7 +40,11 @@ class DefaultController extends Controller
     /**
      * @Route("/location/{locX}/{locY}")
      */
-    public function getLocationPoints($locX,$locY){
+    public function getLocationPoints(Request $request,$locX,$locY){
+
+        //pagenation
+        $page = $request->query->get('page');
+        $page = ($page>1?intval($page):1);
 
         //normalization
         $locX = floatval($locX);
@@ -49,13 +53,16 @@ class DefaultController extends Controller
         $y = round($locY,3);
 
         //get points
-        $points = $this->areaPokemon($x,$y);
-        if(!empty($points)){
+        $points = $this->areaPokemon($x,$y,$page);
+        if(!empty($points['points'])){
             //calculate distance
-            foreach ($points as &$point){
+            foreach ($points['points'] as &$point){
                 $point['distance'] = $this->getGoogleMapLength($locX,$locY,$point['locationX'],$point['locationY']);
             }
         }
+
+
+
         $this->renderApiJson($points);
     }
 

@@ -1,0 +1,9 @@
+{% extends 'PokemonBundle:Front:Base.html.twig' %}
+
+{% block content %}
+    {% if message_error is defined and message_error is not empty %}
+        {{ message_error }}
+    {% else %}
+        {{ message }}
+    {% endif %}
+{% endblock %}

@@ -117,3 +117,9 @@ sonata_admin:
 sonata_translation:
     locales: [en, ru]
     default_locale: en
+
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"

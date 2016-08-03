@@ -16,7 +16,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Doctrine\ORM\EntityManager;
-use PokemonBundle;
+use PokemonBundle\PokemonBundle;
 
 /**
  * EmailTemplate
@@ -240,9 +240,8 @@ class EmailTemplate
     }
 
 
-    public static function sendEmail($code, $attributes)
+    public static function sendEmail($code, $attributes, $container)
     {
-        $container = PokemonBundle::getContainer();
         $em = $container->get('doctrine')->getManager();
         /**
          * @var EmailTemplate $template

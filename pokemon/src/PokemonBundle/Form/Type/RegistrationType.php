@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: N1
- * Date: 02.08.16
- * Time: 10:23
- */
 
 namespace PokemonBundle\Form\Type;
 
