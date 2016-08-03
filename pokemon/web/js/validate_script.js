@@ -131,16 +131,37 @@ function sendToSerwerConfirm( dataId ){
         url : '/app_dev.php/pointsConfirm/' + dataId,
         method:'POST',
         success : function(data){
-            
-            if( data.error == 'Ошибка авторизации' ){
 
-                location.replace( "/login" );
+            console.log( data );
+            
+            if( data.error ){
+
+                switch(data.code ) {
+                    case '1': 
+                        console.log( data.message );
+                        location.replace( "/login" );
+                        break;
+
+                    case '2':  
+                        console.log( data.message );
+
+                        for (var i = 0; i > stack.length; i++){
+                            if ( stack[i].id == dataId ){
+                               stack.splice( i , 1 )
+                            }
+                        }
+                        break;
+                    case '3': 
+                        alert( data.message );
+                        break;
+
+                }
 
             } else {
                 if ( data.success ){
                     for (var i = 0; i > stack.length; i++){
                         if ( stack[i].id == data.point.id ){
-                            stack[i].confirmed = true ;
+                            stack[i].confirmed = data.point.confirmed ;
                         }
                     }
 
@@ -162,17 +183,38 @@ function sendToSerwerReject( dataId ){
         method:'POST',
         success : function(data){
 
-            console.log( data.error.length == 1 );
+            console.log( data );
             
-            if( data.error.length == 1 ){
+            if( data.error ){
 
-                location.replace( "/login" );
+                switch(data.code ) {
+                    case '1': 
+                        console.log( data.message );
+                        location.replace( "/login" );
+                        break;
+
+                    case '2':  
+                        console.log( data.message );
+
+                        for (var i = 0; i > stack.length; i++){
+                            if ( stack[i].id == dataId ){
+                               stack.splice( i , 1 )
+                            }
+                        }
+                        break;
+                    case '3': 
+                        alert( data.message );
+                        break;
+
+                }
+
+                
 
             } else {
                 if ( data.success ){
                     for (var i = 0; i > stack.length; i++){
                         if ( stack[i].id == dataId ){
-                            stack[i].confirmed = false ;
+                            stack[i].confirmed = data.point.confirmed ;
                         }
                     }
 
@@ -185,6 +227,7 @@ function sendToSerwerReject( dataId ){
         }
     });
 }
+
 
 $(document).ready(function(){
 
