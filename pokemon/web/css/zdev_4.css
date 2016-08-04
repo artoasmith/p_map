@@ -54,6 +54,7 @@
           padding: 20px 0; }
           .login-wrap .form-wrap .form form .form_input p {
             position: absolute;
+            pointer-events: none;
             top: 33px;
             left: 15px;
             -webkit-transition: all 0.3s;
@@ -91,7 +92,7 @@
           .login-wrap .form-wrap .form form .form_input.error p {
             color: red; }
           .login-wrap .form-wrap .form form .form_input.error input {
-            border: 1px solid red;
+            border: 1px solid transparent;
             -webkit-box-shadow: inset 0px 0px 2px 1px red;
             -moz-box-shadow: inset 0px 0px 2px 1px red;
             box-shadow: inset 0px 0px 2px 1px red; }
@@ -104,10 +105,8 @@
             position: absolute;
             bottom: 68px;
             min-width: 120px;
-            height: 40px;
             right: 0;
             z-index: 2;
-            border: 1px solid red;
             background-color: white;
             -webkit-box-shadow: inset 0px 0px 2px 1px red;
             -moz-box-shadow: inset 0px 0px 2px 1px red;
@@ -115,7 +114,10 @@
             -webkit-transition: all 0.2s;
             -moz-transition: all 0.2s;
             -o-transition: all 0.2s;
-            transition: all 0.2s; }
+            transition: all 0.2s;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px; }
             .login-wrap .form-wrap .form form .form_input .error-field:before {
               position: absolute;
               content: '';
@@ -126,36 +128,20 @@
               -ms-transform: rotate(45deg);
               -o-transform: rotate(45deg);
               transform: rotate(45deg);
-              bottom: -6px;
+              bottom: -5px;
               background-color: white;
-              border-bottom: 1px solid red;
-              border-right: 1px solid red;
               z-index: 0;
               right: 10px;
-              -webkit-box-shadow: inset -2px -2px 1px 0px red;
-              -moz-box-shadow: inset -2px -2px 1px 0px red;
-              box-shadow: inset -2px -2px 1px 0px red; }
+              -webkit-box-shadow: inset -2px -2px 2px -1px red;
+              -moz-box-shadow: inset -2px -2px 2px -1px red;
+              box-shadow: inset -2px -2px 2px -1px red; }
             .login-wrap .form-wrap .form form .form_input .error-field .costruct {
               z-index: 2;
               position: relative;
               width: 100%;
-              height: 36px;
-              display: -webkit-box;
-              display: -webkit-flex;
-              display: -moz-box;
-              display: -ms-flexbox;
-              display: flex;
-              -webkit-box-align: center;
-              -webkit-align-items: center;
-              -moz-box-align: center;
-              -ms-flex-align: center;
-              align-items: center;
-              -webkit-box-pack: center;
-              -webkit-justify-content: center;
-              -moz-box-pack: center;
-              -ms-flex-pack: center;
-              justify-content: center;
-              overflow: hidden; }
+              text-align: center;
+              overflow: hidden;
+              padding: 5px; }
               .login-wrap .form-wrap .form form .form_input .error-field .costruct span {
                 font-size: 14px;
                 color: #9f9f9f; }
@@ -229,6 +215,14 @@
               line-height: 50px; }
             .login-wrap .form-wrap .form form .contact-form-row-submit button:hover {
               background-color: #4ab2fb; }
+        .login-wrap .form-wrap .form form .error-field {
+          padding: 10px 0; }
+          .login-wrap .form-wrap .form form .error-field p {
+            margin: 0;
+            text-align: center;
+            color: red;
+            font-size: 14px;
+            font-weight: 700; }
       .login-wrap .form-wrap .form .forget-pass {
         display: -webkit-box;
         display: -webkit-flex;
