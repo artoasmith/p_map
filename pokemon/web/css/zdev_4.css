@@ -259,6 +259,100 @@
           color: #2587cc; }
         .login-wrap .form-wrap .form .forget-pass:hover {
           background-color: #e6e4e4; }
+      .login-wrap .form-wrap .form .soc-block {
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 30px 0 0;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -moz-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+        justify-content: space-around; }
+        .login-wrap .form-wrap .form .soc-block a {
+          display: block;
+          width: 70px;
+          height: 60px;
+          background-color: transparent; }
+          .login-wrap .form-wrap .form .soc-block a svg .st0 {
+            fill: transparent; }
+          .login-wrap .form-wrap .form .soc-block a svg .st1 {
+            fill: url(#SVGID_2_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st2 {
+            fill: url(#SVGID_3_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st3 {
+            fill: url(#SVGID_4_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st4 {
+            fill: url(#SVGID_5_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st5 {
+            fill: url(#SVGID_6_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st6 {
+            fill: url(#SVGID_7_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st7 {
+            fill: url(#SVGID_8_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st8 {
+            fill: url(#SVGID_9_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st9 {
+            fill: url(#SVGID_10_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st10 {
+            fill: url(#SVGID_11_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st11 {
+            fill: url(#SVGID_12_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st12 {
+            fill: url(#SVGID_13_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st13 {
+            fill: url(#SVGID_14_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st14 {
+            fill: url(#SVGID_15_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st15 {
+            fill: url(#SVGID_16_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st16 {
+            fill: url(#SVGID_17_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st17 {
+            fill: url(#SVGID_18_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st18 {
+            fill: url(#SVGID_19_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st19 {
+            fill: url(#SVGID_20_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st20 {
+            fill: url(#SVGID_21_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st21 {
+            fill: url(#SVGID_22_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st22 {
+            fill: url(#SVGID_23_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st23 {
+            fill: url(#SVGID_24_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st24 {
+            fill: url(#SVGID_25_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st25 {
+            fill: url(#SVGID_26_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st26 {
+            fill: url(#SVGID_27_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st27 {
+            fill: url(#SVGID_28_); }
+          .login-wrap .form-wrap .form .soc-block a svg .st28 {
+            fill-rule: evenodd;
+            clip-rule: evenodd;
+            fill: #5B74B2;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            transition: all 0.3s; }
+        .login-wrap .form-wrap .form .soc-block .fb:hover svg .st28 {
+          fill: #cd4941; }
+        .login-wrap .form-wrap .form .soc-block .vk:hover svg .st28 {
+          fill: #cd4941; }
+        .login-wrap .form-wrap .form .soc-block .ins:hover svg .st28 {
+          fill: #cd4941; }
+        .login-wrap .form-wrap .form .soc-block .gp:hover svg .st28 {
+          fill: #cd4941; }
 
 /* login */
 /* banner */
