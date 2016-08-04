@@ -95,27 +95,6 @@ function validate(form, options){
 }
 
 
-function sendToSerwer( data, what ){
-
-    console.log( what + data );
-
-    $.ajax({
-        url : what + data,
-     //   data: formSur,
-        method:'POST',
-        success : function(data){
-            
-            if( data.error == 'Ошибка авторизации'){
-                location.replace( "/404" );
-            } else {
-                console.log( data );
-            }
-            
-
-        }
-    });
-}
-
 function popNext(popupId, popupWrap){
 
     $.fancybox.open(popupId,{
@@ -146,40 +125,127 @@ function Maskedinput(){
     }
 }
 
+function sendToSerwerConfirm( dataId ){
 
+    $.ajax({
+        url : '/app_dev.php/pointsConfirm/' + dataId,
+        method:'POST',
+        success : function(data){
+
+            console.log( data );
+            
+            if( data.error ){
+
+                switch(data.code ) {
+                    case '1': 
+                        console.log( data.message );
+                        location.replace( "/login" );
+                        break;
+
+                    case '2':  
+                        console.log( data.message );
+
+                        for (var i = 0; i > stack.length; i++){
+                            if ( stack[i].id == dataId ){
+                               stack.splice( i , 1 )
+                            }
+                        }
+                        break;
+                    case '3': 
+                        alert( data.message );
+                        break;
+
+                }
+
+            } else {
+                if ( data.success ){
+                    for (var i = 0; i > stack.length; i++){
+                        if ( stack[i].id == data.point.id ){
+                            stack[i].confirmed = data.point.confirmed ;
+                        }
+                    }
+
+                } else {
+                    console.log(' some error difinition ');
+                }
+            }
+            
+
+        }
+    });
+}
+
+
+function sendToSerwerReject( dataId ){
+
+    $.ajax({
+        url : '/app_dev.php/pointsReject/' + dataId,
+        method:'POST',
+        success : function(data){
+
+            console.log( data );
+            
+            if( data.error ){
+
+                switch(data.code ) {
+                    case '1': 
+                        console.log( data.message );
+                        location.replace( "/login" );
+                        break;
+
+                    case '2':  
+                        console.log( data.message );
+
+                        for (var i = 0; i > stack.length; i++){
+                            if ( stack[i].id == dataId ){
+                               stack.splice( i , 1 )
+                            }
+                        }
+                        break;
+                    case '3': 
+                        alert( data.message );
+                        break;
+
+                }
+
+                
+
+            } else {
+                if ( data.success ){
+                    for (var i = 0; i > stack.length; i++){
+                        if ( stack[i].id == dataId ){
+                            stack[i].confirmed = data.point.confirmed ;
+                        }
+                    }
+
+                } else {
+                    console.log(' some error difinition ');
+                }
+            }
+            
+
+        }
+    });
+}
 
 
 $(document).ready(function(){
 
-   /* send data to server */ 
+    /* send data to server from map backstage  */ 
 
-   $('.hide-content .button-block>.butt').click( function(){
+        $('.hide-content .button-block>.butt').click( function(){
 
-       if ( $('.hide-content').hasClass('activate') ) {
-           var isLogin = true ;
-
-            if( !isLogin ){
-
-                location.replace("sheep.fish");
-
-            } else {
+            if ( $('.hide-content').hasClass('activate') ) {
 
                 if( $(this).hasClass('confirm') ){
-
-                    
-                    sendToSerwer( $('.hide-content').attr('data-pokemon-id') , '/app_dev.php/pointsConfirm/' );
-
+                    sendToSerwerConfirm ( $('.hide-content').attr('data-pokemon-id')  );
                 }
-
                 if( $(this).hasClass('not-confirm') ){
-
-                    sendToSerwer( $('.hide-content').attr('data-pokemon-id') , '/app_dev.php/pointsReject/' );
-                    
+                    sendToSerwerReject( $('.hide-content').attr('data-pokemon-id') );                    
                 }     
-
             }
-        }
-       
-   });
+            
+        });
+    /* send data to server from map backstage  */ 
 
 });
