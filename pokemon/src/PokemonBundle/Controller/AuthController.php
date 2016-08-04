@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Facebook\Facebook;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
+use Symfony\Component\Security\Core\Exception\AccountStatusException;
 
 class AuthController extends Controller
 {
@@ -433,7 +434,15 @@ class AuthController extends Controller
 
         $response = $this->redirect('/profile');
         if($u){ //login
-            $this->authenticateUser($u, $response);
+            try {
+                $this->container->get('fos_user.security.login_manager')->loginUser(
+                    $this->container->getParameter('fos_user.firewall_name'),
+                    $u,
+                    $response);
+            } catch (AccountStatusException $ex) {
+                // We simply do not authenticate users which do not pass the user
+                // checker (not enabled, expired, etc.).
+            }
         } else { // registration
             $User = $userManager->createUser();
 
@@ -447,7 +456,15 @@ class AuthController extends Controller
                 ->setSuperAdmin(false);
             $userManager->updateUser($User);
 
-            $this->authenticateUser($User, $response);
+            try {
+                $this->container->get('fos_user.security.login_manager')->loginUser(
+                    $this->container->getParameter('fos_user.firewall_name'),
+                    $User,
+                    $response);
+            } catch (AccountStatusException $ex) {
+                // We simply do not authenticate users which do not pass the user
+                // checker (not enabled, expired, etc.).
+            }
         }
         return $response;
     }
