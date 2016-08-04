@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Facebook\Facebook;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
+use Symfony\Component\Security\Core\Exception\AccountStatusException;
 
 class AuthController extends Controller
 {
@@ -325,7 +326,7 @@ class AuthController extends Controller
 
         $helper = $fb->getRedirectLoginHelper();
 
-        $permissions = ['email']; // Optional permissions
+        $permissions = []; // Optional permissions
         $params['fb_login_link'] = $helper->getLoginUrl($params['site'].'/app_dev.php/fbCallback', $permissions);
         ////
         return $this->render('PokemonBundle:Front:login.html.twig',$params);
@@ -341,7 +342,7 @@ class AuthController extends Controller
 
         $params = $this->getDefaultTemplateParams();
         $fb = new Facebook([
-            'app_id' => $params['fb_app_id'], // Replace {app-id} with your app id
+            'app_id' => $params['fb_app_id'],
             'app_secret' => $params['fb_app_secret'],
             'default_graph_version' => 'v2.2',
         ]);
@@ -377,16 +378,16 @@ class AuthController extends Controller
 
 
         // Logged in
-        echo '<h3>Access Token</h3>';
-        var_dump($accessToken->getValue());
+      //  echo '<h3>Access Token</h3>';
+      //  var_dump($accessToken->getValue());
 
         // The OAuth 2.0 client handler helps us manage access tokens
         $oAuth2Client = $fb->getOAuth2Client();
 
         // Get the access token metadata from /debug_token
         $tokenMetadata = $oAuth2Client->debugToken($accessToken);
-        echo '<h3>Metadata</h3>';
-        var_dump($tokenMetadata);
+    //    echo '<h3>Metadata</h3>';
+    //    var_dump($tokenMetadata);
 
         // Validation (these will throw FacebookSDKException's when they fail)
       //  $tokenMetadata->validateAppId($params['fb_app_id']); // Replace {app-id} with your app id
@@ -395,26 +396,77 @@ class AuthController extends Controller
         $tokenMetadata->validateExpiration();
 
         if (! $accessToken->isLongLived()) {
-        // Exchanges a short-lived access token for a long-lived one
+            // Exchanges a short-lived access token for a long-lived one
+            try {
+                $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
+            } catch (FacebookSDKException $e) {
+                $this->renderApiJson("Error getting long-lived access token: " . $helper->getMessage());
+
+            }
+
+        //echo '<h3>Long-lived</h3>';
+        //var_dump($accessToken->getValue());
+        }
+
+        $error = false;
         try {
-            $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
-        } catch (FacebookSDKException $e) {
-            echo "<p>Error getting long-lived access token: " . $helper->getMessage() . "</p>\n\n";
-            exit;
+            $fb->setDefaultAccessToken(strval($accessToken));
+            $response = $fb->get('/me');
+            $userNode = $response->getGraphUser();
+        } catch(FacebookResponseException $e) {
+            // When Graph returns an error
+            $error = 'Graph returned an error: ' . $e->getMessage();
+        } catch(FacebookSDKException $e) {
+            // When validation fails or other local issues
+            $error = 'Facebook SDK returned an error: ' . $e->getMessage();
         }
 
-        echo '<h3>Long-lived</h3>';
-        var_dump($accessToken->getValue());
+        if($error)
+            $this->renderApiJson($error);
+
+        $fbUser = $userNode->all();
+        /**
+         * @var UserManager $userManager
+         * @var User $User
+         */
+        $userManager = $this->get('fos_user.user_manager');
+        $u = $userManager->findUserBy(['facebookUid'=>$fbUser['id']]);
+
+        $response = $this->redirect('/profile');
+        if($u){ //login
+            try {
+                $this->container->get('fos_user.security.login_manager')->loginUser(
+                    $this->container->getParameter('fos_user.firewall_name'),
+                    $u,
+                    $response);
+            } catch (AccountStatusException $ex) {
+                // We simply do not authenticate users which do not pass the user
+                // checker (not enabled, expired, etc.).
+            }
+        } else { // registration
+            $User = $userManager->createUser();
+
+            $confirmToken = md5(time().'randomStringText'.rand(1,100));
+
+            $User->setPassword($confirmToken)
+                ->setUsername('fb'.$fbUser['id'])
+                ->setEmail($this->getRandEmail())
+                ->setEnabled(true)
+                ->setFacebookUid($fbUser['id'])
+                ->setFacebookName($fbUser['name'])
+                ->setSuperAdmin(false);
+            $userManager->updateUser($User);
+
+            try {
+                $this->container->get('fos_user.security.login_manager')->loginUser(
+                    $this->container->getParameter('fos_user.firewall_name'),
+                    $User,
+                    $response);
+            } catch (AccountStatusException $ex) {
+                // We simply do not authenticate users which do not pass the user
+                // checker (not enabled, expired, etc.).
+            }
         }
-
-        $_SESSION['fb_access_token'] = (string) $accessToken;
-
-        $fb->setDefaultAccessToken(strval($accessToken));
-        $response = $fb->get('/me');
-        $userNode = $response->getGraphUser();
-
-        print_r($userNode->all());
-
-        exit();
+        return $response;
     }
 }
