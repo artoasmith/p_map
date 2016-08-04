@@ -408,6 +408,13 @@ class AuthController extends Controller
         }
 
         $_SESSION['fb_access_token'] = (string) $accessToken;
+
+        $fb->setDefaultAccessToken(strval($accessToken));
+        $response = $fb->get('/me');
+        $userNode = $response->getGraphUser();
+
+        print_r($userNode->all());
+
         exit();
     }
 }
