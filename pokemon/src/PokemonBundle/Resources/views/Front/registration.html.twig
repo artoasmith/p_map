@@ -3,7 +3,7 @@
 {% block content %}
     {% if message is defined and message is not empty %}
 
-            <div class="login-wrap">
+        <div class="login-wrap">
             <div class="contein">
                 <div class="form-wrap">
                     <div class="topper">
@@ -68,11 +68,6 @@
                                         <div class="form_input {% if reg_form.fields.password.error is not empty%} error {% endif %}">
                                             <p> Повторить пароль </p>
                                              <input type="password" minlength="8" required="required" name="{{ reg_form.key }}[repassword]">
-                                            <div class="error-field">
-                                                <div class="costruct">
-                                                    <span> {{ reg_form.fields.password.error }} </span>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

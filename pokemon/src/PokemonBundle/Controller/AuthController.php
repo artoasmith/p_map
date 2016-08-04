@@ -326,7 +326,7 @@ class AuthController extends Controller
         $helper = $fb->getRedirectLoginHelper();
 
         $permissions = ['email']; // Optional permissions
-        $params['fb_login_link'] = $helper->getLoginUrl('https://test1.sheepfish.pro/app_dev.php/fbCallback', $permissions);
+        $params['fb_login_link'] = $helper->getLoginUrl($params['site'].'/app_dev.php/fbCallback', $permissions);
         ////
         return $this->render('PokemonBundle:Front:login.html.twig',$params);
     }
@@ -389,7 +389,7 @@ class AuthController extends Controller
         var_dump($tokenMetadata);
 
         // Validation (these will throw FacebookSDKException's when they fail)
-        $tokenMetadata->validateAppId({app-id}); // Replace {app-id} with your app id
+      //  $tokenMetadata->validateAppId($params['fb_app_id']); // Replace {app-id} with your app id
         // If you know the user ID this access token belongs to, you can validate it here
         //$tokenMetadata->validateUserId('123');
         $tokenMetadata->validateExpiration();
@@ -398,7 +398,7 @@ class AuthController extends Controller
         // Exchanges a short-lived access token for a long-lived one
         try {
             $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
-        } catch (Facebook\Exceptions\FacebookSDKException $e) {
+        } catch (FacebookSDKException $e) {
             echo "<p>Error getting long-lived access token: " . $helper->getMessage() . "</p>\n\n";
             exit;
         }
@@ -408,6 +408,13 @@ class AuthController extends Controller
         }
 
         $_SESSION['fb_access_token'] = (string) $accessToken;
+
+        $fb->setDefaultAccessToken(strval($accessToken));
+        $response = $fb->get('/me');
+        $userNode = $response->getGraphUser();
+
+        print_r($userNode->all());
+
         exit();
     }
 }
