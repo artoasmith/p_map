@@ -261,3 +261,135 @@
           background-color: #e6e4e4; }
 
 /* login */
+/* banner */
+.banner-wrap .contein {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center;
+  background-color: black; }
+  .banner-wrap .contein .contein-page {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    height: 100vh;
+    min-height: 400px;
+    max-width: 1200px;
+    margin: 0 auto; }
+    .banner-wrap .contein .contein-page .pocke {
+      width: 300px;
+      height: 300px;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+      z-index: 10; }
+      .banner-wrap .contein .contein-page .pocke svg {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0; }
+        .banner-wrap .contein .contein-page .pocke svg .st0 {
+          fill: #50484F; }
+        .banner-wrap .contein .contein-page .pocke svg .st1 {
+          fill: #cd4941; }
+        .banner-wrap .contein .contein-page .pocke svg .st2 {
+          fill: #E2E2E2; }
+        .banner-wrap .contein .contein-page .pocke svg .st3 {
+          fill: none;
+          stroke: #E2E2E2;
+          stroke-miterlimit: 10; }
+        .banner-wrap .contein .contein-page .pocke svg .st4 {
+          fill: #E2E2E2;
+          -webkit-transition: all 0.3s;
+          -moz-transition: all 0.3s;
+          -o-transition: all 0.3s;
+          transition: all 0.3s; }
+        .banner-wrap .contein .contein-page .pocke svg .st5 {
+          display: none; }
+        .banner-wrap .contein .contein-page .pocke svg .st6 {
+          display: inline;
+          fill: #50484F; }
+        .banner-wrap .contein .contein-page .pocke svg .st7 {
+          display: inline;
+          fill: #D24A43; }
+        .banner-wrap .contein .contein-page .pocke svg .st1, .banner-wrap .contein .contein-page .pocke svg .st2 {
+          -webkit-transition: all 0.3s;
+          -moz-transition: all 0.3s;
+          -o-transition: all 0.3s;
+          transition: all 0.3s; }
+      .banner-wrap .contein .contein-page .pocke.top-hover svg .st1 {
+        fill: #E2E2E2; }
+      .banner-wrap .contein .contein-page .pocke.top-hover svg .st2 {
+        fill: #cd4941; }
+      .banner-wrap .contein .contein-page .pocke.top-hover svg .st4 {
+        fill: #cd4941; }
+      .banner-wrap .contein .contein-page .pocke.top-hover a.top span {
+        color: #50484F; }
+      .banner-wrap .contein .contein-page .pocke.top-hover a.bot span {
+        color: #E2E2E2; }
+      .banner-wrap .contein .contein-page .pocke.bot-hover svg .st1 {
+        fill: #cd4941; }
+      .banner-wrap .contein .contein-page .pocke.bot-hover svg .st2 {
+        fill: #E2E2E2; }
+      .banner-wrap .contein .contein-page .pocke.bot-hover svg .st4 {
+        fill: #cd4941; }
+      .banner-wrap .contein .contein-page .pocke a {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -moz-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -moz-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        width: 100%;
+        height: 150px;
+        z-index: 1;
+        position: relative;
+        text-decoration: none; }
+        .banner-wrap .contein .contein-page .pocke a span {
+          font-size: 24px;
+          font-weight: 700; }
+        .banner-wrap .contein .contein-page .pocke a.top {
+          -webkit-border-top-left-radius: 150px;
+          -moz-border-radius-topleft: 150px;
+          border-top-left-radius: 150px;
+          -webkit-border-top-right-radius: 150px;
+          -moz-border-radius-topright: 150px;
+          border-top-right-radius: 150px; }
+          .banner-wrap .contein .contein-page .pocke a.top span {
+            color: white; }
+        .banner-wrap .contein .contein-page .pocke a.bot {
+          -webkit-border-bottom-left-radius: 150px;
+          -moz-border-radius-bottomleft: 150px;
+          border-bottom-left-radius: 150px;
+          -webkit-border-bottom-right-radius: 150px;
+          -moz-border-radius-bottomright: 150px;
+          border-bottom-right-radius: 150px; }
+          .banner-wrap .contein .contein-page .pocke a.bot span {
+            color: #50484F; }
+
+/* banner */

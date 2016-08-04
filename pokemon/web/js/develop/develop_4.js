@@ -26,6 +26,27 @@ $(document).ready(function(){
 
     /* form beutify */
 
+    /* pockeball beutify */
+
+
+        $('.pocke a').hover(function(){
+            console.log('on');
+
+            if( $(this).hasClass('top') ){
+                $(this).closest('.pocke').addClass('top-hover');
+            }
+            if( $(this).hasClass('bot') ){
+                $(this).closest('.pocke').addClass('bot-hover');
+            }
+
+        }, function(){
+            console.log('off');
+            $(this).closest('.pocke').removeClass('bot-hover').removeClass('top-hover');
+
+        });
+
+    /* pockeball beutify */
+
 });
 
 $(window).load(function(){
