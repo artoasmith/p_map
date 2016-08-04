@@ -100,6 +100,11 @@ class Controller extends BaseController
     public function getDefaultTemplateParams(){
         $yaml = new Parser();
         $a = $yaml->parse(file_get_contents(__DIR__ . '/../../../app/config/params.yml'));
+
+        $user = $this->getUser();
+        $a['is_auth'] = false;
+        if($user)
+            $a['is_auth'] = true;
         return (is_array($a)?$a:[]);
     }
 

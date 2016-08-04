@@ -1,5 +1,14 @@
 {% extends 'PokemonBundle:Front:Base.html.twig' %}
 
+{% block banner %}
+    {% if banner is defined %}
+        <div class="banner-wrap">
+            <div class="contein">
+                <img src="{{ banner }}" alt="">
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
 {% block content %}
     <script>
         var pokemon = [

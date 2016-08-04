@@ -17,6 +17,7 @@ use PokemonBundle\Base\Controller;
 use Sonata\UserBundle\Entity\UserManager;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Request;
+
 use Facebook\Facebook;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
@@ -538,5 +539,37 @@ class AuthController extends Controller
             }
         }
         return $response;
+    }
+
+    /**
+     * @Route("/gpCallback")
+     */
+    public function gpCallbackAction(Request $request)
+    {
+        $user = $this->getUser();
+        if($user)
+            return $this->redirect('/profile');
+
+        $params = $this->getDefaultTemplateParams();
+
+        $client = new \Google_Client();
+        $client->setClientId($params['gp_app_id']);
+        $client->setClientSecret($params['gp_app_secret']);
+        $client->setRedirectUri($params['site'].'/gpCallback');
+        $client->addScope("email");
+        $client->addScope("profile");
+
+        $service = new \Google_Service_Oauth2($client);
+
+        if ($request->query->get('code')) {
+            $token = $client->fetchAccessTokenWithAuthCode($request->query->get('code'));
+            $client->setAccessToken($token);
+
+            $user = $service->userinfo->get();
+            print_r($user); exit();
+        }
+
+        $link = $client->createAuthUrl();
+        echo $link; exit();
     }
 }
