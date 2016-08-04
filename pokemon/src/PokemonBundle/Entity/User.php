@@ -36,6 +36,13 @@ class User extends BaseUser
      */
     private $createTokenAt;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vkontakteUid", type="string", nullable=true)
+     */
+    private $vkontakteUid;
+
     public function __construct()
     {
         parent::__construct();
@@ -91,5 +98,28 @@ class User extends BaseUser
     public function getCreateTokenAt()
     {
         return $this->createTokenAt;
+    }
+
+    /**
+     * Get vkontakteUid
+     *
+     * @return string
+     */
+    public function getVkontakteUid()
+    {
+        return $this->vkontakteUid;
+    }
+
+    /**
+     * Set vkontakteUid
+     *
+     * @param string $vkontakteUid
+     * @return User
+     */
+    public function setVkontakteUid($vkontakteUid)
+    {
+        $this->vkontakteUid = $vkontakteUid;
+
+        return $this;
     }
 }
