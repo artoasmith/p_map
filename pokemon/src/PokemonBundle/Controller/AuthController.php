@@ -21,6 +21,7 @@ use Facebook\Facebook;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
+use BW\Vkontakte as VK;
 
 class AuthController extends Controller
 {
@@ -327,7 +328,14 @@ class AuthController extends Controller
         $helper = $fb->getRedirectLoginHelper();
 
         $permissions = []; // Optional permissions
-        $params['fb_login_link'] = $helper->getLoginUrl($params['site'].'/app_dev.php/fbCallback', $permissions);
+        $params['fb_login_link'] = $helper->getLoginUrl($params['site'].'/fbCallback', $permissions);
+
+        $vk = new VK([
+            'client_id' => $params['vk_app_id'],
+            'client_secret' => $params['vk_app_secret'],
+            'redirect_uri' => $params['site'].'/vkCallback',
+        ]);
+        $params['vk_login_link'] = $vk->getLoginUrl();
         ////
         return $this->render('PokemonBundle:Front:login.html.twig',$params);
     }
@@ -454,6 +462,68 @@ class AuthController extends Controller
                 ->setEnabled(true)
                 ->setFacebookUid($fbUser['id'])
                 ->setFacebookName($fbUser['name'])
+                ->setSuperAdmin(false);
+            $userManager->updateUser($User);
+
+            try {
+                $this->container->get('fos_user.security.login_manager')->loginUser(
+                    $this->container->getParameter('fos_user.firewall_name'),
+                    $User,
+                    $response);
+            } catch (AccountStatusException $ex) {
+                // We simply do not authenticate users which do not pass the user
+                // checker (not enabled, expired, etc.).
+            }
+        }
+        return $response;
+    }
+
+    /**
+     * @Route("/vkCallback")
+     */
+    public function vkCallbackAction(Request $request)
+    {
+        $user = $this->getUser();
+        if($user)
+            return $this->redirect('/profile');
+
+        $params = $this->getDefaultTemplateParams();
+        $vk = new VK([
+            'client_id' => $params['vk_app_id'],
+            'client_secret' => $params['vk_app_secret']
+        ]);
+
+        $vk->authenticate();
+        $userId = $vk->getUserId();
+
+        /**
+         * @var UserManager $userManager
+         * @var User $User
+         */
+        $userManager = $this->get('fos_user.user_manager');
+        $u = $userManager->findUserBy(['vkontakteUid'=>$userId]);
+
+        $response = $this->redirect('/profile');
+        if($u){ //login
+            try {
+                $this->container->get('fos_user.security.login_manager')->loginUser(
+                    $this->container->getParameter('fos_user.firewall_name'),
+                    $u,
+                    $response);
+            } catch (AccountStatusException $ex) {
+                // We simply do not authenticate users which do not pass the user
+                // checker (not enabled, expired, etc.).
+            }
+        } else { // registration
+            $User = $userManager->createUser();
+
+            $confirmToken = md5(time().'randomStringText'.rand(1,100));
+
+            $User->setPassword($confirmToken)
+                ->setUsername('vk'.$userId)
+                ->setEmail($this->getRandEmail())
+                ->setVkontakteUid($userId)
+                ->setEnabled(true)
                 ->setSuperAdmin(false);
             $userManager->updateUser($User);
 

@@ -5,6 +5,9 @@ email_from: ua456@mail.ru
 
 fb_app_id: 1756332607957995
 fb_app_secret: b5277ebb2b03b460e61c3fbd66bb612e
+vk_app_id: 2
+vk_app_secret: 2
+
 
 # 1 = 111 km
 # 0.01 = 1.11 km
