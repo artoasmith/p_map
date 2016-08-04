@@ -450,6 +450,7 @@ class AuthController extends Controller
 
             $User->setPassword($confirmToken)
                 ->setUsername('fb'.$fbUser['id'])
+                ->setEmail($this->getRandEmail())
                 ->setEnabled(true)
                 ->setFacebookUid($fbUser['id'])
                 ->setFacebookName($fbUser['name'])

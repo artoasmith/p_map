@@ -32,7 +32,7 @@ class User extends BaseUser
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createTokenAt", type="datetime")
+     * @ORM\Column(name="createTokenAt", type="datetime", nullable=true)
      */
     private $createTokenAt;
 

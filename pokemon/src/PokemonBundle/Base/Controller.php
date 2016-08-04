@@ -23,6 +23,10 @@ class Controller extends BaseController
     public $tailLength = 4; //google maps need 7 numbers after point. $side is first 3, left 4 for "tail"
     public $pokemonsOnSector = 4;
 
+    public function getRandEmail(){
+        return 'rand_'.time().'@pokemon'.rand(1,99).'.ru';
+    }
+
     public function resetSectorCache(Point $point){
         $x = $point->getLocationX();
         $y = $point->getLocationY();
