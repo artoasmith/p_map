@@ -17,6 +17,9 @@ use PokemonBundle\Base\Controller;
 use Sonata\UserBundle\Entity\UserManager;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Request;
+use Facebook\Facebook;
+use Facebook\Exceptions\FacebookResponseException;
+use Facebook\Exceptions\FacebookSDKException;
 
 class AuthController extends Controller
 {
@@ -314,6 +317,97 @@ class AuthController extends Controller
         $params['error'] = $error;
         $params['csrf_token'] = $csrfToken;
         /////
+        $fb = new Facebook([
+            'app_id' => $params['fb_app_id'], // Replace {app-id} with your app id
+            'app_secret' => $params['fb_app_secret'],
+            'default_graph_version' => 'v2.2',
+        ]);
+
+        $helper = $fb->getRedirectLoginHelper();
+
+        $permissions = ['email']; // Optional permissions
+        $params['fb_login_link'] = $helper->getLoginUrl('https://test1.sheepfish.pro/app_dev.php/fbCallback', $permissions);
+        ////
         return $this->render('PokemonBundle:Front:login.html.twig',$params);
+    }
+
+    /**
+     * @Route("/fbCallback")
+     */
+    public function fbCallbackAction(Request $request){
+        $user = $this->getUser();
+        if($user)
+            return $this->redirect('/profile');
+
+        $params = $this->getDefaultTemplateParams();
+        $fb = new Facebook([
+            'app_id' => $params['fb_app_id'], // Replace {app-id} with your app id
+            'app_secret' => $params['fb_app_secret'],
+            'default_graph_version' => 'v2.2',
+        ]);
+
+        $helper = $fb->getRedirectLoginHelper();
+
+        $error = false;
+        try {
+            $accessToken = $helper->getAccessToken();
+        } catch(FacebookResponseException $e) {
+            // When Graph returns an error
+            $error = 'Graph returned an error: ' . $e->getMessage();
+        } catch(FacebookSDKException $e) {
+            // When validation fails or other local issues
+            $error = 'Facebook SDK returned an error: ' . $e->getMessage();
+        }
+
+        if (! isset($accessToken)) {
+            if ($helper->getError()) {
+                $error = [
+                    "Error: " . $helper->getError(),
+                    "Error Code: " . $helper->getErrorCode(),
+                    "Error Reason: " . $helper->getErrorReason(),
+                    "Error Description: " . $helper->getErrorDescription()
+                ];
+            } else {
+                $error = 'Bad request';
+            }
+        }
+
+        if($error)
+            $this->renderApiJson($error);
+
+
+        // Logged in
+        echo '<h3>Access Token</h3>';
+        var_dump($accessToken->getValue());
+
+        // The OAuth 2.0 client handler helps us manage access tokens
+        $oAuth2Client = $fb->getOAuth2Client();
+
+        // Get the access token metadata from /debug_token
+        $tokenMetadata = $oAuth2Client->debugToken($accessToken);
+        echo '<h3>Metadata</h3>';
+        var_dump($tokenMetadata);
+
+        // Validation (these will throw FacebookSDKException's when they fail)
+        $tokenMetadata->validateAppId({app-id}); // Replace {app-id} with your app id
+        // If you know the user ID this access token belongs to, you can validate it here
+        //$tokenMetadata->validateUserId('123');
+        $tokenMetadata->validateExpiration();
+
+        if (! $accessToken->isLongLived()) {
+        // Exchanges a short-lived access token for a long-lived one
+        try {
+            $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
+        } catch (Facebook\Exceptions\FacebookSDKException $e) {
+            echo "<p>Error getting long-lived access token: " . $helper->getMessage() . "</p>\n\n";
+            exit;
+        }
+
+        echo '<h3>Long-lived</h3>';
+        var_dump($accessToken->getValue());
+        }
+
+        $_SESSION['fb_access_token'] = (string) $accessToken;
+        exit();
     }
 }
