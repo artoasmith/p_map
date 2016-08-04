@@ -4,6 +4,62 @@
         <div>Неверный логин или пароль</div>
     {% endif %}
 
+    <div class="login-wrap">
+        <div class="contein">
+            <div class="form-wrap">
+                <div class="topper">
+                    <h2>Вход в систему</h2>
+                </div>
+                <div class="form">
+                    <form  action="{{ path("fos_user_security_check") }}" method="post" class="register-form">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                        <div class="contact-form-row cfix">
+                            <div class="contact-form-item">
+                                <div class="contact-form-item-input form_row">
+                                    <div class="form_input">
+                                        <p> {{ 'security.login.username'|trans({}, 'FOSUserBundle') }} </p>
+                                        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-form-item">
+                                <div class="contact-form-item-input form_row">
+                                    <div class="form_input">
+                                        <p> {{ 'security.login.password'|trans({}, 'FOSUserBundle') }} </p>
+                                        <input type="password" id="password" name="_password" required="required" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-form-item">
+                                <div class="row-for-check">
+                                    <input type="checkbox" name="check" id="checker"> 
+                                    <label for="checker">
+                                        <span class="checkblock">
+                                            <b></b>
+                                        </span>
+                                        <span class="after-text"> {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }} </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-form-row-submit cfix">
+                            <div class="contact-form-item">
+                                <button  class="contact-submit" id="_submit" name="_submit">
+                                    <span>{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <a href="/" class="forget-pass">
+                        <span>Забыли пароль?</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--
     <form action="{{ path("fos_user_security_check") }}" method="post">
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
@@ -18,5 +74,8 @@
 
         <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
     </form>
+-->
+
     <a href="{{ fb_login_link }}">fb_login_link</a>
+
 {% endblock content %}

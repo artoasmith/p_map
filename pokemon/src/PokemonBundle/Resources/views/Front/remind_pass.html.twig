@@ -3,8 +3,64 @@
 {% block content %}
     {% if form_pass is defined %}
         {% if form_pass.ms is not empty %}
-            {{ form_pass.ms }}
+
+            
+            <div class="login-wrap">
+                <div class="contein">
+                    <div class="form-wrap">
+                        <div class="topper">
+                            <h2> {{ form_pass.ms }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         {% else %}
+
+            <div class="login-wrap">
+                <div class="contein">
+                    <div class="form-wrap">
+                        <div class="topper">
+                            <h2> {{ form_pass.error }} </h2>
+                        </div>
+                        <div class="form">
+                            <form  name="" class="register-form" method="post" >
+                                <input type="hidden" name="{{ form_pass.key }}[token]" value="{{ form_pass.token }}" />
+                                <div class="contact-form-title">
+                                    <h5> what </h5>
+                                </div>
+                                <div class="contact-form-row cfix">
+                                    <div class="contact-form-item">
+                                        <div class="contact-form-item-input form_row">
+                                            <div class="form_input">
+                                                <p> Пароль </p>
+                                                <input type="password" minlength="8" name="{{ form_pass.key }}[password]" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="contact-form-item">
+                                        <div class="contact-form-item-input form_row">
+                                            <div class="form_input">
+                                                <p> Подтвердите пароль </p>
+                                                <input type="password" minlength="8" name="{{ form_pass.key }}[repassword]" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="contact-form-row-submit cfix">
+                                    <div class="contact-form-item">
+                                        <button type="submit" class="contact-submit" value="GO">
+                                            <span>Отправить</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--
             {{ form_pass.error }}
             <form method="post">
                 <input type="hidden" name="{{ form_pass.key }}[token]" value="{{ form_pass.token }}" />
@@ -14,8 +70,50 @@
                 <input type="password" minlength="8" name="{{ form_pass.key }}[repassword]" />
                 <input type="submit" value="GO">
             </form>
+            -->
         {% endif %}
     {% else %}
+
+        <div class="login-wrap">
+            <div class="contein">
+                <div class="form-wrap">
+                    <div class="topper">
+                        <h2> Востановление пароля </h2>
+                    </div>
+                    <div class="form">
+                        <form  name="" class="register-form" method="post" >
+                            <div class="contact-form-title">
+                                <h5> пароль на пошту, каналья (с) Боярский </h5>
+                            </div>
+                            <div class="contact-form-row cfix">
+                                <div class="contact-form-item">
+                                    <div class="contact-form-item-input form_row">
+                                        <div class="form_input">
+                                            <p> Почта или пароль </p>
+                                            <input type="text" minlength="5" required="required" name="{{ form_user.key }}[user]" value="{{ form_user.fields.user.value }}">
+                                            <div class="error-field">
+                                                <div class="costruct">
+                                                    <span> {{ form_user.fields.user.error }} </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-form-row-submit cfix">
+                                <div class="contact-form-item">
+                                    <button type="submit" class="contact-submit" value="GO">
+                                        <span>Отправить</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!--
         <form method="post">
             login or email
             <input type="text" minlength="5" required="required" name="{{ form_user.key }}[user]" value="{{ form_user.fields.user.value }}">
@@ -23,5 +121,6 @@
             {{ form_user.ms }}
             <input type="submit" value="GO">
         </form>
+    -->
     {% endif %}
 {% endblock %}
