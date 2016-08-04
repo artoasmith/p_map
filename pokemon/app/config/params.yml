@@ -2,6 +2,10 @@ document_root: /Users/N1/Sites/pokemon/pokemon/web
 document_root2: D:/OpenServer/domains/pokemon/pokemon/web
 site: http://test1.sheepfish.pro
 email_from: ua456@mail.ru
+
+fb_app_id: 1756332607957995
+fb_app_secret: b5277ebb2b03b460e61c3fbd66bb612e
+
 # 1 = 111 km
 # 0.01 = 1.11 km
 # 0.001 = 0.111 km
