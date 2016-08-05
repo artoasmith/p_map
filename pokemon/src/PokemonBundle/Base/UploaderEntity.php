@@ -8,7 +8,7 @@ class UploaderEntity
 {
     public function documentRoot(){
         $yaml = new Parser();
-        $a = $yaml->parse(file_get_contents(__DIR__ . '\..\..\..\app\config\params.yml'));
+        $a = $yaml->parse(file_get_contents(__DIR__ . '/../../../app/config/params.yml'));
         return (isset($a['document_root'])?$a['document_root']:'');
     }
 

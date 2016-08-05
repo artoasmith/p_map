@@ -1,0 +1,10 @@
+{% extends 'SonataAdminBundle:CRUD:base_form_field.html.twig' %}
+{% block field %}
+    {% if object.type == 'image' %}
+        {% if object.value != null %}
+            <img class="form_image" src="{{ object.getWebPath() }}">
+        {% else %}
+            <span>No picture</span>
+        {% endif %}
+    {% endif %}
+{% endblock %}

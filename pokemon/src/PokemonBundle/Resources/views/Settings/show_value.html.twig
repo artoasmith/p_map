@@ -1,0 +1,12 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+{% block field %}
+    {% if object.type == 'image' %}
+        {% if object.value != null %}
+            <img class="show_image" src="{{ object.getWebPath() }}">
+        {% else %}
+            <span>No picture</span>
+        {% endif %}
+    {% else %}
+        <span>{{ object.value }}</span>
+    {% endif %}
+{% endblock %}

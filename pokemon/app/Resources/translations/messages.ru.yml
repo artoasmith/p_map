@@ -127,6 +127,31 @@ list.label_anotation: Текст анотации
 show.label_anotation: Текст анотации
 breadcrumb.link_blog_create: Создание поста
 
+pokemon.admin.model.settings: Настройки
+
+form.label_category: Категория
+filter.label_category: Категория
+list.label_category: Категория
+show.label_category: Категория
+
+form.label_value: Значение
+filter.label_value: Значение
+list.label_value: Значение
+show.label_value: Значение
+
+form.label_type: Тип
+filter.label_type: Тип
+list.label_type: Тип
+show.label_type: Тип
+
+File: Картинка
+String: Строка
+Text: Текст
+Checkbox: Флажок
+Image: Картинка
+Switcher: Флажок
+breadcrumb.link_settings_list: Список настроет
+breadcrumb.link_settings_create: Создание настройки
 =: =
 >=: >=
 >: >

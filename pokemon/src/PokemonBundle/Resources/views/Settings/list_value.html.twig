@@ -1,0 +1,18 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+{% block field %}
+    {% if object.type == 'image' %}
+        {% if object.value != null %}
+            <img class="list_image" src="{{ object.getWebPath() }}">
+        {% else %}
+            <span>Нет картинки</span>
+        {% endif %}
+    {% elseif object.type == 'checkbox' %}
+        {% if object.value == 1 %}
+            <span class="label label-success">Да</span>
+        {% else %}
+            <span class="label label-danger">Нет</span>
+        {% endif %}
+    {% else %}
+        <span>{{ object.value }}</span>
+    {% endif %}
+{% endblock %}
