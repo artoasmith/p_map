@@ -337,6 +337,16 @@ class AuthController extends Controller
             'redirect_uri' => $params['site'].'/vkCallback',
         ]);
         $params['vk_login_link'] = $vk->getLoginUrl();
+
+        $client = new \Google_Client();
+        $client->setClientId($params['gp_app_id']);
+        $client->setClientSecret($params['gp_app_secret']);
+        $client->setRedirectUri($params['site'].'/gpCallback');
+        $client->addScope("email");
+        $client->addScope("profile");
+        $params['gp_login_link'] = $client->createAuthUrl();
+
+        $params['in_login_link'] = '';
         ////
         return $this->render('PokemonBundle:Front:login.html.twig',$params);
     }
@@ -550,6 +560,9 @@ class AuthController extends Controller
         if($user)
             return $this->redirect('/profile');
 
+        if (!$request->query->get('code'))
+            return $this->redirect('/login');
+
         $params = $this->getDefaultTemplateParams();
 
         $client = new \Google_Client();
@@ -560,16 +573,56 @@ class AuthController extends Controller
         $client->addScope("profile");
 
         $service = new \Google_Service_Oauth2($client);
+        $token = $client->fetchAccessTokenWithAuthCode($request->query->get('code'));
+        $client->setAccessToken($token);
 
-        if ($request->query->get('code')) {
-            $token = $client->fetchAccessTokenWithAuthCode($request->query->get('code'));
-            $client->setAccessToken($token);
+        /**
+         * @var \Google_Service_Oauth2_Userinfoplus $user
+         */
+        $user = $service->userinfo->get();
+        $id = $user->getId();
 
-            $user = $service->userinfo->get();
-            print_r($user); exit();
+        /**
+         * @var UserManager $userManager
+         * @var User $User
+         */
+        $userManager = $this->get('fos_user.user_manager');
+        $u = $userManager->findUserBy(['gplusUid'=>$id]);
+
+        $response = $this->redirect('/profile');
+        if($u){ //login
+            try {
+                $this->container->get('fos_user.security.login_manager')->loginUser(
+                    $this->container->getParameter('fos_user.firewall_name'),
+                    $u,
+                    $response);
+            } catch (AccountStatusException $ex) {
+                // We simply do not authenticate users which do not pass the user
+                // checker (not enabled, expired, etc.).
+            }
+        } else { // registration
+            $User = $userManager->createUser();
+
+            $confirmToken = md5(time().'randomStringText'.rand(1,100));
+
+            $User->setPassword($confirmToken)
+                ->setUsername('gp'.$id)
+                ->setEmail($user->getEmail())
+                ->setGplusUid($id)
+                ->setEnabled(true)
+                ->setSuperAdmin(false);
+            $userManager->updateUser($User);
+
+            try {
+                $this->container->get('fos_user.security.login_manager')->loginUser(
+                    $this->container->getParameter('fos_user.firewall_name'),
+                    $User,
+                    $response);
+            } catch (AccountStatusException $ex) {
+                // We simply do not authenticate users which do not pass the user
+                // checker (not enabled, expired, etc.).
+            }
         }
-
-        $link = $client->createAuthUrl();
-        echo $link; exit();
+        return $response;
     }
 }
