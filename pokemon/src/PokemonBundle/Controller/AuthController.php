@@ -33,7 +33,7 @@ class AuthController extends Controller
     public function remindPassword(Request $request)
     {
         $params = $this->getDefaultTemplateParams();
-
+        $params['show_ball'] = false;
         $params['form_user'] = [
             'key'=>'form_user',
             'ms'=>'',
@@ -149,6 +149,7 @@ class AuthController extends Controller
         $errorMessage = 'Неверный код активации';
 
         $params = $this->getDefaultTemplateParams();
+        $params['show_ball'] = false;
 
         if(empty($token)) {
             $params['message_error'] = $errorMessage;
@@ -177,6 +178,7 @@ class AuthController extends Controller
     public function RegistrationAction(Request $request)
     {
         $params = $this->getDefaultTemplateParams();
+        $params['show_ball'] = false;
         $params['reg_form'] = [
             'key'=>'registration',
             'error'=>[],
@@ -287,6 +289,7 @@ class AuthController extends Controller
             return $this->redirect('/profile');
 
         $params = $this->getDefaultTemplateParams();
+        $params['show_ball'] = false;
         /**
          * @var UserManager $userManager
          */

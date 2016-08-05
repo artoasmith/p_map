@@ -96,46 +96,53 @@
     <div class="main">
         <!-- add partials here -->
 
-        <div class="banner-wrap">
-            <div class="contein" style="background-image: url();">
-                <div class="contein-page">
-                    <div class="pocke">
-                        <!-- svg -->                
-                        <svg version="1.1" id="Слой_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                            viewBox="0 0 129.8 133" style="enable-background:new 0 0 129.8 133;" xml:space="preserve">
-                            <g>
-                                <circle class="st0" cx="64.9" cy="67.4" r="63.2"/>
-                                <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="64.9198" y1="63.4896" x2="64.9198" y2="0">
-                                    <stop  offset="0" style="stop-color:#D24A43"/>
-                                    <stop  offset="1" style="stop-color:#C2463E"/>
-                                </linearGradient>
-                                <path class="st1" d="M129.8,63.5C129.8,28.4,100.8,0,64.9,0S0,28.4,0,63.5H129.8z"/>
-                                <linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="64.9198" y1="133.0336" x2="64.9198" y2="69.544">
-                                    <stop  offset="0" style="stop-color:#C8C8C8"/>
-                                    <stop  offset="1" style="stop-color:#E5E5E5"/>
-                                </linearGradient>
-                                <path class="st2" d="M0,69.5C0,104.6,29.1,133,64.9,133s64.9-28.4,64.9-63.5H0z"/>
-                                <circle class="st0" cx="64.9" cy="67.4" r="21.7"/>
-                                <circle class="st3" cx="64.9" cy="67.6" r="13.1"/>
-                                <linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="64.9198" y1="78.4885" x2="64.9198" y2="56.6309">
-                                    <stop  offset="0" style="stop-color:#C8C8C8"/>
-                                    <stop  offset="1" style="stop-color:#E5E5E5"/>
-                                </linearGradient>
-                                <circle class="st4" cx="64.9" cy="67.6" r="10.9"/>
-                            </g>
-                        </svg>
-                        <!-- svg -->   
-                        <a href="" class="top">
-                            <span>LOG IN</span>
-                        </a>
-                        <a href="" class="bot">
-                            <span>REGISTER</span>
-                        </a>
+        {% if show_ball %}
+            <div class="banner-wrap">
+                <div class="contein" style="background-image: url();">
+                    <div class="contein-page">
+                        <div class="pocke">
+                            <!-- svg -->
+                            <svg version="1.1" id="Слой_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                viewBox="0 0 129.8 133" style="enable-background:new 0 0 129.8 133;" xml:space="preserve">
+                                <g>
+                                    <circle class="st0" cx="64.9" cy="67.4" r="63.2"/>
+                                    <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="64.9198" y1="63.4896" x2="64.9198" y2="0">
+                                        <stop  offset="0" style="stop-color:#D24A43"/>
+                                        <stop  offset="1" style="stop-color:#C2463E"/>
+                                    </linearGradient>
+                                    <path class="st1" d="M129.8,63.5C129.8,28.4,100.8,0,64.9,0S0,28.4,0,63.5H129.8z"/>
+                                    <linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="64.9198" y1="133.0336" x2="64.9198" y2="69.544">
+                                        <stop  offset="0" style="stop-color:#C8C8C8"/>
+                                        <stop  offset="1" style="stop-color:#E5E5E5"/>
+                                    </linearGradient>
+                                    <path class="st2" d="M0,69.5C0,104.6,29.1,133,64.9,133s64.9-28.4,64.9-63.5H0z"/>
+                                    <circle class="st0" cx="64.9" cy="67.4" r="21.7"/>
+                                    <circle class="st3" cx="64.9" cy="67.6" r="13.1"/>
+                                    <linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="64.9198" y1="78.4885" x2="64.9198" y2="56.6309">
+                                        <stop  offset="0" style="stop-color:#C8C8C8"/>
+                                        <stop  offset="1" style="stop-color:#E5E5E5"/>
+                                    </linearGradient>
+                                    <circle class="st4" cx="64.9" cy="67.6" r="10.9"/>
+                                </g>
+                            </svg>
+                            <!-- svg -->
+                            {% if is_auth %}
+                                <a href="/logout" class="top">
+                                    <span>Выход</span>
+                                </a>
+                            {% else %}
+                                <a href="/login" class="top">
+                                    <span>Вход</span>
+                                </a>
+                                <a href="/registration" class="bot">
+                                    <span>Регистрация</span>
+                                </a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
+        {% endif %}
         {% block banner %}
 
         {% endblock %}

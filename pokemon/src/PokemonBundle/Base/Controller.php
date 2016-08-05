@@ -105,6 +105,7 @@ class Controller extends BaseController
         $a['is_auth'] = false;
         if($user)
             $a['is_auth'] = true;
+        $a['show_ball'] = true;
         return (is_array($a)?$a:[]);
     }
 
