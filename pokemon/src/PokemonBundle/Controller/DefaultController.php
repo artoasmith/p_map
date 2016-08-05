@@ -170,8 +170,11 @@ class DefaultController extends Controller
         if(false !== ($key=array_search($user->getId(),$json['reject'])))
             unset($json['reject'][$key]);
 
-        if(count($json['confirm']) == 5) // иммено когда нужное подтвержение
+        $length = count($json['confirm'])-count($json['reject']);
+        if($length >= 5) // иммено когда нужное подтвержение
             $point->setConfirm(true);
+        else
+            $point->setConfirm(false);
 
         $point->setJsonInfo(json_encode($json));
 
@@ -227,7 +230,8 @@ class DefaultController extends Controller
         $response = [
             'success'=>true
         ];
-        if(count($json['reject'])<5){    //update
+        $length = count($json['confirm'])-count($json['reject']);
+        if($length>-5){    //update
             $point->setJsonInfo(json_encode($json));
             $manager->persist($point);
 

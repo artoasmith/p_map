@@ -111,6 +111,22 @@ filter.label_text: Текст
 list.label_text: Текст
 show.label_text: Текст
 
+filter.label_title: Название
+breadcrumb.link_blog_list: Посты
+pokemon.admin.model.blog: Посты
+form.label_title:  Название
+list.label_title:  Название
+show.label_title:  Название
+form.label_create_at: Дата
+filter.label_create_at: Дата
+list.label_create_at: Дата
+show.label_create_at: Дата
+form.label_anotation: Текст анотации
+filter.label_anotation: Текст анотации
+list.label_anotation: Текст анотации
+show.label_anotation: Текст анотации
+breadcrumb.link_blog_create: Создание поста
+
 =: =
 >=: >=
 >: >

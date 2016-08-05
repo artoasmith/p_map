@@ -56,7 +56,7 @@ class EmailTemplateAdmin extends AbstractAdmin
                 ->add('code')
                 ->add('subject')
                 ->add('fromName')
-                ->add('text')
+                ->add('text', 'textarea', array('attr' => array('class'=>'ckeditor'), 'help' => '<script src="/js/admin/ckeditor/ckeditor.js" type="text/javascript"></script>'))
             ->end()
         ;
     }
