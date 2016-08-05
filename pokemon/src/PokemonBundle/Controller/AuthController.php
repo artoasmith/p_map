@@ -607,7 +607,7 @@ class AuthController extends Controller
 
             $User->setPassword($confirmToken)
                 ->setUsername('gp'.$id)
-                ->setEmail($user->getEmail())
+                ->setEmail($this->getRandEmail())
                 ->setGplusUid($id)
                 ->setEnabled(true)
                 ->setSuperAdmin(false);
