@@ -23,6 +23,7 @@ use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use BW\Vkontakte as VK;
+use MetzWeb\Instagram\Instagram;
 
 class AuthController extends Controller
 {
@@ -346,7 +347,12 @@ class AuthController extends Controller
         $client->addScope("profile");
         $params['gp_login_link'] = $client->createAuthUrl();
 
-        $params['in_login_link'] = '';
+        $instagram = new Instagram(array(
+            'apiKey'      => $params['in_app_id'],
+            'apiSecret'   => $params['in_app_secret'],
+            'apiCallback' => $params['site'].'/inCallback'
+        ));
+        $params['in_login_link'] = $instagram->getLoginUrl();
         ////
         return $this->render('PokemonBundle:Front:login.html.twig',$params);
     }
@@ -624,5 +630,74 @@ class AuthController extends Controller
             }
         }
         return $response;
+    }
+
+    /**
+     * @Route("/inCallback")
+     */
+    public function inCallbackAction(Request $request)
+    {
+        $user = $this->getUser();
+        if($user)
+            return $this->redirect('/profile');
+
+        if (!$request->query->get('code'))
+            return $this->redirect('/login');
+
+        $params = $this->getDefaultTemplateParams();
+
+        $instagram = new Instagram(array(
+            'apiKey'      => $params['in_app_id'],
+            'apiSecret'   => $params['in_app_secret'],
+            'apiCallback' => $params['site'].'/inCallback'
+        ));
+
+        $data = $instagram->getOAuthToken($request->query->get('code'));
+        if(@$data->user->id){
+            $id = $data->user->id;
+            /**
+             * @var UserManager $userManager
+             * @var User $User
+             */
+            $userManager = $this->get('fos_user.user_manager');
+            $u = $userManager->findUserBy(['instagramUid'=>$id]);
+
+            $response = $this->redirect('/profile');
+            if($u){ //login
+                try {
+                    $this->container->get('fos_user.security.login_manager')->loginUser(
+                        $this->container->getParameter('fos_user.firewall_name'),
+                        $u,
+                        $response);
+                } catch (AccountStatusException $ex) {
+                    // We simply do not authenticate users which do not pass the user
+                    // checker (not enabled, expired, etc.).
+                }
+            } else { // registration
+                $User = $userManager->createUser();
+
+                $confirmToken = md5(time().'randomStringText'.rand(1,100));
+
+                $User->setPassword($confirmToken)
+                    ->setUsername('in'.$id)
+                    ->setEmail($this->getRandEmail())
+                    ->setInstagramUid($id)
+                    ->setEnabled(true)
+                    ->setSuperAdmin(false);
+                $userManager->updateUser($User);
+
+                try {
+                    $this->container->get('fos_user.security.login_manager')->loginUser(
+                        $this->container->getParameter('fos_user.firewall_name'),
+                        $User,
+                        $response);
+                } catch (AccountStatusException $ex) {
+                    // We simply do not authenticate users which do not pass the user
+                    // checker (not enabled, expired, etc.).
+                }
+            }
+            return $response;
+        }
+        print_r($data); exit();
     }
 }

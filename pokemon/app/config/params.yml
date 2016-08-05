@@ -9,7 +9,8 @@ vk_app_id: 2
 vk_app_secret: 2
 gp_app_id: 977924656404-qin5hbvjr45c7k7a71eqcauplomsm0a5.apps.googleusercontent.com
 gp_app_secret: w_9rXjpZX7zbm2XUjf7B7f0P
-
+in_app_id:  f742734ffc4e4d889a2b15d1d7fb32c8
+in_app_secret: 86bf148cebca49799390d6833f9f652b
 
 # 1 = 111 km
 # 0.01 = 1.11 km

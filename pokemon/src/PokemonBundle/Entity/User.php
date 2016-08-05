@@ -43,6 +43,13 @@ class User extends BaseUser
      */
     private $vkontakteUid;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="instagramUid", type="string", nullable=true)
+     */
+    private $instagramUid;
+
     public function __construct()
     {
         parent::__construct();
@@ -122,4 +129,28 @@ class User extends BaseUser
 
         return $this;
     }
+
+    /**
+     * Get instagramUid
+     *
+     * @return string
+     */
+    public function getInstagramUid()
+    {
+        return $this->instagramUid;
+    }
+
+    /**
+     * Set instagramUid
+     *
+     * @param string $instagramUid
+     * @return User
+     */
+    public function setInstagramUid($instagramUid)
+    {
+        $this->instagramUid = $instagramUid;
+
+        return $this;
+    }
+
 }

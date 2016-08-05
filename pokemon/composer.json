@@ -35,7 +35,8 @@
         "facebook/php-sdk-v4": "^5.2",
         "propel/propel-bundle": "^1.5",
         "bocharsky-bw/vkontakte-php-sdk": "^2.0",
-        "google/apiclient": "^2.0"
+        "google/apiclient": "^2.0",
+        "cosenary/instagram": "^2.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
