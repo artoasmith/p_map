@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Facebook\Facebook;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
+use Facebook\GraphNodes\GraphPicture;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use BW\Vkontakte as VK;
 use MetzWeb\Instagram\Instagram;
@@ -439,7 +440,7 @@ class AuthController extends Controller
         $error = false;
         try {
             $fb->setDefaultAccessToken(strval($accessToken));
-            $response = $fb->get('/me');
+            $response = $fb->get('/me?fields=id,name,picture');
             $userNode = $response->getGraphUser();
         } catch(FacebookResponseException $e) {
             // When Graph returns an error
@@ -482,7 +483,16 @@ class AuthController extends Controller
                 ->setEnabled(true)
                 ->setFacebookUid($fbUser['id'])
                 ->setFacebookName($fbUser['name'])
-                ->setSuperAdmin(false);
+                ->setSuperAdmin(false)
+                ->setFirstname($fbUser['name'])
+            ;
+            if(isset($fbUser['picture']) && is_object($fbUser['picture'])){
+                /**
+                 * @var GraphPicture $pic
+                 */
+                $pic = $fbUser['picture'];
+                $User->upload('Image',$pic->getUrl());
+            }
             $userManager->updateUser($User);
 
             try {
@@ -510,11 +520,15 @@ class AuthController extends Controller
         $params = $this->getDefaultTemplateParams();
         $vk = new VK([
             'client_id' => $params['vk_app_id'],
-            'client_secret' => $params['vk_app_secret']
+            'client_secret' => $params['vk_app_secret'],
+            'redirect_uri' => $params['site'].'/vkCallback'
         ]);
 
         $vk->authenticate();
         $userId = $vk->getUserId();
+
+        if(!$userId)
+            return $this->redirect('/login');
 
         /**
          * @var UserManager $userManager
@@ -535,6 +549,16 @@ class AuthController extends Controller
                 // checker (not enabled, expired, etc.).
             }
         } else { // registration
+
+            $user = $vk->api('users.get', [
+                'user_id' => $userId,
+                'fields' => [
+                    'photo_100'
+                ],
+            ]);
+            $name = (isset($user[0]['first_name'])?$user[0]['first_name']:'').' '.(isset($user[0]['last_name'])?$user[0]['last_name']:'');
+            $name = trim($name);
+
             $User = $userManager->createUser();
 
             $confirmToken = md5(time().'randomStringText'.rand(1,100));
@@ -544,7 +568,13 @@ class AuthController extends Controller
                 ->setEmail($this->getRandEmail())
                 ->setVkontakteUid($userId)
                 ->setEnabled(true)
-                ->setSuperAdmin(false);
+                ->setSuperAdmin(false)
+                ->setFirstname($name)
+            ;
+
+            if(isset($user[0]['photo_100']))
+                $User->upload('Image',$user[0]['photo_100']);
+
             $userManager->updateUser($User);
 
             try {
@@ -619,7 +649,9 @@ class AuthController extends Controller
                 ->setEmail($this->getRandEmail())
                 ->setGplusUid($id)
                 ->setEnabled(true)
+                ->setFirstname($user->getName())
                 ->setSuperAdmin(false);
+            $User->upload('Image',$user->getPicture());
             $userManager->updateUser($User);
 
             try {
@@ -658,7 +690,6 @@ class AuthController extends Controller
         $data = $instagram->getOAuthToken($request->query->get('code'));
         if(@$data->user->id){
             $id = $data->user->id;
-            print_r($data->user); exit();
             /**
              * @var UserManager $userManager
              * @var User $User
@@ -686,8 +717,10 @@ class AuthController extends Controller
                     ->setUsername('in'.$id)
                     ->setEmail($this->getRandEmail())
                     ->setInstagramUid($id)
+                    ->setFirstname($data->user->full_name)
                     ->setEnabled(true)
                     ->setSuperAdmin(false);
+                $User->upload('Image',$data->user->profile_picture);
                 $userManager->updateUser($User);
 
                 try {

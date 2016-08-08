@@ -168,6 +168,18 @@ Image: Картинка
 Switcher: Флажок
 breadcrumb.link_settings_list: Список настроет
 breadcrumb.link_settings_create: Создание настройки
+
+form.label_facebook_uid: Facebook ID
+form.label_vkontakte_uid: VK ID
+form.label_gplus_uid: G+ ID
+form.label_instagram_uid: Instagram ID
+
+
+show.label_facebook_uid: Facebook ID
+show.label_vkontakte_uid: VK ID
+show.label_gplus_uid: G+ ID
+show.label_instagram_uid: Instagram ID
+
 =: =
 >=: >=
 >: >
