@@ -6,6 +6,12 @@
         {% else %}
             <span>No picture</span>
         {% endif %}
+    {% elseif object.type == 'checkbox' %}
+        {% if object.value == 1 %}
+            <span class="label label-success">Да</span>
+        {% else %}
+            <span class="label label-danger">Нет</span>
+        {% endif %}
     {% else %}
         <span>{{ object.value }}</span>
     {% endif %}

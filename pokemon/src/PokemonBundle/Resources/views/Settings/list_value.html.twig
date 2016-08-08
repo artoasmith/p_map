@@ -2,7 +2,7 @@
 {% block field %}
     {% if object.type == 'image' %}
         {% if object.value != null %}
-            <img class="list_image" src="{{ object.getWebPath() }}">
+            <img class="list_image" src="{{ object.getWebPath() }}" style="max-width: 200px; max-height: 200px;">
         {% else %}
             <span>Нет картинки</span>
         {% endif %}

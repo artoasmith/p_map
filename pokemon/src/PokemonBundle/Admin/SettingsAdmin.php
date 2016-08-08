@@ -47,7 +47,6 @@ class SettingsAdmin extends Admin
             ->add('category', null, array(), 'choice', array(
                 'choices' => $categories
             ))
-            ->add('value')
             ->add('type', null, array(), 'choice', array(
                 'choices' => array('file' => 'File', 'string' => 'String', 'text' => 'Text','checkbox' => 'Checkbox'),
                 'preferred_choices' => array('file'),
@@ -114,7 +113,7 @@ class SettingsAdmin extends Admin
         $showMapper
             ->add('code')
             ->add('category')
-            ->add('value', 'image', array('template' => 'GulpfishBackendBundle:Settings:show_value.html.twig'))
+            ->add('value', 'image', array('template' => 'PokemonBundle:Settings:show_value.html.twig'))
         ;
     }
 
