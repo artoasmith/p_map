@@ -45,6 +45,8 @@ function CheckAuthentication()
 // fully functional, in demo mode.
 $config['LicenseName'] = 'pokemon.loc';
 $config['LicenseKey'] = '7X0J0000U00FJ00000000000070';
+//$config['LicenseName'] = 'test1.sheepfish.pro';
+//$config['LicenseKey'] = 'HJ050000Z00G8000000000000F0';
 
 /*
  Uncomment lines below to enable PHP error reporting and displaying PHP errors.
@@ -70,6 +72,7 @@ ATTENTION: The trailing slash is required.
 */
 
 $baseUrl = 'http://pokemon.loc/upload/fck/';
+//$baseUrl = 'http://test1.sheepfish.pro/upload/fck/';
 
 /*
 $baseDir : the path to the local directory (in the server) which points to the
@@ -89,6 +92,7 @@ Examples:
 ATTENTION: The trailing slash is required.
 */
 $baseDir = '/Users/N1/Sites/pokemon/pokemon/web/upload/fck/';
+//$baseDir = '/var/www/tester/data/www/test1.sheepfish.pro/web/upload/fck/';
 
 /*
  * ### Advanced Settings

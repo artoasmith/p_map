@@ -13,6 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use PokemonBundle\Entity\Pokemon;
 use PokemonBundle\Entity\Point;
 use PokemonBundle\Entity\User;
+use PokemonBundle\Entity\Blog;
+use PokemonBundle\Entity\Settings;
 use Symfony\Component\Yaml\Parser;
 
 class Controller extends BaseController
@@ -25,6 +27,18 @@ class Controller extends BaseController
 
     public function getRandEmail(){
         return 'rand_'.time().'@pokemon'.rand(1,99).'.ru';
+    }
+
+    public function getSettingsByCode($code){
+        /**
+         * @var Settings $value
+         */
+        $em = $this->getDoctrine()->getManager();
+        $value = $em->getRepository('PokemonBundle:Settings')->findOneByCode($code);
+        if(!empty($value)){
+            return $value->getSettingValue();
+        }
+        return false;
     }
 
     public function resetSectorCache(Point $point){
@@ -252,6 +266,7 @@ class Controller extends BaseController
                         ->setLocationX(floatval($newX))
                         ->setLocationY(floatval($newY))
                         ->setCreateAt(new \DateTime())
+                        ->setEnabled(true)
                     ;
                     $errors = $this->get('validator')->validate($point);
                     if (count($errors) > 0)
@@ -278,9 +293,6 @@ class Controller extends BaseController
             return [
                 'id'=>$a->getId(),
                 'pokemon'=>$a->getPokemon()->getId(),
-                //'pokemon'=>str_pad(strval($a->getPokemon()->getId()), 3, '0', STR_PAD_LEFT),
-                //'name'=>$a->getPokemon()->getName(),
-                //'image'=>$a->getPokemon()->getImageUrl(),
                 'confirmed'=>$a->getConfirm(),
                 'locationX'=>$a->getLocationX(),
                 'locationY'=>$a->getLocationY(),
@@ -290,7 +302,13 @@ class Controller extends BaseController
     }
 
     public function getSectorPoints($x, $y, $side){
-        $query = sprintf('SELECT p.id FROM point as p WHERE p.`locationX` >= %f AND p.`locationX` < %f AND p.`locationY` >= %f AND p.`locationY` < %f', $x,($x+$side),$y,($y+$side));
+        $query = sprintf(
+            'SELECT p.id FROM point as p WHERE p.`locationX` >= %f AND p.`locationX` < %f AND p.`locationY` >= %f AND p.`locationY` < %f AND p.`enabled`=1',
+            $x,
+            ($x+$side),
+            $y,
+            ($y+$side)
+        );
 
         $stmt = $this->getDoctrine()->getManager()
             ->getConnection()

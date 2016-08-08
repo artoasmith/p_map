@@ -1,5 +1,7 @@
 document_root: /Users/N1/Sites/pokemon/pokemon/web
 document_root2: D:/OpenServer/domains/pokemon/pokemon/web
+document_root3: /var/www/tester/data/www/test1.sheepfish.pro/web
+
 site: http://test1.sheepfish.pro
 email_from: ua456@mail.ru
 

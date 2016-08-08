@@ -5,11 +5,13 @@ namespace PokemonBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use PokemonBundle\Base\UploaderEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
  * Blog
  *
  * @ORM\Table(name="blog")
+ * @DoctrineAssert\UniqueEntity(fields="code", message="Пост с таким кодом уже существует")
  * @ORM\Entity(repositoryClass="PokemonBundle\Repository\BlogRepository")
  */
 class Blog extends UploaderEntity
@@ -62,6 +64,45 @@ class Blog extends UploaderEntity
      * @Assert\File(maxSize="10000000")
      */
     private $fileImage;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled=true;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titleTitle", type="string", length=255, nullable=true)
+     */
+    private $titleTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="keywords", type="text", nullable=true)
+     */
+    private $keywords;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @Assert\Regex(
+     *     pattern="/^[_a-zA-Z][a-zA-z-_0-9]*$/",
+     *     match=true,
+     *     message="Недопустимый формат"
+     * )
+     * @ORM\Column(name="code", type="string", length=255, nullable=true, unique=true)
+     */
+    private $code;
 
     /**
      * Get id
@@ -213,6 +254,125 @@ class Blog extends UploaderEntity
     public function setFileImage($fileImage)
     {
         $this->fileImage = $fileImage;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return Blog
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set titleTitle
+     *
+     * @param string $title
+     *
+     * @return Blog
+     */
+    public function setTitleTitle($title)
+    {
+        $this->titleTitle = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get titleTitle
+     *
+     * @return string
+     */
+    public function getTitleTitle()
+    {
+        return $this->titleTitle;
+    }
+
+    /**
+     * Set keywords
+     *
+     * @param string $text
+     *
+     * @return Blog
+     */
+    public function setKeywords($text)
+    {
+        $this->keywords = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return string
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $text
+     *
+     * @return Blog
+     */
+    public function setDescription($text)
+    {
+        $this->description = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $text
+     *
+     * @return Blog
+     */
+    public function setCode($text)
+    {
+        $this->code = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 
     /**

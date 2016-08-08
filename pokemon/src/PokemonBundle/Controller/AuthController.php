@@ -658,6 +658,7 @@ class AuthController extends Controller
         $data = $instagram->getOAuthToken($request->query->get('code'));
         if(@$data->user->id){
             $id = $data->user->id;
+            print_r($data->user); exit();
             /**
              * @var UserManager $userManager
              * @var User $User

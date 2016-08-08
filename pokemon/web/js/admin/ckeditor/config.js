@@ -28,6 +28,7 @@ CKEDITOR.editorConfig = function( config ) {
     config.protectedSource.push( /<script[\s\S]*?script>/g ); /* script tags */
     config.allowedContent = true; /* all tags */
     var dom = 'http://pokemon.loc/js/admin';
+    //var dom = 'http://test1.sheepfish.pro/js/admin';
     config.filebrowserBrowseUrl = dom+'/ckfinder/ckfinder.html';
     config.filebrowserImageBrowseUrl = dom+'/ckfinder/ckfinder.html?type=Images';
     config.filebrowserFlashBrowseUrl = dom+'/ckfinder/ckfinder.html?type=Flash';
