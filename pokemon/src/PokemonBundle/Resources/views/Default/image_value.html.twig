@@ -1,9 +1,8 @@
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 {% block field %}
     {% if object.image != null %}
-        <img class="list_image" src="{{ object.getImageUrl() }}">
+        <img class="list_image" src="{{ object.getImageUrl() }}" style="max-height: 200px; max-width: 200px;">
     {% else %}
         <span>Отсутствует</span>
     {% endif %}
-
 {% endblock %}

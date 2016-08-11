@@ -61,11 +61,11 @@
                         </div>
                     </form>
 
-                    <a href="/" class="forget-pass">
+                    <a href="/remindPassword" class="forget-pass">
                         <span>Забыли пароль?</span>
                     </a>
                     <div class="soc-block">
-                        <a href="" class="fb">
+                        <a href="{{ fb_login_link }}" class="fb">
                             <svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 viewBox="0 0 49.6 49.6" style="enable-background:new 0 0 49.6 49.6;" xml:space="preserve">
                                 <g>
@@ -331,8 +331,7 @@
                                 </g>
                             </svg>
                         </a>
-
-                        <a href="" class="vk">
+                        <a href="{{ vk_login_link }}" class="vk">
                             <svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 49.6 49.6" style="enable-background:new 0 0 49.6 49.6;" xml:space="preserve">
                                 <radialGradient id="SVGID_1_" cx="24.8064" cy="24.8064" r="24.8064" gradientUnits="userSpaceOnUse">
                                     <stop  offset="0.5538" style="stop-color:#A2A2A4"/>
@@ -630,9 +629,8 @@
                                 c-0.1-0.1-0.3-0.1-0.3-0.1l-2.1,0c0,0-0.3,0-0.4,0.1c-0.1,0.1,0,0.4,0,0.4s1.6,3.8,3.5,5.7C22.2,24.6,24.2,24.5,24.2,24.5L24.2,24.5
                                 L24.2,24.5z"/>
                             </svg>
-
                         </a>
-                        <a href="" class="ins">
+                        <a href="{{ in_login_link }}" class="ins">
                             <svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 49.6 49.7" style="enable-background:new 0 0 49.6 49.7;" xml:space="preserve">
                                 <g>
                                     <g>
@@ -903,7 +901,7 @@
                                 </g>
                             </svg>
                         </a>
-                        <a href="" class="gp">
+                        <a href="{{ gp_login_link }}" class="gp">
                             <svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 49.6 49.8" style="enable-background:new 0 0 49.6 49.8;" xml:space="preserve">
                                 <g>
                                     <g>
@@ -1174,7 +1172,6 @@
                                     </g>
                                 </g>
                             </svg>
-
                         </a>
                     </div>
                 </div>
@@ -1182,7 +1179,7 @@
         </div>
     </div>
 
-<!--
+    {#
     <form action="{{ path("fos_user_security_check") }}" method="post">
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
@@ -1192,15 +1189,10 @@
         <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
         <input type="password" id="password" name="_password" required="required" />
 
-      {#  <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-        <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>#}
+        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+        <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
 
         <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
     </form>
--->
-
-    <a href="{{ fb_login_link }}">fb_login_link</a>
-    <a href="{{ vk_login_link }}">vk_login_link</a>
-    <a href="{{ gp_login_link }}">gp_login_link</a>
-    <a href="{{ in_login_link }}">in_login_link</a>
+    #}
 {% endblock content %}

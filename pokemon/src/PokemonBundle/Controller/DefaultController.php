@@ -114,7 +114,8 @@ class DefaultController extends Controller
 
         $point = $this->createForm(new PointType(), new Point())->handleRequest($request)->getData();
         $point->setCreateAt(new \DateTime())
-              ->setAuthor($user);
+              ->setAuthor($user)
+              ->setEnabled(true);
         $errors = $this->get('validator')->validate($point);
         if (count($errors) > 0)
             $this->renderApiJson(['error' => 'Ошибка передачи данных']);
@@ -148,7 +149,7 @@ class DefaultController extends Controller
         $point = $this->getDoctrine()
                       ->getRepository('PokemonBundle:Point')
                       ->find($id);
-        if(!$point)
+        if(!$point || !$point->getEnabled())
             $this->renderApiJson(['code'=>2,'error'=>true,'message'=>'Точка была удалена или отсутствует']);
 
         if($point->getAuthor() && $point->getAuthor()->getId() == $user->getId())
@@ -170,8 +171,11 @@ class DefaultController extends Controller
         if(false !== ($key=array_search($user->getId(),$json['reject'])))
             unset($json['reject'][$key]);
 
-        if(count($json['confirm']) == 5) // иммено когда нужное подтвержение
+        $length = count($json['confirm'])-count($json['reject']);
+        if($length >= 5) // иммено когда нужное подтвержение
             $point->setConfirm(true);
+        else
+            $point->setConfirm(false);
 
         $point->setJsonInfo(json_encode($json));
 
@@ -202,7 +206,7 @@ class DefaultController extends Controller
         $point = $this->getDoctrine()
                       ->getRepository('PokemonBundle:Point')
                       ->find($id);
-        if(!$point)
+        if(!$point || !$point->getEnabled())
             $this->renderApiJson(['code'=>2,'error'=>true,'message'=>'Точка была удалена или отсутствует']);
 
         if($point->getAuthor() && $point->getAuthor()->getId() == $user->getId())
@@ -227,17 +231,14 @@ class DefaultController extends Controller
         $response = [
             'success'=>true
         ];
-        if(count($json['reject'])<5){    //update
-            $point->setJsonInfo(json_encode($json));
-            $manager->persist($point);
+        $length = count($json['confirm'])-count($json['reject']);
+        $point->setEnabled($length>-5);
+        $point->setJsonInfo(json_encode($json));
+        $formater = $this->getSerializePointCallback();
+        $res = array_map($formater,[$point]);
+        $response['point'] = ($point->getEnabled()?array_shift($res):'');
 
-            $formater = $this->getSerializePointCallback();
-            $res = array_map($formater,[$point]);
-
-            $response['point'] = array_shift($res);
-        } else {                        //remove
-            $manager->remove($point);
-        }
+        $manager->persist($point);
         $manager->flush();
         $this->resetSectorCache($point);
         $this->renderApiJson($response);

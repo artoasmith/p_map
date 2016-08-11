@@ -91,6 +91,12 @@ class Point
     private $confirm=false;
 
     /**
+     * @var boolean
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled=true;
+
+    /**
      * Get id
      *
      * @return int
@@ -257,6 +263,29 @@ class Point
     public function getConfirm()
     {
         return $this->confirm;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return Point
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 
     public function __toString()

@@ -33,12 +33,32 @@ services:
         calls:
            - [ setLabelTranslatorStrategy, ["@sonata.admin.label.strategy.underscore"]]
     pokemon.admin.email:
-            class: PokemonBundle\Admin\EmailTemplateAdmin
-            tags:
-               - {name: sonata.admin, manager_type: orm, label: "pokemon.admin.model.email", label_catalogue: "PokemonBundle"}
-            arguments:
-               - ~
-               - PokemonBundle\Entity\EmailTemplate
-               - ~
-            calls:
-               - [ setLabelTranslatorStrategy, ["@sonata.admin.label.strategy.underscore"]]
+        class: PokemonBundle\Admin\EmailTemplateAdmin
+        tags:
+           - {name: sonata.admin, manager_type: orm, label: "pokemon.admin.model.email", label_catalogue: "PokemonBundle"}
+        arguments:
+           - ~
+           - PokemonBundle\Entity\EmailTemplate
+           - ~
+        calls:
+           - [ setLabelTranslatorStrategy, ["@sonata.admin.label.strategy.underscore"]]
+    pokemon.admin.blog:
+        class: PokemonBundle\Admin\BlogAdmin
+        tags:
+           - {name: sonata.admin, manager_type: orm, label: "pokemon.admin.model.blog", label_catalogue: "PokemonBundle"}
+        arguments:
+           - ~
+           - PokemonBundle\Entity\Blog
+           - ~
+        calls:
+           - [ setLabelTranslatorStrategy, ["@sonata.admin.label.strategy.underscore"]]
+    pokemon.admin.settings:
+        class: PokemonBundle\Admin\SettingsAdmin
+        tags:
+           - {name: sonata.admin, manager_type: orm, label: "pokemon.admin.model.settings", label_catalogue: "PokemonBundle"}
+        arguments:
+           - ~
+           - PokemonBundle\Entity\Settings
+           - ~
+        calls:
+           - [ setLabelTranslatorStrategy, ["@sonata.admin.label.strategy.underscore"]]

@@ -65,8 +65,8 @@ Roles: Роли
 form.label_roles: Роли
 breadcrumb.link_user_create: Создание пользователя
 
-form.label_file_image: Иконка
-list.label_image: Иконка
+form.label_file_image: Картинка
+list.label_image: Картинка
 
 show.label_location_x: Позиция Х
 show.label_location_y: Позиция Y
@@ -110,6 +110,75 @@ form.label_text: Текст
 filter.label_text: Текст
 list.label_text: Текст
 show.label_text: Текст
+
+filter.label_title: Название
+breadcrumb.link_blog_list: Посты
+pokemon.admin.model.blog: Посты
+form.label_title:  Название
+list.label_title:  Название
+show.label_title:  Название
+form.label_create_at: Дата
+filter.label_create_at: Дата
+list.label_create_at: Дата
+show.label_create_at: Дата
+form.label_anotation: Текст анотации
+filter.label_anotation: Текст анотации
+list.label_anotation: Текст анотации
+show.label_anotation: Текст анотации
+breadcrumb.link_blog_create: Создание поста
+
+pokemon.admin.model.settings: Настройки
+
+form.label_category: Категория
+filter.label_category: Категория
+list.label_category: Категория
+show.label_category: Категория
+
+form.label_value: Значение
+filter.label_value: Значение
+list.label_value: Значение
+show.label_value: Значение
+
+form.label_type: Тип
+filter.label_type: Тип
+list.label_type: Тип
+show.label_type: Тип
+
+form.label_titletitle: Заголовок (META)
+filter.label_titletitle: Заголовок (META)
+list.label_titletitle: Заголовок (META)
+show.label_titletitle: Заголовок (META)
+
+form.label_keywords: Ключевые слова (META)
+filter.label_keywords: Ключевые слова (META)
+list.label_keywords: Ключевые слова (META)
+show.label_keywords: Ключевые слова  (META)
+
+
+form.label_description: Описание (META)
+filter.label_description: Описание (META)
+list.label_description: Описание (META)
+show.label_description: Описание (META)
+
+File: Картинка
+String: Строка
+Text: Текст
+Checkbox: Флажок
+Image: Картинка
+Switcher: Флажок
+breadcrumb.link_settings_list: Список настроет
+breadcrumb.link_settings_create: Создание настройки
+
+form.label_facebook_uid: Facebook ID
+form.label_vkontakte_uid: VK ID
+form.label_gplus_uid: G+ ID
+form.label_instagram_uid: Instagram ID
+
+
+show.label_facebook_uid: Facebook ID
+show.label_vkontakte_uid: VK ID
+show.label_gplus_uid: G+ ID
+show.label_instagram_uid: Instagram ID
 
 =: =
 >=: >=

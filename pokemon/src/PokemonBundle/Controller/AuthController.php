@@ -21,8 +21,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Facebook\Facebook;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
+use Facebook\GraphNodes\GraphPicture;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use BW\Vkontakte as VK;
+use MetzWeb\Instagram\Instagram;
 
 class AuthController extends Controller
 {
@@ -32,7 +34,7 @@ class AuthController extends Controller
     public function remindPassword(Request $request)
     {
         $params = $this->getDefaultTemplateParams();
-
+        $params['show_ball'] = false;
         $params['form_user'] = [
             'key'=>'form_user',
             'ms'=>'',
@@ -148,6 +150,7 @@ class AuthController extends Controller
         $errorMessage = 'Неверный код активации';
 
         $params = $this->getDefaultTemplateParams();
+        $params['show_ball'] = false;
 
         if(empty($token)) {
             $params['message_error'] = $errorMessage;
@@ -176,6 +179,7 @@ class AuthController extends Controller
     public function RegistrationAction(Request $request)
     {
         $params = $this->getDefaultTemplateParams();
+        $params['show_ball'] = false;
         $params['reg_form'] = [
             'key'=>'registration',
             'error'=>[],
@@ -286,6 +290,7 @@ class AuthController extends Controller
             return $this->redirect('/profile');
 
         $params = $this->getDefaultTemplateParams();
+        $params['show_ball'] = false;
         /**
          * @var UserManager $userManager
          */
@@ -346,7 +351,12 @@ class AuthController extends Controller
         $client->addScope("profile");
         $params['gp_login_link'] = $client->createAuthUrl();
 
-        $params['in_login_link'] = '';
+        $instagram = new Instagram(array(
+            'apiKey'      => $params['in_app_id'],
+            'apiSecret'   => $params['in_app_secret'],
+            'apiCallback' => $params['site'].'/inCallback'
+        ));
+        $params['in_login_link'] = $instagram->getLoginUrl();
         ////
         return $this->render('PokemonBundle:Front:login.html.twig',$params);
     }
@@ -430,7 +440,7 @@ class AuthController extends Controller
         $error = false;
         try {
             $fb->setDefaultAccessToken(strval($accessToken));
-            $response = $fb->get('/me');
+            $response = $fb->get('/me?fields=id,name,picture');
             $userNode = $response->getGraphUser();
         } catch(FacebookResponseException $e) {
             // When Graph returns an error
@@ -473,7 +483,16 @@ class AuthController extends Controller
                 ->setEnabled(true)
                 ->setFacebookUid($fbUser['id'])
                 ->setFacebookName($fbUser['name'])
-                ->setSuperAdmin(false);
+                ->setSuperAdmin(false)
+                ->setFirstname($fbUser['name'])
+            ;
+            if(isset($fbUser['picture']) && is_object($fbUser['picture'])){
+                /**
+                 * @var GraphPicture $pic
+                 */
+                $pic = $fbUser['picture'];
+                $User->upload('Image',$pic->getUrl());
+            }
             $userManager->updateUser($User);
 
             try {
@@ -501,11 +520,15 @@ class AuthController extends Controller
         $params = $this->getDefaultTemplateParams();
         $vk = new VK([
             'client_id' => $params['vk_app_id'],
-            'client_secret' => $params['vk_app_secret']
+            'client_secret' => $params['vk_app_secret'],
+            'redirect_uri' => $params['site'].'/vkCallback'
         ]);
 
         $vk->authenticate();
         $userId = $vk->getUserId();
+
+        if(!$userId)
+            return $this->redirect('/login');
 
         /**
          * @var UserManager $userManager
@@ -526,6 +549,16 @@ class AuthController extends Controller
                 // checker (not enabled, expired, etc.).
             }
         } else { // registration
+
+            $user = $vk->api('users.get', [
+                'user_id' => $userId,
+                'fields' => [
+                    'photo_100'
+                ],
+            ]);
+            $name = (isset($user[0]['first_name'])?$user[0]['first_name']:'').' '.(isset($user[0]['last_name'])?$user[0]['last_name']:'');
+            $name = trim($name);
+
             $User = $userManager->createUser();
 
             $confirmToken = md5(time().'randomStringText'.rand(1,100));
@@ -535,7 +568,13 @@ class AuthController extends Controller
                 ->setEmail($this->getRandEmail())
                 ->setVkontakteUid($userId)
                 ->setEnabled(true)
-                ->setSuperAdmin(false);
+                ->setSuperAdmin(false)
+                ->setFirstname($name)
+            ;
+
+            if(isset($user[0]['photo_100']))
+                $User->upload('Image',$user[0]['photo_100']);
+
             $userManager->updateUser($User);
 
             try {
@@ -610,7 +649,9 @@ class AuthController extends Controller
                 ->setEmail($this->getRandEmail())
                 ->setGplusUid($id)
                 ->setEnabled(true)
+                ->setFirstname($user->getName())
                 ->setSuperAdmin(false);
+            $User->upload('Image',$user->getPicture());
             $userManager->updateUser($User);
 
             try {
@@ -624,5 +665,76 @@ class AuthController extends Controller
             }
         }
         return $response;
+    }
+
+    /**
+     * @Route("/inCallback")
+     */
+    public function inCallbackAction(Request $request)
+    {
+        $user = $this->getUser();
+        if($user)
+            return $this->redirect('/profile');
+
+        if (!$request->query->get('code'))
+            return $this->redirect('/login');
+
+        $params = $this->getDefaultTemplateParams();
+
+        $instagram = new Instagram(array(
+            'apiKey'      => $params['in_app_id'],
+            'apiSecret'   => $params['in_app_secret'],
+            'apiCallback' => $params['site'].'/inCallback'
+        ));
+
+        $data = $instagram->getOAuthToken($request->query->get('code'));
+        if(@$data->user->id){
+            $id = $data->user->id;
+            /**
+             * @var UserManager $userManager
+             * @var User $User
+             */
+            $userManager = $this->get('fos_user.user_manager');
+            $u = $userManager->findUserBy(['instagramUid'=>$id]);
+
+            $response = $this->redirect('/profile');
+            if($u){ //login
+                try {
+                    $this->container->get('fos_user.security.login_manager')->loginUser(
+                        $this->container->getParameter('fos_user.firewall_name'),
+                        $u,
+                        $response);
+                } catch (AccountStatusException $ex) {
+                    // We simply do not authenticate users which do not pass the user
+                    // checker (not enabled, expired, etc.).
+                }
+            } else { // registration
+                $User = $userManager->createUser();
+
+                $confirmToken = md5(time().'randomStringText'.rand(1,100));
+
+                $User->setPassword($confirmToken)
+                    ->setUsername('in'.$id)
+                    ->setEmail($this->getRandEmail())
+                    ->setInstagramUid($id)
+                    ->setFirstname($data->user->full_name)
+                    ->setEnabled(true)
+                    ->setSuperAdmin(false);
+                $User->upload('Image',$data->user->profile_picture);
+                $userManager->updateUser($User);
+
+                try {
+                    $this->container->get('fos_user.security.login_manager')->loginUser(
+                        $this->container->getParameter('fos_user.firewall_name'),
+                        $User,
+                        $response);
+                } catch (AccountStatusException $ex) {
+                    // We simply do not authenticate users which do not pass the user
+                    // checker (not enabled, expired, etc.).
+                }
+            }
+            return $response;
+        }
+        print_r($data); exit();
     }
 }

@@ -19,16 +19,6 @@ use Sonata\UserBundle\Admin\Model\UserAdmin as SonataUserAdmin;
 
 class UserAdmin extends SonataUserAdmin
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function preUpdate($user)
-    {
-       
-        //$this->getUserManager()->updateCanonicalFields($user);
-        //$this->getUserManager()->updatePassword($user);
-    }
-
 
     /**
      * {@inheritdoc}
@@ -85,7 +75,7 @@ class UserAdmin extends SonataUserAdmin
             ->with('Profile')
                 ->add('dateOfBirth')
                 ->add('firstname')
-                ->add('lastname')
+              //  ->add('lastname')
                 ->add('website')
                 ->add('biography')
                 ->add('gender')
@@ -95,16 +85,19 @@ class UserAdmin extends SonataUserAdmin
             ->end()
             ->with('Social')
                 ->add('facebookUid')
-                ->add('facebookName')
-                ->add('twitterUid')
-                ->add('twitterName')
+                ->add('vkontakteUid')
                 ->add('gplusUid')
-                ->add('gplusName')
+                ->add('instagramUid')
+                //->add('facebookName')
+                //->add('twitterUid')
+                //->add('twitterName')
+                //->add('gplusUid')
+                //->add('gplusName')
             ->end()
-            ->with('Security')
+          /*  ->with('Security')
                 ->add('token')
                 ->add('twoStepVerificationCode')
-            ->end()
+            ->end()*/
         ;
     }
 
@@ -113,6 +106,15 @@ class UserAdmin extends SonataUserAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+
+        /**
+         * @var User $object
+         */
+        $object = $this->getSubject();
+        $fileImageOptions = array('required' => false);
+        if ($object && ($webPath = $object->getImageUrl()))
+            $fileImageOptions['help'] = '<img src="'.$webPath.'" class="admin-preview thumbnail"  style="max-width: 500px; max-height: 500 px;" />';
+
         // define group zoning
         $formMapper
             ->tab('User')
@@ -121,8 +123,8 @@ class UserAdmin extends SonataUserAdmin
                 ->with('Social', array('class' => 'col-md-6'))->end()
             ->end()
             ->tab('Security')
-                ->with('Status', array('class' => 'col-md-6'))->end()
-                ->with('Keys', array('class' => 'col-md-6'))->end()
+                ->with('Status', array('class' => 'col-md-12'))->end()
+                //->with('Keys', array('class' => 'col-md-6'))->end()
                 ->with('Roles', array('class' => 'col-md-12'))->end()
             ->end()
         ;
@@ -146,7 +148,7 @@ class UserAdmin extends SonataUserAdmin
                     'required' => false,
                 ))
                 ->add('firstname', null, array('required' => false))
-                ->add('lastname', null, array('required' => false))
+                ->add('fileImage', 'file', $fileImageOptions)
                 ->add('website', 'url', array('required' => false))
                 ->add('biography', 'text', array('required' => false))
                 ->add('gender', 'sonata_user_gender', array(
@@ -158,20 +160,18 @@ class UserAdmin extends SonataUserAdmin
                 ->add('phone', null, array('required' => false))
             ->end()
             ->with('Social')
-                ->add('facebookUid', null, array('required' => false))
-                ->add('facebookName', null, array('required' => false))
-                ->add('twitterUid', null, array('required' => false))
-                ->add('twitterName', null, array('required' => false))
-                ->add('gplusUid', null, array('required' => false))
-                ->add('gplusName', null, array('required' => false))
+                ->add('facebookUid', null, array('required' => false,'disabled'=>true))
+                ->add('vkontakteUid', null, array('required' => false,'disabled'=>true))
+                ->add('gplusUid', null, array('required' => false,'disabled'=>true))
+                ->add('instagramUid', null, array('required' => false,'disabled'=>true))
             ->end()
             ->end()
             ->tab('Security')
             ->with('Status')
                 ->add('locked', null, array('required' => false))
-                ->add('expired', null, array('required' => false))
+               // ->add('expired', null, array('required' => false))
                 ->add('enabled', null, array('required' => false))
-                ->add('credentialsExpired', null, array('required' => false))
+               // ->add('credentialsExpired', null, array('required' => false))
             ->end()
             ->with('Roles')
                 ->add('realRoles', 'sonata_security_roles', array(
@@ -181,11 +181,29 @@ class UserAdmin extends SonataUserAdmin
                     'required' => false,
                 ))
             ->end()
-            ->with('Keys')
+           /* ->with('Keys')
                 ->add('token', null, array('required' => false))
                 ->add('twoStepVerificationCode', null, array('required' => false))
-            ->end()
+            ->end()*/
             ->end()
         ;
+    }
+
+    public function prePersist($pm) {
+        /**
+         * @var User $pm
+         */
+        $this->saveFile($pm);
+    }
+
+    public function preUpdate($pm) {
+        $this->saveFile($pm);
+    }
+
+    public function saveFile($pm) {
+        /**
+         * @var User $pm
+         */
+        $pm->upload('Image');
     }
 }

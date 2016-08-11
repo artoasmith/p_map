@@ -56,7 +56,7 @@ class PokemonAdmin extends AbstractAdmin
         $object = $this->getSubject();
         $fileImageOptions = array('required' => false);
         if ($object && ($webPath = $object->getImageUrl()))
-            $fileImageOptions['help'] = '<img src="'.$webPath.'" class="admin-preview thumbnail" />';
+            $fileImageOptions['help'] = '<img src="'.$webPath.'" class="admin-preview thumbnail" style="max-width: 500px; max-height: 500 px;" />';
 
         $formMapper
             ->with('Основная информация')

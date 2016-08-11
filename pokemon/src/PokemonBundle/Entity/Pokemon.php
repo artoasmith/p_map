@@ -122,10 +122,14 @@ class Pokemon extends UploaderEntity
 
     /**
      * @param mixed $fileImage
+     *
+     * @return Pokemon
      */
     public function setFileImage($fileImage)
     {
         $this->fileImage = $fileImage;
+
+        return $this;
     }
 
     /**

@@ -111,9 +111,16 @@ sonata_admin:
                 items:
                     - pokemon.admin.pokemon
                     - pokemon.admin.point
+            pokemon.admin.blogs:
+                label: pokemon.blogs
+                items:
+                    - pokemon.admin.blog
+            pokemon.admin.main:
+                label: pokemon.admin.main
+                items:
                     - pokemon.admin.user
                     - pokemon.admin.email
-
+                    - pokemon.admin.settings
 sonata_translation:
     locales: [en, ru]
     default_locale: en

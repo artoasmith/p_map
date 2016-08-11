@@ -5,6 +5,8 @@ namespace PokemonBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
+use Symfony\Component\Yaml\Parser;
+
 /**
  * User
  *
@@ -42,6 +44,26 @@ class User extends BaseUser
      * @ORM\Column(name="vkontakteUid", type="string", nullable=true)
      */
     private $vkontakteUid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="instagramUid", type="string", nullable=true)
+     */
+    private $instagramUid;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @Assert\File(maxSize="10000000")
+     */
+    private $fileImage;
 
     public function __construct()
     {
@@ -121,5 +143,152 @@ class User extends BaseUser
         $this->vkontakteUid = $vkontakteUid;
 
         return $this;
+    }
+
+    /**
+     * Get instagramUid
+     *
+     * @return string
+     */
+    public function getInstagramUid()
+    {
+        return $this->instagramUid;
+    }
+
+    /**
+     * Set instagramUid
+     *
+     * @param string $instagramUid
+     * @return User
+     */
+    public function setInstagramUid($instagramUid)
+    {
+        $this->instagramUid = $instagramUid;
+
+        return $this;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return User
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageUrl()
+    {
+        return (empty($this->image)?'':$this->defaultFolderPath().$this->image);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFileImage()
+    {
+        return $this->fileImage;
+    }
+
+    /**
+     * @param mixed $fileImage
+     * @return User
+     */
+    public function setFileImage($fileImage)
+    {
+        $this->fileImage = $fileImage;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function defaultFolderPath(){
+        return '/upload/user_image/';
+    }
+
+    function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return ($this->getId()?$this->getUsername():'-');
+    }
+
+    public function documentRoot(){
+        $yaml = new Parser();
+        $a = $yaml->parse(file_get_contents(__DIR__ . '/../../../app/config/params.yml'));
+        return (isset($a['document_root'])?$a['document_root']:'');
+    }
+
+
+    public function clearOldUpload($type){
+        if(!$type)
+            return;
+
+        $file = $this->documentRoot().$this->defaultFolderPath().$this->{'get'.$type}();
+        @unlink($file);
+    }
+
+    public function upload($type, $fileurl = ''){
+        if (empty($fileurl)) {
+            if (null === $this->{'getFile' . $type}()) {
+                return;
+            }
+
+            $filename = md5(time() . rand(5, 100)) . '.' . pathinfo($this->{'getFile' . $type}()->getClientOriginalName(), PATHINFO_EXTENSION);
+            $filePath = $this->defaultFolderPath();
+            $filename = str_replace('..', '.', $filename);
+
+
+            $this->clearOldUpload($type);
+
+            $file = $this->{'getFile' . $type}();
+            $newfile = $this->documentRoot() . $filePath . $filename;
+
+            if (\copy($file, $newfile)) {
+                $this->{'set' . $type}($filename);
+            }
+        } else {
+            $arr = @file($fileurl);
+            if (!empty($arr)) {
+
+                $pathinfo = pathinfo($fileurl);
+                if (strpos($pathinfo['extension'], '?') !== false)
+                    $filename = md5(time() . rand(5, 100)) . '.' . substr($pathinfo['extension'], 0, strpos($pathinfo['extension'], '?'));
+                else
+                    $filename = md5(time() . rand(5, 100)) . '.' . $pathinfo['extension'];
+
+                $filePath = $this->defaultFolderPath();
+                $filename = str_replace('..', '.', $filename);
+
+                if (strpos($fileurl, '?') !== false) {
+                    $filename = substr($filename, 0, strpos($fileurl, '?'));
+                }
+
+                $this->clearOldUpload($type);
+
+                $newfile = $this->documentRoot() . $filePath . $filename;
+                if (\copy($fileurl, $newfile)) {
+                    $this->{'set' . $type}($filename);
+                }
+            }
+        }
     }
 }
