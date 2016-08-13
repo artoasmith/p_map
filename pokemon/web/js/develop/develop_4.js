@@ -47,6 +47,99 @@ $(document).ready(function(){
 
     /* pockeball beutify */
 
+    /* pockeball open */
+
+        $('.top-pock').on('click', function(){ /* login */
+
+            if( $('.pockeball').hasClass('open-reg') ){
+
+                $('.form-reg').slideUp(300, function(){
+
+                    $('.form-log').slideDown(300, function(){                        
+
+                    });
+                    $('.pockeball').removeClass('open-reg').addClass('open-login'); 
+
+                });
+
+            } else {
+
+                $('.form-log').slideDown(300, function(){                    
+                    
+                });
+                $('.pockeball').removeClass('open-reg').addClass('open-login'); 
+
+            }
+
+           // $('.pockeball').removeClass('open-reg').addClass('open-login'); 
+
+        });
+
+        $('.bot-pock').on('click', function(){ /* reg */
+
+            if( $('.pockeball').hasClass('open-login') ){
+
+                $('.form-log').slideUp(300, function(){
+
+                    $('.form-reg').slideDown(300, function(){                        
+
+                    });
+                    $('.pockeball').removeClass('open-login').addClass('open-reg'); 
+
+                });
+
+            } else {
+
+                $('.form-reg').slideDown(300, function(){
+                    
+                });
+                $('.pockeball').removeClass('open-login').addClass('open-reg'); 
+
+            }
+
+          //  $('.pockeball').removeClass('open-login').addClass('open-reg'); 
+            
+        });
+
+
+
+        $('.circle').on('click', function(){ /* circle */
+
+            if( $('.pockeball').hasClass('open-reg') ){
+                $('.form-reg').slideUp(300, function(){
+                    $('.pockeball').removeClass('open-reg').removeClass('open-login');
+                });
+            }
+
+            if( $('.pockeball').hasClass('open-login') ){
+                $('.form-log').slideUp(300, function(){
+                    $('.pockeball').removeClass('open-reg').removeClass('open-login');
+                });
+            }
+
+          //  $('.pockeball').removeClass('open-reg').removeClass('open-login');
+
+        });
+
+    /* pockeball open */
+
+    /* slider */
+
+        $('.slider-row>.content').slick({
+            infinite: false,
+            dots: true,
+            slidesToShow: 5,
+            slidesToScroll: 1, 
+            swipeToSlide: true
+        });
+
+    /* slider */
+
+    $('.form-part>form').on('submit', function(){
+        console.log( $(this).find('input').val() );
+        return false;
+    });
+
 });
 
 $(window).load(function(){
@@ -54,7 +147,7 @@ $(window).load(function(){
         if ( !$('form').length == 0 ){
             $('form').find('input').each(function(){
 
-                if( !$(this).val().length == 0 ) {
+                if( !$(this).val() ==''  ) {
                     $(this).closest('.form_input').addClass('dirty');
                 }
 
