@@ -237,26 +237,60 @@
   max-width: 320px;
   width: 100%;
   margin: 0 auto;
-  position: relative; }
-  .pockeball.open-reg .circle {
-    cursor: pointer;
-    top: 125px;
+  position: relative;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s; }
+  .pockeball.open-reg {
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     -o-transform: rotate(180deg);
     transform: rotate(180deg); }
-    .pockeball.open-reg .circle .arrows {
-      display: block; }
-  .pockeball.open-login .circle {
-    cursor: pointer;
-    top: -webkit-calc(100% - 196px);
-    top: -moz-calc(100% - 196px);
-    top: calc(100% - 196px); }
-    .pockeball.open-login .circle .arrows {
-      display: block; }
-  .pockeball.open-login .mid {
-    height: auto; }
+    .pockeball.open-reg .bot-pock span {
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      transform: rotate(180deg); }
+    .pockeball.open-reg .top-pock span {
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      transform: rotate(180deg); }
+    .pockeball.open-reg .circle {
+      cursor: pointer;
+      top: 125px;
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      transform: rotate(180deg); }
+      .pockeball.open-reg .circle .arrows {
+        display: block; }
+    .pockeball.open-reg .mid .form-reg {
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      transform: rotate(180deg); }
+  .pockeball.open-login {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg); }
+    .pockeball.open-login .circle {
+      cursor: pointer;
+      top: -webkit-calc(100% - 196px);
+      top: -moz-calc(100% - 196px);
+      top: calc(100% - 196px); }
+      .pockeball.open-login .circle .arrows {
+        display: block; }
+    .pockeball.open-login .mid {
+      height: auto; }
   .pockeball .top-pock {
     width: 100%;
     height: -webkit-calc((320px - 14px)/2);

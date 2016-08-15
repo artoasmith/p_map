@@ -55,10 +55,15 @@ $(document).ready(function(){
 
                 $('.form-reg').slideUp(300, function(){
 
-                    $('.form-log').slideDown(300, function(){                        
-
-                    });
                     $('.pockeball').removeClass('open-reg').addClass('open-login'); 
+
+                    setTimeout(function(){
+
+                        $('.form-log').slideDown(300, function(){                        
+
+                        });
+
+                    }, 500); 
 
                 });
 
@@ -81,19 +86,30 @@ $(document).ready(function(){
 
                 $('.form-log').slideUp(300, function(){
 
-                    $('.form-reg').slideDown(300, function(){                        
-
-                    });
                     $('.pockeball').removeClass('open-login').addClass('open-reg'); 
+
+                    setTimeout( function(){
+
+                        $('.form-reg').slideDown(300, function(){                        
+
+                        });
+
+                    }, 500) 
 
                 });
 
             } else {
 
-                $('.form-reg').slideDown(300, function(){
-                    
-                });
                 $('.pockeball').removeClass('open-login').addClass('open-reg'); 
+
+                setTimeout( function(){
+
+                    $('.form-reg').slideDown(300, function(){                        
+
+                    });
+
+                }, 500)
+                
 
             }
 
