@@ -8,6 +8,7 @@
 
 namespace PokemonBundle\Base;
 
+use GuzzleHttp\Psr7\Request as Request_guz;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use PokemonBundle\Entity\Pokemon;
@@ -16,6 +17,17 @@ use PokemonBundle\Entity\User;
 use PokemonBundle\Entity\Blog;
 use PokemonBundle\Entity\Settings;
 use Symfony\Component\Yaml\Parser;
+use Symfony\Component\HttpFoundation\Request;
+use Facebook\Facebook;
+use Facebook\Exceptions\FacebookResponseException;
+use Facebook\Exceptions\FacebookSDKException;
+use Facebook\GraphNodes\GraphPicture;
+use Symfony\Component\Security\Core\Exception\AccountStatusException;
+use BW\Vkontakte as VK;
+use MetzWeb\Instagram\Instagram;
+
+use Sonata\UserBundle\Entity\UserManager;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class Controller extends BaseController
 {
@@ -123,6 +135,8 @@ class Controller extends BaseController
             $a['is_auth'] = true;
             $a['user_name'] = (empty($user->getFirstname())?$user->getUsername():$user->getFirstname());
             $a['user_pic'] = $user->getImageUrl();
+        } else {
+            $a['social'] = $this->getSocialAuthLink($a);
         }
         $a['show_ball'] = true;
         return (is_array($a)?$a:[]);
@@ -138,6 +152,37 @@ class Controller extends BaseController
 
         echo ($isJson?$value:json_encode($value));
         exit();
+    }
+
+    public function checkLogin(Request $request){
+        /* @var $request \Symfony\Component\HttpFoundation\Request */
+        $session = $request->getSession();
+        /* @var $session \Symfony\Component\HttpFoundation\Session\Session */
+
+        // get the error if any (works with forward and redirect -- see below)
+        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+        } elseif (null !== $session && $session->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        } else {
+            $error = '';
+        }
+
+        if ($error) {
+            // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
+            $error = $error->getMessage();
+        }
+        // last username entered by the user
+        $lastUsername = (null === $session) ? '' : $session->get(SecurityContext::LAST_USERNAME);
+
+        $csrfToken = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
+
+
+        $params['last_username'] = $lastUsername;
+        $params['error'] = $error;
+        $params['show'] = boolval($error);
+        return $params;
     }
 
     public function getGoogleMapLength($fromX,$fromY,$toX,$toY){
@@ -431,5 +476,44 @@ class Controller extends BaseController
     private function pointsDist($x,$y,$x2,$y2){
         $a = pow(($x-$x2),2)+pow(($y-$y2),2);
         return sqrt($a);
+    }
+
+    private function getSocialAuthLink($params){
+        $a = [];
+        /////
+        $fb = new Facebook([
+            'app_id' => $params['fb_app_id'], // Replace {app-id} with your app id
+            'app_secret' => $params['fb_app_secret'],
+            'default_graph_version' => 'v2.2',
+        ]);
+
+        $helper = $fb->getRedirectLoginHelper();
+
+        $permissions = []; // Optional permissions
+        $a['fb_login_link'] = $helper->getLoginUrl($params['site'].'/fbCallback', $permissions);
+
+        $vk = new VK([
+            'client_id' => $params['vk_app_id'],
+            'client_secret' => $params['vk_app_secret'],
+            'redirect_uri' => $params['site'].'/vkCallback',
+        ]);
+        $a['vk_login_link'] = $vk->getLoginUrl();
+
+        $client = new \Google_Client();
+        $client->setClientId($params['gp_app_id']);
+        $client->setClientSecret($params['gp_app_secret']);
+        $client->setRedirectUri($params['site'].'/gpCallback');
+        $client->addScope("email");
+        $client->addScope("profile");
+        $a['gp_login_link'] = $client->createAuthUrl();
+
+        $instagram = new Instagram(array(
+            'apiKey'      => $params['in_app_id'],
+            'apiSecret'   => $params['in_app_secret'],
+            'apiCallback' => $params['site'].'/inCallback'
+        ));
+        $a['in_login_link'] = $instagram->getLoginUrl();
+        ////
+        return $a;
     }
 }

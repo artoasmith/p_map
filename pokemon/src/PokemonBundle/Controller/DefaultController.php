@@ -15,15 +15,20 @@ class DefaultController extends Controller
     /**
      * @Route("/")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $params = $this->getDefaultTemplateParams();
 
         //user info
         $u = $this->getUser();
-        if($u)
+        if($u) {
             $params['user_login'] = $u->getUsername();
 
+        } else {
+            //check login
+            $params['log'] = $this->checkLogin($request);
+            //check reg
+        }
         //demo params
         $x = 44.442;
         $y = 35.504;
@@ -38,6 +43,12 @@ class DefaultController extends Controller
             },
             $this->getDoctrine()->getRepository('PokemonBundle:Pokemon')->findAll()
         );
+
+
+
+
+        $params['csrf_token'] = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
+
         return $this->render('PokemonBundle:Front:main.html.twig',$params);
     }
 

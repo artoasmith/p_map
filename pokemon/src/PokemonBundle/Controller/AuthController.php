@@ -324,40 +324,7 @@ class AuthController extends Controller
         $params['last_username'] = $lastUsername;
         $params['error'] = $error;
         $params['csrf_token'] = $csrfToken;
-        /////
-        $fb = new Facebook([
-            'app_id' => $params['fb_app_id'], // Replace {app-id} with your app id
-            'app_secret' => $params['fb_app_secret'],
-            'default_graph_version' => 'v2.2',
-        ]);
 
-        $helper = $fb->getRedirectLoginHelper();
-
-        $permissions = []; // Optional permissions
-        $params['fb_login_link'] = $helper->getLoginUrl($params['site'].'/fbCallback', $permissions);
-
-        $vk = new VK([
-            'client_id' => $params['vk_app_id'],
-            'client_secret' => $params['vk_app_secret'],
-            'redirect_uri' => $params['site'].'/vkCallback',
-        ]);
-        $params['vk_login_link'] = $vk->getLoginUrl();
-
-        $client = new \Google_Client();
-        $client->setClientId($params['gp_app_id']);
-        $client->setClientSecret($params['gp_app_secret']);
-        $client->setRedirectUri($params['site'].'/gpCallback');
-        $client->addScope("email");
-        $client->addScope("profile");
-        $params['gp_login_link'] = $client->createAuthUrl();
-
-        $instagram = new Instagram(array(
-            'apiKey'      => $params['in_app_id'],
-            'apiSecret'   => $params['in_app_secret'],
-            'apiCallback' => $params['site'].'/inCallback'
-        ));
-        $params['in_login_link'] = $instagram->getLoginUrl();
-        ////
         return $this->render('PokemonBundle:Front:login.html.twig',$params);
     }
 

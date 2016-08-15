@@ -7,6 +7,12 @@ services:
     cache:
         class: Doctrine\Common\Cache\PhpFileCache
         arguments: [%kernel.cache_dir%]
+    acme.security.authentication_handler:
+        class: PokemonBundle\Controller\AuthenticationHandlerController
+        public: false
+        arguments:
+            - @router
+            - @session
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

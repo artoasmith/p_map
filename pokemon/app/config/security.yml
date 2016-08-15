@@ -39,10 +39,11 @@ security:
             context:            user
             form_login:
                 provider:       fos_userbundle
-                login_path:     /login
-                use_forward:    false
+               #login_path:     /login
+                use_forward:    true
                 check_path:     /login_check
-                failure_path:   null
+                success_handler: acme.security.authentication_handler
+                failure_handler: acme.security.authentication_handler
             logout:             true
             anonymous:          true
             # activate different ways to authenticate
