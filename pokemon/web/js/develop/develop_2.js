@@ -209,7 +209,7 @@ function superAjax( page ) {
 
             /* content init */
 
-            addContentToHell();
+          //  addContentToHell();
 
             /* content init */
 
@@ -229,26 +229,51 @@ function superAjax( page ) {
 
 function addContentToHell(){
 
-     
+    // pokemon
     var htmlStack='';
+    var gg = 0;
+    for ( var i = 0;  i < pokemon.length; i++ ){
+        gg++;
 
-    for ( var i = 0;  i < stack.length; i++ ){
-        htmlStack += "<div class='item' data-names='" + stack[i].name + "'>" +
-                        "<div class='num'> #" + stack[i].pokemon +"</div>" +
-                        "<div class='look'>" +
-                            "<img src='"+ stack[i].image +"' "+
-                                "alt='" + stack[i].name + "' title='" + stack[i].name +"'>" +
-                        "</div>" +
-                        "<div class='name'>" + stack[i].name + "</div>" +
-                        "<div class='disance'> " + stack[i].distance + " км </div>" +
-                        "<div class='button'>"+
-                            "<a href='" + stack[i].id + "' data-locationx='" + stack[i].locationX + 
-                         "' data-locationy='" + stack[i].locationY + "' > <span>ПОКАЗАТЬ</span> </a>" +
-                        "</div>" +
-                    "</div>";
+        if (gg == 1){
+            htmlStack +=  '<div class="sliding-items">';
         }
         
-    $('.sorting-wrap .items-wrap').html(htmlStack);
+
+
+        htmlStack += '<div class="item">'+
+                        '<div class="top">'+  '2km' + '</div>'+
+                        '<div class="circle">' + 
+                            '<div class="con">' +
+                                '<img src="' + pokemon[i].image + '" alt="">'+
+                            '</div>' +
+                        '</div>' +
+                        '<div class="named">' + pokemon[i].name + '</div>'+
+                    '</div>' ;
+
+        if (gg == 3){
+            htmlStack += '</div>';
+            gg = 0;
+        }
+
+    }
+
+    
+        console.log(htmlStack);
+        
+    $('.slider-row .content').html( htmlStack );
+
+    /* slider */
+
+        $('.slider-row>.content').slick({
+            infinite: false,
+            dots: true,
+            slidesToShow: 5,
+            slidesToScroll: 3, 
+            swipeToSlide: true
+        });
+
+    /* slider */
 
 }
 
@@ -480,6 +505,7 @@ $(document).ready(function(){
 
 $(window).load(function(){
 
+    addContentToHell();
 
     if( $('body').find('.map-page').length == 1 ){
         onLoadStartData();

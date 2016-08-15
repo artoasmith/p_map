@@ -58,9 +58,12 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
 {% endblock %}
+
 <div class="global-wrapper">
     {% block header %}
         <!-- HEADER -->
+
+        <!--
         <header>
             <div class="header-wrap">
                 <div class="mbox">
@@ -90,61 +93,550 @@
                 </div>
             </div>
         </header>
-        <!-- /HEADER -->
-    {% endblock %}
-    <!-- MAIN -->
-    <div class="main">
-        <!-- add partials here -->
+        -->
+        <header>
 
-        {% if show_ball %}
-            <div class="banner-wrap">
-                <div class="contein" style="background-image: url();">
-                    <div class="contein-page">
-                        <div class="pocke">
-                            <!-- svg -->
-                            <svg version="1.1" id="Слой_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                viewBox="0 0 129.8 133" style="enable-background:new 0 0 129.8 133;" xml:space="preserve">
-                                <g>
-                                    <circle class="st0" cx="64.9" cy="67.4" r="63.2"/>
-                                    <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="64.9198" y1="63.4896" x2="64.9198" y2="0">
-                                        <stop  offset="0" style="stop-color:#D24A43"/>
-                                        <stop  offset="1" style="stop-color:#C2463E"/>
-                                    </linearGradient>
-                                    <path class="st1" d="M129.8,63.5C129.8,28.4,100.8,0,64.9,0S0,28.4,0,63.5H129.8z"/>
-                                    <linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="64.9198" y1="133.0336" x2="64.9198" y2="69.544">
-                                        <stop  offset="0" style="stop-color:#C8C8C8"/>
-                                        <stop  offset="1" style="stop-color:#E5E5E5"/>
-                                    </linearGradient>
-                                    <path class="st2" d="M0,69.5C0,104.6,29.1,133,64.9,133s64.9-28.4,64.9-63.5H0z"/>
-                                    <circle class="st0" cx="64.9" cy="67.4" r="21.7"/>
-                                    <circle class="st3" cx="64.9" cy="67.6" r="13.1"/>
-                                    <linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="64.9198" y1="78.4885" x2="64.9198" y2="56.6309">
-                                        <stop  offset="0" style="stop-color:#C8C8C8"/>
-                                        <stop  offset="1" style="stop-color:#E5E5E5"/>
-                                    </linearGradient>
-                                    <circle class="st4" cx="64.9" cy="67.6" r="10.9"/>
-                                </g>
-                            </svg>
-                            <!-- svg -->
-                            {% if is_auth %}
-                                <a href="/logout" class="top">
-                                    <span>Выход</span>
-                                </a>
-                            {% else %}
-                                <a href="/login" class="top">
-                                    <span>Вход</span>
-                                </a>
-                                <a href="/registration" class="bot">
-                                    <span>Регистрация</span>
-                                </a>
-                            {% endif %}
+            <div class="row-in">
+                <div class="mbox">
+                    <div class="row-ser-login">
+                        <div class="logout">
+                            <a href="#">
+                                <img src="images/log-out.png" alt="">
+                                <span>Выход</span>
+                            </a>
+                        </div>
+                        <div class="user-name">
+                            <a href="#">
+                                <span class="con">
+                                    <img src="images/no-face.png" alt="">
+                                </span>
+                                <span>Mister_Pokemon</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row-ser-logout">
+                        <div class="spread">
+                            <a href="" class="log-in"> Вход </a>
+                        </div>
+                        <div class="spread">
+                            <a href="" class="log-out"> Регистрация </a>
                         </div>
                     </div>
                 </div>
             </div>
-        {% endif %}
-        {% block banner %}
+            <div class="header-wrap">
+                <div class="mbox">
+                    <div class="con">
+                        <div class="logo-block">
+                            <a href="#" class="logo">                        
+                                <svg version="1.1" id="Слой_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 481.9 133.1" style="enable-background:new 0 0 481.9 133.1;" xml:space="preserve">
+                                    <style type="text/css">
+                                        .st0{fill:#50484F;}
+                                        .st1{fill:url(#SVGID_1_);}
+                                        .st2{fill:url(#SVGID_2_);}
+                                        .st3{fill:none;stroke:#E2E2E2;stroke-miterlimit:10;}
+                                        .st4{fill:url(#SVGID_3_);}
+                                        .st5{fill:#D24A43;}
+                                    </style>
+                                    <g>
+                                        <circle class="st0" cx="64.9" cy="67.5" r="63.2"/>
+                                        
+                                            <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="64.9" y1="-31.61" x2="64.9" y2="31.89" gradientTransform="matrix(1 0 0 -1 0 31.89)">
+                                            <stop  offset="0" style="stop-color:#D24A43"/>
+                                            <stop  offset="1" style="stop-color:#C2463E"/>
+                                        </linearGradient>
+                                        <path class="st1" d="M129.8,63.5C129.8,28.4,100.7,0,64.9,0S0,28.4,0,63.5H129.8z"/>
+                                        
+                                            <linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="64.9" y1="-101.21" x2="64.9" y2="-37.71" gradientTransform="matrix(1 0 0 -1 0 31.89)">
+                                            <stop  offset="0" style="stop-color:#C8C8C8"/>
+                                            <stop  offset="1" style="stop-color:#E5E5E5"/>
+                                        </linearGradient>
+                                        <path class="st2" d="M0,69.6c0,35.1,29.1,63.5,64.9,63.5s64.9-28.4,64.9-63.5L0,69.6L0,69.6z"/>
+                                        <circle class="st0" cx="64.9" cy="67.5" r="21.7"/>
+                                        <circle class="st3" cx="64.9" cy="67.6" r="13.1"/>
+                                        
+                                            <linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="64.9" y1="-46.6403" x2="64.9" y2="-24.7827" gradientTransform="matrix(1 0 0 -1 0 31.89)">
+                                            <stop  offset="0" style="stop-color:#C8C8C8"/>
+                                            <stop  offset="1" style="stop-color:#E5E5E5"/>
+                                        </linearGradient>
+                                        <circle class="st4" cx="64.9" cy="67.6" r="10.9"/>
+                                    </g>
+                                    <g>
+                                        <path class="st0" d="M160.3,83.9v-40h21.4c9.4,0,14.4,6.2,14.4,13.7c0,7.4-5,13.7-14.4,13.7h-9.2v12.6L160.3,83.9L160.3,83.9z
+                                            M183.7,57.6c0-2.2-1.6-3.2-3.7-3.2h-7.7v6.3h7.7C182.1,60.7,183.7,59.7,183.7,57.6z"/>
+                                        <path class="st0" d="M197.8,63.9c0-12.3,9.5-20.7,21.9-20.7s21.9,8.4,21.9,20.7c0,12.3-9.5,20.7-21.9,20.7S197.8,76.2,197.8,63.9z
+                                            M229.3,63.9c0-5.6-3.8-10-9.6-10c-5.8,0-9.6,4.4-9.6,10s3.8,10,9.6,10C225.6,73.9,229.3,69.5,229.3,63.9z"/>
+                                        <path class="st0" d="M269.3,83.9l-9-14.1l-2.2,3v11.1H246v-40h12.1v15l10.5-15h14.8l-15.1,18.6l15.8,21.4H269.3z"/>
+                                        <path class="st0" d="M286.2,83.9v-40h30.4v10.6h-18.2v4h17.8v10.6h-17.8v4.4h18.2v10.6h-30.4V83.9z"/>
+                                        <path class="st5" d="M319.8,63.9c0-12.3,9.5-20.7,21.9-20.7s21.9,8.4,21.9,20.7c0,12.3-9.5,20.7-21.9,20.7S319.8,76.2,319.8,63.9z
+                                            M351.3,63.9c0-5.6-3.8-10-9.6-10c-5.8,0-9.6,4.4-9.6,10s3.8,10,9.6,10C347.5,73.9,351.3,69.5,351.3,63.9z"/>
+                                        <path class="st5" d="M367.9,83.9v-40h21.4c9.4,0,14.4,6.2,14.4,13.7c0,7.4-5,13.7-14.4,13.7h-9.2v12.6L367.9,83.9L367.9,83.9z
+                                            M391.4,57.6c0-2.2-1.6-3.2-3.7-3.2H380v6.3h7.7C389.8,60.7,391.4,59.7,391.4,57.6z"/>
+                                        <path class="st5" d="M407.6,83.9v-40H438v10.6h-18.2v4h17.8v10.6h-17.8v4.4H438v10.6h-30.4V83.9z"/>
+                                        <path class="st5" d="M470.3,83.9l-14.8-20.3v20.3h-12.1v-40h12.5l13.9,19v-19h12.1v40H470.3z"/>
+                                    </g>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="nav-part">
+                            <ul>
+                                <li>
+                                    <a href="#">Главная</a>
+                                </li>
+                                <li>
+                                    <a href="#">Блог</a>
+                                </li>
+                                <li>
+                                    <a href="#">О проекте</a>
+                                </li>
+                                <li>
+                                    <a href="#">Контакты</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#" class="call-back">
+                            <span>Заказать звонок</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
+        </header>
+        
+        <!-- /HEADER -->
+    {% endblock %}
+    <!-- MAIN -->
+    <div class="main">
+
+        <div class="find-pockemon">
+            <div class="contein">        
+                <div class="head-row">
+                    <h1>Найти своего покемона</h1>
+                </div>
+                <div class="mbox">
+                    <div class="pockeball">
+                        <div class="top-pock">
+                            <span> Вход </span>
+                        </div>
+                        <div class="mid">
+                            <div class="form-reg">
+                                <form action="" method="post" class="register-form">
+                                    <input type="hidden"  value="">
+                                    <div class="contact-form-row cfix">
+                                        <div class="contact-form-item">
+                                            <div class="contact-form-item-input form_row">
+                                                <div class="form_input">
+                                                    <p> Имя пользователя: </p>
+                                                    <input type="text" id="username" name="_username" value="" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="contact-form-item">
+                                            <div class="contact-form-item-input form_row">
+                                                <div class="form_input">
+                                                    <p> E-mail </p>
+                                                    <input type="email" id="email" name="email" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="contact-form-item">
+                                            <div class="contact-form-item-input form_row">
+                                                <div class="form_input">
+                                                    <p> Пароль: </p>
+                                                    <input type="password" id="password" name="_password" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="contact-form-item">
+                                            <div class="contact-form-item-input form_row">
+                                                <div class="form_input">
+                                                    <p> Повторить пароль </p>
+                                                    <input type="password" name="re_password" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="contact-form-row-submit cfix">
+                                        <div class="contact-form-item">
+                                            <button class="contact-submit" id="_submit" name="_submit">
+                                                <span>Регистрация</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="soc-block">
+                                    <a href="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <path d="M24.826,0C11.137,0,0,11.137,0,24.826c0,13.688,11.137,24.826,24.826,24.826c13.688,0,24.826-11.138,24.826-24.826    C49.652,11.137,38.516,0,24.826,0z M31,25.7h-4.039c0,6.453,0,14.396,0,14.396h-5.985c0,0,0-7.866,0-14.396h-2.845v-5.088h2.845    v-3.291c0-2.357,1.12-6.04,6.04-6.04l4.435,0.017v4.939c0,0-2.695,0-3.219,0c-0.524,0-1.269,0.262-1.269,1.386v2.99h4.56L31,25.7z    "/>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                     <a href="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <path d="M24.826,0C11.137,0,0,11.137,0,24.826c0,13.688,11.137,24.826,24.826,24.826c13.688,0,24.826-11.138,24.826-24.826    C49.652,11.137,38.516,0,24.826,0z M31,25.7h-4.039c0,6.453,0,14.396,0,14.396h-5.985c0,0,0-7.866,0-14.396h-2.845v-5.088h2.845    v-3.291c0-2.357,1.12-6.04,6.04-6.04l4.435,0.017v4.939c0,0-2.695,0-3.219,0c-0.524,0-1.269,0.262-1.269,1.386v2.99h4.56L31,25.7z    "/>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                     <a href="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <path d="M24.826,0C11.137,0,0,11.137,0,24.826c0,13.688,11.137,24.826,24.826,24.826c13.688,0,24.826-11.138,24.826-24.826    C49.652,11.137,38.516,0,24.826,0z M31,25.7h-4.039c0,6.453,0,14.396,0,14.396h-5.985c0,0,0-7.866,0-14.396h-2.845v-5.088h2.845    v-3.291c0-2.357,1.12-6.04,6.04-6.04l4.435,0.017v4.939c0,0-2.695,0-3.219,0c-0.524,0-1.269,0.262-1.269,1.386v2.99h4.56L31,25.7z    "/>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                     <a href="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <path d="M24.826,0C11.137,0,0,11.137,0,24.826c0,13.688,11.137,24.826,24.826,24.826c13.688,0,24.826-11.138,24.826-24.826    C49.652,11.137,38.516,0,24.826,0z M31,25.7h-4.039c0,6.453,0,14.396,0,14.396h-5.985c0,0,0-7.866,0-14.396h-2.845v-5.088h2.845    v-3.291c0-2.357,1.12-6.04,6.04-6.04l4.435,0.017v4.939c0,0-2.695,0-3.219,0c-0.524,0-1.269,0.262-1.269,1.386v2.99h4.56L31,25.7z    "/>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+        
+                            <div class="form-log">
+                                <form action="" method="post" class="register-form">
+                                    <input type="hidden"  value="">
+                                    <div class="contact-form-row cfix">
+                                        <div class="contact-form-item">
+                                            <div class="contact-form-item-input form_row">
+                                                <div class="form_input">
+                                                    <p> Имя пользователя: </p>
+                                                    <input type="text" id="username" name="_username" value="" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="contact-form-item">
+                                            <div class="contact-form-item-input form_row">
+                                                <div class="form_input">
+                                                    <p> Пароль: </p>
+                                                    <input type="password" id="password" name="_password" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="contact-form-item">
+                                            <div class="row-for-check">
+                                                <input type="checkbox" name="check" id="checker"> 
+                                                <label for="checker">
+                                                    <span class="checkblock">
+                                                        <b></b>
+                                                    </span>
+                                                    <span class="after-text"> Запомнить меня </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="contact-form-row-submit cfix">
+                                        <div class="contact-form-item">
+                                            <button class="contact-submit" id="_submit" name="_submit">
+                                                <span>Войти</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+        
+                                <a href="/remindPassword" class="forget-pass">
+                                    <span>Забыли пароль?</span>
+                                </a>
+                                <div class="soc-block">
+                                    <a href="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <path d="M24.826,0C11.137,0,0,11.137,0,24.826c0,13.688,11.137,24.826,24.826,24.826c13.688,0,24.826-11.138,24.826-24.826    C49.652,11.137,38.516,0,24.826,0z M31,25.7h-4.039c0,6.453,0,14.396,0,14.396h-5.985c0,0,0-7.866,0-14.396h-2.845v-5.088h2.845    v-3.291c0-2.357,1.12-6.04,6.04-6.04l4.435,0.017v4.939c0,0-2.695,0-3.219,0c-0.524,0-1.269,0.262-1.269,1.386v2.99h4.56L31,25.7z    "/>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                     <a href="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <path d="M24.826,0C11.137,0,0,11.137,0,24.826c0,13.688,11.137,24.826,24.826,24.826c13.688,0,24.826-11.138,24.826-24.826    C49.652,11.137,38.516,0,24.826,0z M31,25.7h-4.039c0,6.453,0,14.396,0,14.396h-5.985c0,0,0-7.866,0-14.396h-2.845v-5.088h2.845    v-3.291c0-2.357,1.12-6.04,6.04-6.04l4.435,0.017v4.939c0,0-2.695,0-3.219,0c-0.524,0-1.269,0.262-1.269,1.386v2.99h4.56L31,25.7z    "/>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                     <a href="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <path d="M24.826,0C11.137,0,0,11.137,0,24.826c0,13.688,11.137,24.826,24.826,24.826c13.688,0,24.826-11.138,24.826-24.826    C49.652,11.137,38.516,0,24.826,0z M31,25.7h-4.039c0,6.453,0,14.396,0,14.396h-5.985c0,0,0-7.866,0-14.396h-2.845v-5.088h2.845    v-3.291c0-2.357,1.12-6.04,6.04-6.04l4.435,0.017v4.939c0,0-2.695,0-3.219,0c-0.524,0-1.269,0.262-1.269,1.386v2.99h4.56L31,25.7z    "/>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                     <a href="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <path d="M24.826,0C11.137,0,0,11.137,0,24.826c0,13.688,11.137,24.826,24.826,24.826c13.688,0,24.826-11.138,24.826-24.826    C49.652,11.137,38.516,0,24.826,0z M31,25.7h-4.039c0,6.453,0,14.396,0,14.396h-5.985c0,0,0-7.866,0-14.396h-2.845v-5.088h2.845    v-3.291c0-2.357,1.12-6.04,6.04-6.04l4.435,0.017v4.939c0,0-2.695,0-3.219,0c-0.524,0-1.269,0.262-1.269,1.386v2.99h4.56L31,25.7z    "/>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+        
+                        </div>
+                        <div class="circle">
+                            <div class="arrows"></div>
+                        </div>
+                        <div class="bot-pock">
+                            <span> регистрация </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contein-search">
+            <div class="mbox">
+                <div class="top-row">
+                    <div class="form-part">
+                        <form action="" novalidate>
+                            <div class="form-row">
+                                <input type="text" name="search-pockemon" placeholder="Search" required="required">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="select-part">
+                        <div class="drop"> </div>
+                    </div>
+                </div>
+                <div class="slider-row">
+                    <div class="content">
+                        <div class="sliding-items">
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                        </div>
+                        <div class="sliding-items">
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                        </div>
+                        <div class="sliding-items">
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                        </div>
+                        <div class="sliding-items">
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                        </div>
+                        <div class="sliding-items">
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                        </div>
+                        <div class="sliding-items">
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                        </div>
+                        <div class="sliding-items">
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                        </div>
+                        <div class="sliding-items">
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                            <div class="item">
+                                <div class="top"> 2km</div>
+                                <div class="circle">
+                                    <div class="con">
+                                        <img src="images/bubl.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="named">Бульбазавр</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- add partials here -->
+        {% block banner %}
+            {% if banner is defined %}
+                <div class="banner-wrap">
+                    <div class="contein">
+                        <img src="{{ banner }}" alt="">
+                    </div>
+                </div>
+            {% endif %}
         {% endblock %}
         {% block content %}
 
@@ -189,27 +681,139 @@
 
     {% block footer %}
         <!-- FOOTER -->
+
+        <!--
         <div class="footer_placeholder"></div>
         <footer class="footer">
             <div class="row">
                 {% if copi_right is not empty %}
-                    &copy; {{ copi_right | raw }}
+                &copy; {{ copi_right }}
                 {% endif %}
             </div>
         </footer>
+        -->
+
+        <footer class="footer">
+            <div class="row-like-header">
+                <div class="header-wrap">
+                    <div class="mbox">
+                        <div class="con">
+                            <div class="logo-block">
+                                <a href="#" class="logo">                        
+                                    <svg version="1.1" id="Слой_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                        viewBox="0 0 481.9 133.1" style="enable-background:new 0 0 481.9 133.1;" xml:space="preserve">
+                                        <style type="text/css">
+                                            .st0{fill:#50484F;}
+                                            .st1{fill:url(#SVGID_1_);}
+                                            .st2{fill:url(#SVGID_2_);}
+                                            .st3{fill:none;stroke:#E2E2E2;stroke-miterlimit:10;}
+                                            .st4{fill:url(#SVGID_3_);}
+                                            .st5{fill:#D24A43;}
+                                        </style>
+                                        <g>
+                                            <circle class="st0" cx="64.9" cy="67.5" r="63.2"/>
+                                            
+                                                <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="64.9" y1="-31.61" x2="64.9" y2="31.89" gradientTransform="matrix(1 0 0 -1 0 31.89)">
+                                                <stop  offset="0" style="stop-color:#D24A43"/>
+                                                <stop  offset="1" style="stop-color:#C2463E"/>
+                                            </linearGradient>
+                                            <path class="st1" d="M129.8,63.5C129.8,28.4,100.7,0,64.9,0S0,28.4,0,63.5H129.8z"/>
+                                            
+                                                <linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="64.9" y1="-101.21" x2="64.9" y2="-37.71" gradientTransform="matrix(1 0 0 -1 0 31.89)">
+                                                <stop  offset="0" style="stop-color:#C8C8C8"/>
+                                                <stop  offset="1" style="stop-color:#E5E5E5"/>
+                                            </linearGradient>
+                                            <path class="st2" d="M0,69.6c0,35.1,29.1,63.5,64.9,63.5s64.9-28.4,64.9-63.5L0,69.6L0,69.6z"/>
+                                            <circle class="st0" cx="64.9" cy="67.5" r="21.7"/>
+                                            <circle class="st3" cx="64.9" cy="67.6" r="13.1"/>
+                                            
+                                                <linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="64.9" y1="-46.6403" x2="64.9" y2="-24.7827" gradientTransform="matrix(1 0 0 -1 0 31.89)">
+                                                <stop  offset="0" style="stop-color:#C8C8C8"/>
+                                                <stop  offset="1" style="stop-color:#E5E5E5"/>
+                                            </linearGradient>
+                                            <circle class="st4" cx="64.9" cy="67.6" r="10.9"/>
+                                        </g>
+                                        <g>
+                                            <path class="st0" d="M160.3,83.9v-40h21.4c9.4,0,14.4,6.2,14.4,13.7c0,7.4-5,13.7-14.4,13.7h-9.2v12.6L160.3,83.9L160.3,83.9z
+                                                M183.7,57.6c0-2.2-1.6-3.2-3.7-3.2h-7.7v6.3h7.7C182.1,60.7,183.7,59.7,183.7,57.6z"/>
+                                            <path class="st0" d="M197.8,63.9c0-12.3,9.5-20.7,21.9-20.7s21.9,8.4,21.9,20.7c0,12.3-9.5,20.7-21.9,20.7S197.8,76.2,197.8,63.9z
+                                                M229.3,63.9c0-5.6-3.8-10-9.6-10c-5.8,0-9.6,4.4-9.6,10s3.8,10,9.6,10C225.6,73.9,229.3,69.5,229.3,63.9z"/>
+                                            <path class="st0" d="M269.3,83.9l-9-14.1l-2.2,3v11.1H246v-40h12.1v15l10.5-15h14.8l-15.1,18.6l15.8,21.4H269.3z"/>
+                                            <path class="st0" d="M286.2,83.9v-40h30.4v10.6h-18.2v4h17.8v10.6h-17.8v4.4h18.2v10.6h-30.4V83.9z"/>
+                                            <path class="st5" d="M319.8,63.9c0-12.3,9.5-20.7,21.9-20.7s21.9,8.4,21.9,20.7c0,12.3-9.5,20.7-21.9,20.7S319.8,76.2,319.8,63.9z
+                                                M351.3,63.9c0-5.6-3.8-10-9.6-10c-5.8,0-9.6,4.4-9.6,10s3.8,10,9.6,10C347.5,73.9,351.3,69.5,351.3,63.9z"/>
+                                            <path class="st5" d="M367.9,83.9v-40h21.4c9.4,0,14.4,6.2,14.4,13.7c0,7.4-5,13.7-14.4,13.7h-9.2v12.6L367.9,83.9L367.9,83.9z
+                                                M391.4,57.6c0-2.2-1.6-3.2-3.7-3.2H380v6.3h7.7C389.8,60.7,391.4,59.7,391.4,57.6z"/>
+                                            <path class="st5" d="M407.6,83.9v-40H438v10.6h-18.2v4h17.8v10.6h-17.8v4.4H438v10.6h-30.4V83.9z"/>
+                                            <path class="st5" d="M470.3,83.9l-14.8-20.3v20.3h-12.1v-40h12.5l13.9,19v-19h12.1v40H470.3z"/>
+                                        </g>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="nav-part">
+                                <ul>
+                                    <li>
+                                        <a href="#">Главная</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Блог</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">О проекте</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Контакты</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="#" class="call-back">
+                                <span>Заказать звонок</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contacts">
+                <div class="col">
+                    <div class="adress">
+                        <b>Адрес:</b>
+                        <p> 121069, Россия, Москва,   ул. Большая Молчановка,  д. 17, оф. 5 </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <b>Адрес:</b>
+                    <a href="#"> +7-495-691-41-88 </a>
+                    <a href="#"> +7-495-691-35-17 </a>   
+                </div>
+                <div class="col">
+                    <div class="site-map">
+                        <a href=""> карта сайта </a>
+                    </div>
+                </div>
+            </div>
+            <div class="last-row">
+                <div class="mbox">
+                    <div class="row"> 
+                        <div class="left">Политика конфиденциальности</div>    
+                        <div class="right">
+                            <a href="http://sheep.fish/" class="we-are-avesome"> Проект разработан - <b>SHEEP.FISH</b> </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
         <!-- FOOTER -->
+
     {% endblock %}
     {% block javascript %}
         <!-- SCRIPTS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <script type="text/javascript" src="/js/validate_script.js" ></script>
-            
+ <!--          
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBPqB8Xg3YCcmxmVah8AO5mZTXVXc2LeY"></script>
+ -->    
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
-    <!--  
-
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBPqB8Xg3YCcmxmVah8AO5mZTXVXc2LeY"></script>
-  -->
         
         <!-- build:js -->
         <script type="text/javascript" src="/js/plagins/device.js" ></script>

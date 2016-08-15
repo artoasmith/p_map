@@ -123,17 +123,7 @@ $(document).ready(function(){
 
     /* pockeball open */
 
-    /* slider */
 
-        $('.slider-row>.content').slick({
-            infinite: false,
-            dots: true,
-            slidesToShow: 5,
-            slidesToScroll: 1, 
-            swipeToSlide: true
-        });
-
-    /* slider */
 
     $('.form-part>form').on('submit', function(){
         console.log( $(this).find('input').val() );
