@@ -98,38 +98,40 @@
 
             <div class="row-in">
                 <div class="mbox">
-                    <div class="row-ser-login">
-                        <div class="logout">
-                            <a href="#">
-                                <img src="images/log-out.png" alt="">
-                                <span>Выход</span>
-                            </a>
+                    {% if is_auth %}
+                        <div class="row-ser-login">
+                            <div class="logout">
+                                <a href="/logout">
+                                    <img src="/images/log-out.png" alt="">
+                                    <span>Выход</span>
+                                </a>
+                            </div>
+                            <div class="user-name">
+                                <a href="#">
+                                    <span class="con">
+                                        <img src="{{ (user_pic?user_pic:'/images/no-face.png') }}" alt="">
+                                    </span>
+                                    <span>{{ user_name }}</span>
+                                </a>
+                            </div>
                         </div>
-                        <div class="user-name">
-                            <a href="#">
-                                <span class="con">
-                                    <img src="images/no-face.png" alt="">
-                                </span>
-                                <span>Mister_Pokemon</span>
-                            </a>
+                    {% else %}
+                        <div class="row-ser-logout">
+                            <div class="spread">
+                                <a href="" class="log-in"> Вход </a>
+                            </div>
+                            <div class="spread">
+                                <a href="" class="log-out"> Регистрация </a>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="row-ser-logout">
-                        <div class="spread">
-                            <a href="" class="log-in"> Вход </a>
-                        </div>
-                        <div class="spread">
-                            <a href="" class="log-out"> Регистрация </a>
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="header-wrap">
                 <div class="mbox">
                     <div class="con">
                         <div class="logo-block">
-                            <a href="#" class="logo">                        
+                            <a href="{{ path('pokemon_default_index') }}" class="logo">
                                 <svg version="1.1" id="Слой_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 481.9 133.1" style="enable-background:new 0 0 481.9 133.1;" xml:space="preserve">
                                     <style type="text/css">

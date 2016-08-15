@@ -17,17 +17,17 @@ in_app_secret: 86bf148cebca49799390d6833f9f652b
 # 1 = 111 km
 # 0.01 = 1.11 km
 # 0.001 = 0.111 km
-page_title: Pokémon GO
+page_title: Pokeopen
 banner: /images/pok-ban.jpg
-logo:
-    image:        /images/logo.png
-    text:         Logo
 main_menu:
     main:
         title:    Главная
         link:     /
+    blog:
+        title:    Блог
+        link:     /blog
     about:
-        title:    О нас
+        title:    О проекте
         link:     /about
     contacts:
         title:    Контакты
