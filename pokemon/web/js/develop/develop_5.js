@@ -1,7 +1,7 @@
 function loginFormSubmit(form) {
     var data = form.serialize();
     $.ajax({
-        type:'post',
+        method:'POST',
         url:'/app_dev.php/login_check',
         data:data,
         success:function (data) {
@@ -19,13 +19,15 @@ function loginFormSubmit(form) {
 function regFormSubmit(form) {
     var data = form.serialize();
     $.ajax({
-        type:'post',
+        method:'POST',
         url:'/app_dev.php/registration',
         data:data,
         success:function (data) {
             console.log(data);
         }
     });
+
+    console.log( 'go' );
 
     return false;
 }

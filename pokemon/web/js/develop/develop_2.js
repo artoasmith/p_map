@@ -257,9 +257,6 @@ function addContentToHell(){
         }
 
     }
-
-    
-        console.log(htmlStack);
         
     $('.slider-row .content').html( htmlStack );
 
