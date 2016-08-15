@@ -61,41 +61,7 @@
 
 <div class="global-wrapper">
     {% block header %}
-        <!-- HEADER -->
-
-        <!--
         <header>
-            <div class="header-wrap">
-                <div class="mbox">
-                    <div class="con">
-                        <div class="logo-block">
-                            {% if logo.image is defined %}
-                                <div class="logo">
-                                    <img src="{{ logo.image }}" alt="">
-                                </div>
-                            {% endif %}
-                            {% if logo.text is defined %}
-                                <div class="logo-text">{{ logo.text }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="nav-part">
-                            {% if main_menu is defined and main_menu is not empty %}
-                            <ul>
-                                {% for menu in main_menu %}
-                                <li>
-                                    <a href="{{ menu.link }}">{{ menu.title }}</a>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        -->
-        <header>
-
             <div class="row-in">
                 <div class="mbox">
                     {% if is_auth %}
@@ -199,9 +165,7 @@
                     </div>
                 </div>
             </div>
-
         </header>
-        
         <!-- /HEADER -->
     {% endblock %}
     <!-- MAIN -->
@@ -209,242 +173,9 @@
         {% block pokeball %}
 
         {% endblock %}
-        <div class="contein-search">
-            <div class="mbox">
-                <div class="top-row">
-                    <div class="form-part">
-                        <form action="" novalidate>
-                            <div class="form-row">
-                                <input type="text" name="search-pockemon" placeholder="Search" required="required">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="select-part">
-                        <div class="drop"> </div>
-                    </div>
-                </div>
-                <div class="slider-row">
-                    <div class="content">
-                        <div class="sliding-items">
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                        </div>
-                        <div class="sliding-items">
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                        </div>
-                        <div class="sliding-items">
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                        </div>
-                        <div class="sliding-items">
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                        </div>
-                        <div class="sliding-items">
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                        </div>
-                        <div class="sliding-items">
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                        </div>
-                        <div class="sliding-items">
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                        </div>
-                        <div class="sliding-items">
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                            <div class="item">
-                                <div class="top"> 2km</div>
-                                <div class="circle">
-                                    <div class="con">
-                                        <img src="images/bubl.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="named">Бульбазавр</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- add partials here -->
-        {% block banner %}
-            {% if banner is defined %}
-                <div class="banner-wrap">
-                    <div class="contein">
-                        <img src="{{ banner }}" alt="">
-                    </div>
-                </div>
-            {% endif %}
-        {% endblock %}
         {% block content %}
 
         {% endblock %}
@@ -458,8 +189,6 @@
 
     {% block footer %}
         <!-- FOOTER -->
-
-
         <footer class="footer">
             <div class="row-like-header">
                 <div class="header-wrap">
@@ -538,20 +267,19 @@
             </div>
             <div class="contacts">
                 <div class="col">
-                    <div class="adress">
-                        <b>Адрес:</b>
-                        <p> 121069, Россия, Москва,   ул. Большая Молчановка,  д. 17, оф. 5 </p>
-                    </div>
+                    {% if settings.footer_col_1 is defined %}
+                        {{ settings.footer_col_1|raw }}
+                    {% endif %}
                 </div>
                 <div class="col">
-                    <b>Адрес:</b>
-                    <a href="#"> +7-495-691-41-88 </a>
-                    <a href="#"> +7-495-691-35-17 </a>   
+                    {% if settings.footer_col_2 is defined %}
+                        {{ settings.footer_col_2|raw }}
+                    {% endif %}
                 </div>
                 <div class="col">
-                    <div class="site-map">
-                        <a href=""> карта сайта </a>
-                    </div>
+                    {% if settings.footer_col_3 is defined %}
+                        {{ settings.footer_col_3|raw }}
+                    {% endif %}
                 </div>
             </div>
             <div class="last-row">

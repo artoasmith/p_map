@@ -48,17 +48,14 @@ class BlogController extends Controller
                           ->getRepository('PokemonBundle:Blog')
                           ->findBy(['enabled'=>true],['createAt'=>'DESC','id'=>'DESC'],$count,$offset);
 
-            $params['page_navi'] = [
-                'active'=>$page,
-                'total'=>$totalPages
-            ];
+            $params['page_navi'] = $this->getNaviPager($totalPages,$page);
         }
 
         return $this->render('PokemonBundle:Blog:list.html.twig',$params);
     }
 
     /**
-     * @Route("/blog/{id}")
+     * @Route("/blog/{id}", name="pokemon_blog_blogpost")
      */
     public function blogShowAction($id,Request $request)
     {

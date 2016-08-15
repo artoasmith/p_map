@@ -41,6 +41,80 @@ class Controller extends BaseController
         return 'rand_'.time().'@pokemon'.rand(1,99).'.ru';
     }
 
+    public function getNaviPager($total, $active){
+        if($total<=1)
+            return[];
+
+        $resp = [];
+
+        if($active>1)
+            $resp[] = [
+                'type'=>'l_arraow',
+                'id'=>($active-1)
+            ];
+
+        if($active<=4){
+            for($i=1;$i<$active;$i++){
+                $resp[] = [
+                    'type'=>'page',
+                    'id'=>$i
+                ];
+            }
+        } else {
+            $resp[] = [
+                'type'=>'page',
+                'id'=>1
+            ];
+            $resp[] = [
+                'type'=>'',
+                'id'=>null
+            ];
+            for($i=$active-2;$i<$active;$i++){
+                $resp[] = [
+                    'type'=>'page',
+                    'id'=>$i
+                ];
+            }
+        }
+
+        $resp[] = [
+            'type'=>'active',
+            'id'=>$active
+        ];
+
+        if($active>=$total-3){
+            for($i=$active+1;$i<=$total;$i++){
+                $resp[] = [
+                    'type'=>'page',
+                    'id'=>$i
+                ];
+            }
+        }else{
+            for($i=$active+1;$i<$active+3;$i++){
+                $resp[] = [
+                    'type'=>'page',
+                    'id'=>$i
+                ];
+            }
+            $resp[] = [
+                'type'=>'',
+                'id'=>null
+            ];
+            $resp[] = [
+                'type'=>'page',
+                'id'=>$total
+            ];
+        }
+
+        if($active<$total)
+            $resp[] = [
+                'type'=>'r_arraow',
+                'id'=>($active+1)
+            ];
+
+        return $resp;
+    }
+
     public function getSettingsByCode($code){
         /**
          * @var Settings $value
@@ -126,6 +200,20 @@ class Controller extends BaseController
     public function getDefaultTemplateParams(){
         $yaml = new Parser();
         $a = $yaml->parse(file_get_contents(__DIR__ . '/../../../app/config/params.yml'));
+
+        //get settings
+        $settings = $this->getDoctrine()
+                        ->getRepository('PokemonBundle:Settings')
+                        ->findBy(['category'=>'base']);
+        $a['settings'] = [];
+        /**
+         * @var Settings $setting
+         */
+        if(!empty($settings)){
+            foreach ($settings as $setting){
+                $a['settings'][$setting->getCode()] = $setting->getValue();
+            }
+        }
         /**
          * @var User $user
          */
