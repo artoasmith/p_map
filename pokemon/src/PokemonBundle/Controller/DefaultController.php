@@ -28,6 +28,24 @@ class DefaultController extends Controller
             //check login
             $params['log'] = $this->checkLogin($request);
             //check reg
+            $params['reg_form'] = [
+                'key'=>'registration',
+                'error'=>[],
+                'fields'=>[
+                    'login'=>[
+                        'value'=>'',
+                        'error'=>''
+                    ],
+                    'email'=>[
+                        'value'=>'',
+                        'error'=>''
+                    ],
+                    'password'=>[
+                        'value'=>'',
+                        'error'=>''
+                    ]
+                ]
+            ];
         }
         //demo params
         $x = 44.442;

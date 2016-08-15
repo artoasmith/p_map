@@ -260,9 +260,16 @@ class AuthController extends Controller
                     ], $this);
 
                     $params['message'] = sprintf("Для подтверждения регистрации перейдите по ссылке отправленой в письме на адрес %s",$formdata['email']);
+
+                    $params['reg_form']['message'] = $params['message'];
+                    $params['reg_form']['success'] = true;
                 }
             }
         }
+
+        //if ajax registration
+        if ( $request->isXmlHttpRequest() )
+            $this->renderApiJson($params['reg_form']);
 
         return $this->render('PokemonBundle:Front:registration.html.twig',$params);
     }

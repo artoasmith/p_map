@@ -16,6 +16,19 @@ function loginFormSubmit(form) {
     return false;
 }
 
+function regFormSubmit(form) {
+    var data = form.serialize();
+    $.ajax({
+        type:'post',
+        url:'/app_dev.php/registration',
+        data:data,
+        success:function (data) {
+            console.log(data);
+        }
+    });
+
+    return false;
+}
 
 $(document).ready(function(){
 
