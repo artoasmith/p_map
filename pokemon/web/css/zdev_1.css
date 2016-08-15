@@ -365,11 +365,11 @@
             -o-transition: all 0.3s;
             transition: all 0.3s;
             width: 20px; }
-          .blog-wrap .pig-nation ul li a:hover, .blog-wrap .pig-nation ul li span:hover {
+          .blog-wrap .pig-nation ul li a:hover, .blog-wrap .pig-nation ul li a.active, .blog-wrap .pig-nation ul li span:hover, .blog-wrap .pig-nation ul li span.active {
             background-color: #fc103c; }
-            .blog-wrap .pig-nation ul li a:hover i, .blog-wrap .pig-nation ul li span:hover i {
+            .blog-wrap .pig-nation ul li a:hover i, .blog-wrap .pig-nation ul li a.active i, .blog-wrap .pig-nation ul li span:hover i, .blog-wrap .pig-nation ul li span.active i {
               color: white; }
-            .blog-wrap .pig-nation ul li a:hover svg, .blog-wrap .pig-nation ul li span:hover svg {
+            .blog-wrap .pig-nation ul li a:hover svg, .blog-wrap .pig-nation ul li a.active svg, .blog-wrap .pig-nation ul li span:hover svg, .blog-wrap .pig-nation ul li span.active svg {
               fill: white; }
         .blog-wrap .pig-nation ul li a[rel=next] svg {
           -webkit-transform: rotate(180deg);
