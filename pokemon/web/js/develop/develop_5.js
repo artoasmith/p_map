@@ -1,3 +1,4 @@
+/*
 function loginFormSubmit(form) {
     var data = form.serialize();
     $.ajax({
@@ -31,6 +32,8 @@ function regFormSubmit(form) {
 
     return false;
 }
+
+*/
 
 $(document).ready(function(){
 
