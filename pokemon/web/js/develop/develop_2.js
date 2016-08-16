@@ -502,11 +502,14 @@ $(document).ready(function(){
 
 $(window).load(function(){
 
-    addContentToHell();
+    if( $('.slider-row').length != 0 ){
+        addContentToHell();
+    };
+    
 
     if( $('body').find('.map-page').length == 1 ){
         onLoadStartData();
-    }
+    };
     
 
 });
