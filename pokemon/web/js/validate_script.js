@@ -276,6 +276,9 @@ $(document).ready(function(){
 
         validate('.form-log form', {submitFunction:validationReg} );
 
+        validate('.form-reg form', {submitFunction:validationReg} );
+        
+
     /* login */
 
 });
