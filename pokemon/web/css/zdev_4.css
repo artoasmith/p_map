@@ -196,6 +196,7 @@
 /* header */
 /* find-pockemon */
 .find-pockemon {
+  font-family: "ProximaNova";
   background-color: #e5e5e5;
   min-height: 100vh;
   padding: 40px 0; }
@@ -543,6 +544,13 @@
         font-family: "ProximaNova";
         color: #ecdde8;
         padding: 0 10px; }
+      .pockeball .mid form .contact-form-row .form_input input.error {
+        border: 1px solid #ef3f39;
+        -webkit-box-shadow: inset 0px 0px 1px 1px #ef3f39;
+        -moz-box-shadow: inset 0px 0px 1px 1px #ef3f39;
+        box-shadow: inset 0px 0px 1px 1px #ef3f39; }
+      .pockeball .mid form .contact-form-row .form_input .errorText {
+        display: none !important; }
       .pockeball .mid form .contact-form-row .form_input.focused p, .pockeball .mid form .contact-form-row .form_input.dirty p {
         top: 5px;
         left: 0; }
@@ -633,6 +641,15 @@
         color: #e5cede; }
       .pockeball .mid form .contact-form-row-submit button:hover {
         background-color: rgba(255, 255, 255, 0.1); }
+  .pockeball .mid .error-row {
+    color: #ef3f39;
+    padding: 20px 0 0;
+    text-align: center;
+    display: none; }
+    .pockeball .mid .error-row p {
+      margin: 0;
+      font-weight: 700;
+      font-size: 18px; }
   .pockeball .mid .forget-pass {
     display: -webkit-box;
     display: -webkit-flex;
@@ -685,13 +702,44 @@
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       border-radius: 50%;
-      border: 1px solid #6e606a; }
+      border: 1px solid #6e606a;
+      -webkit-transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      transition: all 0.3s; }
+      .pockeball .mid .soc-block a .con {
+        width: 48px;
+        height: 48px;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -moz-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -moz-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center; }
       .pockeball .mid .soc-block a svg {
-        width: 90%;
-        height: 90%;
-        margin: 5%; }
+        width: 25px;
+        height: 25px;
+        margin: 5%;
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        -o-transition: all 0.3s;
+        transition: all 0.3s; }
       .pockeball .mid .soc-block a:hover {
-        border: 2px solid #ed3f39; }
+        border: 1px solid #ed3f39;
+        -webkit-box-shadow: inset 0px 0px 1px 1px #ef3f39;
+        -moz-box-shadow: inset 0px 0px 1px 1px #ef3f39;
+        box-shadow: inset 0px 0px 1px 1px #ef3f39; }
+        .pockeball .mid .soc-block a:hover svg {
+          fill: #ed3f39; }
 
 /* find-pockemon */
 @-webkit-keyframes upper1 {

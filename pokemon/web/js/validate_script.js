@@ -228,6 +228,30 @@ function sendToSerwerReject( dataId ){
     });
 }
 
+function validationReg(form){
+
+    var thisForm = $(form);
+    var formSur = thisForm.serialize();
+
+    $.ajax({
+        url : thisForm.attr('action'),
+        data: formSur,
+        method:'POST',
+        success : function(data){
+
+            console.log(data);
+            if ( data.success ) {
+                console.log('reload');
+                //location.reload();
+            }
+            else {
+               thisForm.closest('div').find('.error-row').css('display','block').find('p').html(data.message);
+            }
+
+        }
+    });
+
+}
 
 $(document).ready(function(){
 
@@ -247,5 +271,11 @@ $(document).ready(function(){
             
         });
     /* send data to server from map backstage  */ 
+
+    /* login */
+
+        validate('.form-log form', {submitFunction:validationReg} );
+
+    /* login */
 
 });
