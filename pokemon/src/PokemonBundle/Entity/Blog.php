@@ -382,6 +382,10 @@ class Blog extends UploaderEntity
         return '/upload/blog/';
     }
 
+    public function getLinkParam(){
+        return ($this->getCode()?$this->getCode():$this->getId());
+    }
+
     function __toString()
     {
         // TODO: Implement __toString() method.
