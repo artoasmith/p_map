@@ -60,8 +60,9 @@ class BlogController extends Controller
     public function blogShowAction($id,Request $request)
     {
         $params = $this->getDefaultTemplateParams();
-
-        $post = false;
+        /**
+         * @var Blog $post
+         */
         if(preg_match('/^[0-9]/',$id))
             $post = $this->getDoctrine()
                          ->getRepository('PokemonBundle:Blog')
@@ -71,7 +72,7 @@ class BlogController extends Controller
                 ->getRepository('PokemonBundle:Blog')
                 ->findOneBy(['code'=>$id]);
 
-        if(!$post)
+        if(!$post || !$post->getEnabled())
             return $this->redirect('/blog');
 
         $params['post'] = $post;
