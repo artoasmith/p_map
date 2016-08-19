@@ -160,6 +160,9 @@ filter.label_description: Описание (META)
 list.label_description: Описание (META)
 show.label_description: Описание (META)
 
+form.label_file_image_detail: Картинка детального просмотра
+show.label_enabled: Доступен
+
 File: Картинка
 String: Строка
 Text: Текст
