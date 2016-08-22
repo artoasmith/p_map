@@ -86,7 +86,7 @@ class DefaultController extends Controller
     public function contactsAction()
     {
         $params = $this->getDefaultTemplateParams();
-
+        $params['about'] = $this->getSettingsGroup('contacts');
         return $this->render('PokemonBundle:Front:contacts.html.twig',$params);
     }
 

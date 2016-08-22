@@ -94,27 +94,27 @@ function validate(form, options){
     }
 }
 
+/*Отправка формы с вызовом попапа*/
+function validationCall(form){
 
-function popNext(popupId, popupWrap){
+  var thisForm = $(form);
+  var formSur = thisForm.serialize();
 
-    $.fancybox.open(popupId,{
-        padding:0,
-        fitToView:false,
-        wrapCSS:popupWrap,
-        autoSize:true,
-        afterClose: function(){
-            $('form').trigger("reset");
-            clearTimeout(timer);
+    $.ajax({
+        url : thisForm.attr('action'),
+        data: formSur,
+        method:'POST',
+        success : function(data){
+            if ( data.trim() == 'true') {
+                thisForm.trigger("reset");
+                popNext("#call_success", "call-popup");
+            }
+            else {
+               thisForm.trigger('reset');
+            }
+
         }
     });
-
-    var timer = null;
-
-    timer = setTimeout(function(){
-        $('form').trigger("reset");
-        $.fancybox.close(popupId);
-    },2000);
-
 }
 
 
@@ -125,107 +125,49 @@ function Maskedinput(){
     }
 }
 
-function sendToSerwerConfirm( dataId ){
-
-    $.ajax({
-        url : '/app_dev.php/pointsConfirm/' + dataId,
-        method:'POST',
-        success : function(data){
-
-            console.log( data );
-            
-            if( data.error ){
-
-                switch(data.code ) {
-                    case '1': 
-                        console.log( data.message );
-                        location.replace( "/login" );
-                        break;
-
-                    case '2':  
-                        console.log( data.message );
-
-                        for (var i = 0; i > stack.length; i++){
-                            if ( stack[i].id == dataId ){
-                               stack.splice( i , 1 )
-                            }
-                        }
-                        break;
-                    case '3': 
-                        alert( data.message );
-                        break;
-
-                }
-
-            } else {
-                if ( data.success ){
-                    for (var i = 0; i > stack.length; i++){
-                        if ( stack[i].id == data.point.id ){
-                            stack[i].confirmed = data.point.confirmed ;
-                        }
-                    }
-
-                } else {
-                    console.log(' some error difinition ');
-                }
-            }
-            
-
-        }
-    });
+/*fansybox на форме*/
+function fancyboxForm(){
+  $('.fancybox-form').fancybox({
+    openEffect  : 'fade',
+    closeEffect : 'fade',
+    autoResize:true,
+    wrapCSS:'fancybox-form',
+    'closeBtn' : true,
+    fitToView:true,
+    padding:'0'
+  })
 }
 
+//ajax func for programmer
 
-function sendToSerwerReject( dataId ){
+function someAjax(item, someUrl, successFunc, someData){
 
-    $.ajax({
-        url : '/app_dev.php/pointsReject/' + dataId,
-        method:'POST',
-        success : function(data){
+    $(document).on('click', item, function(e){
 
-            console.log( data );
-            
-            if( data.error ){
+        e.preventDefault();
 
-                switch(data.code ) {
-                    case '1': 
-                        console.log( data.message );
-                        location.replace( "/login" );
-                        break;
+        var itemObject = $(this);
+        var ajaxData = null;
 
-                    case '2':  
-                        console.log( data.message );
-
-                        for (var i = 0; i > stack.length; i++){
-                            if ( stack[i].id == dataId ){
-                               stack.splice( i , 1 )
-                            }
-                        }
-                        break;
-                    case '3': 
-                        alert( data.message );
-                        break;
-
-                }
-
-                
-
-            } else {
-                if ( data.success ){
-                    for (var i = 0; i > stack.length; i++){
-                        if ( stack[i].id == dataId ){
-                            stack[i].confirmed = data.point.confirmed ;
-                        }
-                    }
-
-                } else {
-                    console.log(' some error difinition ');
-                }
-            }
-            
-
+        if(typeof someData == 'function'){
+            ajaxData = someData(itemObject);
+        }else{
+            ajaxData = someData;
         }
+
+        console.log(ajaxData);
+
+        $.ajax({
+            url:someUrl,
+            data:ajaxData,
+            method:'POST',
+            success : function(data){
+                successFunc(data, itemObject);
+            }
+        });
+
     });
+
 }
 
 function validationReg(form){
@@ -242,10 +184,10 @@ function validationReg(form){
             console.log(data);
             if ( data.success ) {
                 console.log('reload');
-                //location.reload();
+                location.reload();
             }
             else {
-               thisForm.closest('div').find('.error-row').css('display','block').find('p').html(data.message);
+               thisForm.closest('div').find('.error-row').css('display','block').find('p').html('Неверный логин или пароль');
             }
 
         }
@@ -253,32 +195,50 @@ function validationReg(form){
 
 }
 
+function changeSomeCabinet(form){
+
+    $(form).closest('.contact-form-row').addClass('loading-change');
+
+  var thisForm = $(form);
+  var formSur = thisForm.serialize();
+
+    $.ajax({
+        url : thisForm.attr('action'),
+        data: formSur,
+        method:'POST',
+        success : function(data){
+
+            $(form).closest('.contact-form-row').removeClass('loading-change');
+
+            $(form).closest('.contact-form-item').removeClass('i-can-write');
+
+            console.log(data);
+
+            if ( data.success ) {
+                console.log('reload');
+                //location.reload();
+            }
+            else {
+              $('.error-field-for-all').css('display','block').find('p').html(data.message);
+            }
+
+        }
+    });
+}
+
 $(document).ready(function(){
 
-    /* send data to server from map backstage  */ 
-
-        $('.hide-content .button-block>.butt').click( function(){
-
-            if ( $('.hide-content').hasClass('activate') ) {
-
-                if( $(this).hasClass('confirm') ){
-                    sendToSerwerConfirm ( $('.hide-content').attr('data-pokemon-id')  );
-                }
-                if( $(this).hasClass('not-confirm') ){
-                    sendToSerwerReject( $('.hide-content').attr('data-pokemon-id') );                    
-                }     
-            }
-            
-        });
-    /* send data to server from map backstage  */ 
-
-    /* login */
+   /* login */
 
         validate('.form-log form', {submitFunction:validationReg} );
 
-        validate('.form-reg form', {submitFunction:validationReg} );
-        
-
     /* login */
+
+    validate('.rewrite_pass', {submitFunction:changeSomeCabinet} );
+    validate('.rewrite_email', {submitFunction:changeSomeCabinet} );
+    validate('.rewrite_name', {submitFunction:changeSomeCabinet} );
+
+   Maskedinput();
+   fancyboxForm();
 
 });
