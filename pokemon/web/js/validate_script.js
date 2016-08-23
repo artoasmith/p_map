@@ -253,6 +253,38 @@ function validationReg(form){
 
 }
 
+function changeSomeCabinet(form){
+
+    $(form).closest('.contact-form-row').addClass('loading-change');
+
+  var thisForm = $(form);
+  var formSur = thisForm.serialize();
+
+    $.ajax({
+        url : thisForm.attr('action'),
+        data: formSur,
+        method:'POST',
+        success : function(data){
+
+            $(form).closest('.contact-form-row').removeClass('loading-change');
+
+            $(form).closest('.contact-form-item').removeClass('i-can-write');
+
+            console.log(data);
+
+            if ( data.success ) {
+                console.log('reload');
+                //location.reload();
+            }
+            else {
+              $('.error-field-for-all').css('display','block').find('p').html(data.message);
+            }
+
+        }
+    });
+}
+
+
 $(document).ready(function(){
 
     /* send data to server from map backstage  */ 
@@ -280,5 +312,9 @@ $(document).ready(function(){
         
 
     /* login */
+
+        validate('.rewrite_pass', {submitFunction:changeSomeCabinet} );
+        validate('.rewrite_email', {submitFunction:changeSomeCabinet} );
+        validate('.rewrite_name', {submitFunction:changeSomeCabinet} );
 
 });
