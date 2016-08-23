@@ -153,6 +153,7 @@ $(document).ready(function(){
     /* pockeball open */
 
     /* slider */
+    /*
 
         $('.slider-row>.content').slick({
             infinite: false,
@@ -161,6 +162,8 @@ $(document).ready(function(){
             slidesToScroll: 1, 
             swipeToSlide: true
         });
+
+    */
 
     /* slider */
 });

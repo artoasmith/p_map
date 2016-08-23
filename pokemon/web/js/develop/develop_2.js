@@ -262,13 +262,17 @@ function addContentToHell(){
 
     /* slider */
 
-        $('.slider-row>.content').slick({
-            infinite: false,
-            dots: true,
-            slidesToShow: 5,
-            slidesToScroll: 3, 
-            swipeToSlide: true
-        });
+        setTimeout( function(){
+
+            $('.slider-row>.content').slick({
+                infinite: false,
+                dots: true,
+                slidesToShow: 5,
+                slidesToScroll: 3, 
+                swipeToSlide: true
+            });
+
+        }, 10);        
 
     /* slider */
 
