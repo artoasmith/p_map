@@ -156,7 +156,7 @@
 .map .hide-content .convert .after-all .button-block {
   padding: 45px 0; }
 
-.map .hide-content .convert .after-all .button-block .butt {
+.button-block .butt {
   margin-bottom: 10px;
   cursor: pointer;
   height: 55px;
@@ -183,17 +183,17 @@
   text-transform: uppercase;
   position: relative; }
 
-.map .hide-content .convert .after-all .button-block .butt:last-child {
+.button-block .butt:last-child {
   margin: 0; }
 
-.map .hide-content .convert .after-all .button-block .butt.confirm {
+.button-block .butt.confirm {
   border: 1px solid #3cae4e;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s; }
 
-.map .hide-content .convert .after-all .button-block .butt.confirm span {
+.button-block .butt.confirm span {
   color: #3cae4e;
   margin-left: 56px;
   -webkit-transition: all 0.3s;
@@ -201,13 +201,13 @@
   -o-transition: all 0.3s;
   transition: all 0.3s; }
 
-.map .hide-content .convert .after-all .button-block .butt.confirm:hover {
+.button-block .butt.confirm:hover {
   background-color: #2b983c; }
 
-.map .hide-content .convert .after-all .button-block .butt:hover span {
+.button-block .butt:hover span {
   color: white; }
 
-.map .hide-content .convert .after-all .button-block .butt.confirm:before {
+.button-block .butt.confirm:before {
   content: '';
   position: absolute;
   top: 0;
@@ -219,7 +219,7 @@
   background-repeat: no-repeat;
   background-color: #2b983c; }
 
-.map .hide-content .convert .after-all .button-block .butt.not-confirm {
+.button-block .butt.not-confirm {
   background-color: white;
   border: 1px solid #ff3c3c;
   -webkit-transition: all 0.3s;
@@ -227,7 +227,7 @@
   -o-transition: all 0.3s;
   transition: all 0.3s; }
 
-.map .hide-content .convert .after-all .button-block .butt.not-confirm span {
+.button-block .butt.not-confirm span {
   color: #ff3c3c;
   margin-left: 56px;
   -webkit-transition: all 0.3s;
@@ -235,13 +235,13 @@
   -o-transition: all 0.3s;
   transition: all 0.3s; }
 
-.map .hide-content .convert .after-all .button-block .butt.not-confirm:hover {
+.button-block .butt.not-confirm:hover {
   background-color: #ff3c3c; }
 
-.map .hide-content .convert .after-all .button-block .butt.not-confirm:hover span {
+.button-block .butt.not-confirm:hover span {
   color: white; }
 
-.map .hide-content .convert .after-all .button-block .butt.not-confirm:before {
+.button-block .butt.not-confirm:before {
   content: '';
   position: absolute;
   top: 0;
