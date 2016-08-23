@@ -92,6 +92,18 @@ class SettingsAdmin extends Admin
                 $required = false;
             }
         }
+        switch ($settings->getType()){
+            case 'checkbox':
+                $valueType = 'checkbox';
+                break;
+            case 'text':
+                $valueType = 'textarea';
+                break;
+            default:
+                $valueType = 'text';
+        }
+
+
         $formMapper
             ->add('uniqid','hidden')
             ->add('code')
@@ -101,7 +113,7 @@ class SettingsAdmin extends Admin
                 'data' => ($settings && strlen($settings->getType()) > 0) ? $settings->getType() : 'image',
                 'help' => $imagePreview,
             ))
-            ->add('value', ($settings->getType()=='chackbox'?'checkbox':'text'), array('required' => $required, 'help' => '<script src="/js/sonata_settings.js"></script>'))
+            ->add('value', $valueType, array('required' => $required, 'help' => '<script src="/js/sonata_settings.js"></script>'))
         ;
     }
 

@@ -70,6 +70,9 @@ class BlogAdmin extends AbstractAdmin
         $fileImageOptions = array('required' => false);
         if ($object && ($webPath = $object->getImageUrl()))
             $fileImageOptions['help'] = '<img src="'.$webPath.'" class="admin-preview thumbnail" style="max-width: 500px; max-height: 500px;"/>';
+        $fileImageDetailOptions = array('required' => false);
+        if ($object && ($webPath = $object->getImageDetailUrl()))
+            $fileImageDetailOptions['help'] = '<img src="'.$webPath.'" class="admin-preview thumbnail" style="max-width: 500px; max-height: 500px;"/>';
 
         $formMapper
             ->tab('Главная')
@@ -77,6 +80,7 @@ class BlogAdmin extends AbstractAdmin
                     ->add('title')
                     ->add('createAt','date')
                     ->add('fileImage','file',$fileImageOptions)
+                    ->add('fileImageDetail','file',$fileImageDetailOptions)
                     ->add('anotation','textarea')
                     ->add('text', 'textarea', array('attr' => array('class'=>'ckeditor'), 'help' => '<script src="/js/admin/ckeditor/ckeditor.js" type="text/javascript"></script>'))
                 ->end()
@@ -102,6 +106,7 @@ class BlogAdmin extends AbstractAdmin
             ->add('id')
             ->add('createAt', null, array('format' => 'Y-m-d H:i'))
             ->add('image', 'image', array('template' => 'PokemonBundle:Default:image_value.html.twig'))
+            ->add('imageDetail', 'image', array('template' => 'PokemonBundle:Default:image_detail_value.html.twig'))
             ->add('title')
             ->add('anotation')
             ->add('text',null,['template'=>'PokemonBundle:Default:fck.html.twig'])
@@ -129,5 +134,6 @@ class BlogAdmin extends AbstractAdmin
          * @var Blog $pm
          */
         $pm->upload('Image');
+        $pm->upload('ImageDetail');
     }
 }

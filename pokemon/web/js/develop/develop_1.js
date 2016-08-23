@@ -1,4 +1,3 @@
-
 $(window).on( "scroll", function(){
 
     if (  $('.ban-topper-placeholder').length != 0 ){    
@@ -302,4 +301,3 @@ $(window).load(function(){
 $(window).resize(function(){
 
 });
-

@@ -1,18 +1,17 @@
 {% extends 'PokemonBundle:Front:Base.html.twig' %}
 
 {% block banner %}
-    {% if banner is defined %}
-        <div class="banner-wrap">
-            <div class="contein">
-                <img src="{{ banner }}" alt="">
-            </div>
-        </div>
-    {% endif %}
 {% endblock %}
 
 {% block pokeball %}
-    {% if is_auth == false %}
-        <div class="find-pockemon">
+    {% if is_auth %}
+        <div class="banner-wrap">
+            <div class="contein">
+                <img src="/images/pok-ban.jpg" alt="">
+            </div>
+        </div>
+    {% else %}
+        <div class="find-pockemon" style="background-image: url(/images/pok-ban2.jpg);">
             <div class="contein">
                 <div class="head-row">
                     <h1>Найти своего покемона</h1>
@@ -282,7 +281,7 @@
                             <div class="top"> 2km</div>
                             <div class="circle">
                                 <div class="con">
-                                    <img src="images/bubl.png" alt="">
+                                    <img src="/images/bubl.png" alt="">
                                 </div>
                             </div>
                             <div class="named">Бульбазавр</div>
@@ -291,7 +290,7 @@
                             <div class="top"> 2km</div>
                             <div class="circle">
                                 <div class="con">
-                                    <img src="images/bubl.png" alt="">
+                                    <img src="/images/bubl.png" alt="">
                                 </div>
                             </div>
                             <div class="named">Бульбазавр</div>
@@ -300,36 +299,7 @@
                             <div class="top"> 2km</div>
                             <div class="circle">
                                 <div class="con">
-                                    <img src="images/bubl.png" alt="">
-                                </div>
-                            </div>
-                            <div class="named">Бульбазавр</div>
-                        </div>
-                    </div>
-                    <div class="sliding-items">
-                        <div class="item">
-                            <div class="top"> 2km</div>
-                            <div class="circle">
-                                <div class="con">
-                                    <img src="images/bubl.png" alt="">
-                                </div>
-                            </div>
-                            <div class="named">Бульбазавр</div>
-                        </div>
-                        <div class="item">
-                            <div class="top"> 2km</div>
-                            <div class="circle">
-                                <div class="con">
-                                    <img src="images/bubl.png" alt="">
-                                </div>
-                            </div>
-                            <div class="named">Бульбазавр</div>
-                        </div>
-                        <div class="item">
-                            <div class="top"> 2km</div>
-                            <div class="circle">
-                                <div class="con">
-                                    <img src="images/bubl.png" alt="">
+                                    <img src="/images/bubl.png" alt="">
                                 </div>
                             </div>
                             <div class="named">Бульбазавр</div>
@@ -340,7 +310,7 @@
                             <div class="top"> 2km</div>
                             <div class="circle">
                                 <div class="con">
-                                    <img src="images/bubl.png" alt="">
+                                    <img src="/images/bubl.png" alt="">
                                 </div>
                             </div>
                             <div class="named">Бульбазавр</div>
@@ -349,7 +319,7 @@
                             <div class="top"> 2km</div>
                             <div class="circle">
                                 <div class="con">
-                                    <img src="images/bubl.png" alt="">
+                                    <img src="/images/bubl.png" alt="">
                                 </div>
                             </div>
                             <div class="named">Бульбазавр</div>
@@ -358,36 +328,7 @@
                             <div class="top"> 2km</div>
                             <div class="circle">
                                 <div class="con">
-                                    <img src="images/bubl.png" alt="">
-                                </div>
-                            </div>
-                            <div class="named">Бульбазавр</div>
-                        </div>
-                    </div>
-                    <div class="sliding-items">
-                        <div class="item">
-                            <div class="top"> 2km</div>
-                            <div class="circle">
-                                <div class="con">
-                                    <img src="images/bubl.png" alt="">
-                                </div>
-                            </div>
-                            <div class="named">Бульбазавр</div>
-                        </div>
-                        <div class="item">
-                            <div class="top"> 2km</div>
-                            <div class="circle">
-                                <div class="con">
-                                    <img src="images/bubl.png" alt="">
-                                </div>
-                            </div>
-                            <div class="named">Бульбазавр</div>
-                        </div>
-                        <div class="item">
-                            <div class="top"> 2km</div>
-                            <div class="circle">
-                                <div class="con">
-                                    <img src="images/bubl.png" alt="">
+                                    <img src="/images/bubl.png" alt="">
                                 </div>
                             </div>
                             <div class="named">Бульбазавр</div>
@@ -398,7 +339,7 @@
                             <div class="top"> 2km</div>
                             <div class="circle">
                                 <div class="con">
-                                    <img src="images/bubl.png" alt="">
+                                    <img src="/images/bubl.png" alt="">
                                 </div>
                             </div>
                             <div class="named">Бульбазавр</div>
@@ -407,7 +348,7 @@
                             <div class="top"> 2km</div>
                             <div class="circle">
                                 <div class="con">
-                                    <img src="images/bubl.png" alt="">
+                                    <img src="/images/bubl.png" alt="">
                                 </div>
                             </div>
                             <div class="named">Бульбазавр</div>
@@ -416,36 +357,7 @@
                             <div class="top"> 2km</div>
                             <div class="circle">
                                 <div class="con">
-                                    <img src="images/bubl.png" alt="">
-                                </div>
-                            </div>
-                            <div class="named">Бульбазавр</div>
-                        </div>
-                    </div>
-                    <div class="sliding-items">
-                        <div class="item">
-                            <div class="top"> 2km</div>
-                            <div class="circle">
-                                <div class="con">
-                                    <img src="images/bubl.png" alt="">
-                                </div>
-                            </div>
-                            <div class="named">Бульбазавр</div>
-                        </div>
-                        <div class="item">
-                            <div class="top"> 2km</div>
-                            <div class="circle">
-                                <div class="con">
-                                    <img src="images/bubl.png" alt="">
-                                </div>
-                            </div>
-                            <div class="named">Бульбазавр</div>
-                        </div>
-                        <div class="item">
-                            <div class="top"> 2km</div>
-                            <div class="circle">
-                                <div class="con">
-                                    <img src="images/bubl.png" alt="">
+                                    <img src="/images/bubl.png" alt="">
                                 </div>
                             </div>
                             <div class="named">Бульбазавр</div>
@@ -456,7 +368,25 @@
                             <div class="top"> 2km</div>
                             <div class="circle">
                                 <div class="con">
-                                    <img src="images/bubl.png" alt="">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
                                 </div>
                             </div>
                             <div class="named">Бульбазавр</div>
@@ -467,7 +397,7 @@
                             <div class="top"> 2km</div>
                             <div class="circle">
                                 <div class="con">
-                                    <img src="images/bubl.png" alt="">
+                                    <img src="/images/bubl.png" alt="">
                                 </div>
                             </div>
                             <div class="named">Бульбазавр</div>
@@ -476,7 +406,336 @@
                             <div class="top"> 2km</div>
                             <div class="circle">
                                 <div class="con">
-                                    <img src="images/bubl.png" alt="">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                    </div>
+                    <div class="sliding-items">
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                    </div>
+                    <div class="sliding-items">
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                    </div>
+                    <div class="sliding-items">
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="map">
+        <div class="top-row">
+            <div class="title">КАРТА</div>
+        </div>
+        <div class="row">
+            <div id="map" class="activate"></div>
+            <div class="hide-content activate confirm-pokemon">
+                <div class="convert">
+                    <div class="topper">
+                        <div class="con">
+                            <img src="/images/bubl.png" alt="">
+                        </div>
+                    </div>
+                    <div class="after-all">
+                        <div class="top-name"> Бульбазавр</div>
+                        <div class="distance"> Растояние до покемона 5 км </div>
+                        <div class="button-block">
+                            <div class="butt confirm">
+                                <span>Подтвердить</span>
+                            </div>
+                            <div class="butt not-confirm">
+                                <span>Отказать</span>
+                            </div>
+                        </div>
+                        <div class="road-is-so-far">
+                            <div class="contr">
+                                <span>Проложить путь</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#<div class="contein-search">
+        <div class="mbox">
+            <div class="top-row">
+                <div class="form-part">
+                    <form action="" novalidate>
+                        <div class="form-row">
+                            <input type="text" name="search-pockemon" placeholder="Search" required="required">
+                        </div>
+                    </form>
+                </div>
+                <div class="select-part">
+                    <div class="drop"> </div>
+                </div>
+            </div>
+            <div class="slider-row">
+                <div class="content">
+                    <div class="sliding-items">
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                    </div>
+                    <div class="sliding-items">
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                    </div>
+                    <div class="sliding-items">
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                    </div>
+                    <div class="sliding-items">
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                    </div>
+                    <div class="sliding-items">
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                    </div>
+                    <div class="sliding-items">
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                    </div>
+                    <div class="sliding-items">
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                    </div>
+                    <div class="sliding-items">
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
+                                </div>
+                            </div>
+                            <div class="named">Бульбазавр</div>
+                        </div>
+                        <div class="item">
+                            <div class="top"> 2km</div>
+                            <div class="circle">
+                                <div class="con">
+                                    <img src="/images/bubl.png" alt="">
                                 </div>
                             </div>
                             <div class="named">Бульбазавр</div>
@@ -496,7 +755,7 @@
                 <div class="convert">
                     <div class="topper">
                         <div class="con">
-                            <img src="images/bubl.png" alt="">
+                            <img src="/images/bubl.png" alt="">
                         </div>
                     </div>
                     <div class="after-all">
@@ -523,5 +782,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>#}
 {% endblock %}

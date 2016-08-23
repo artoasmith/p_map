@@ -1,27 +1,40 @@
 
+ /* load form */
 
+        function formCharge() {
+            if ( !$('.contact-form-item').length == "" ){
+                $('.contact-form-item').find('input').each(function(){
+
+                    if( !$(this).val().length == 0 ) {
+                        $(this).closest('.form_input').addClass('dirty');
+                    }
+
+                });
+            }
+        }
+        
+    /* load form */
 
 $(document).ready(function(){
 
     /* form beutify */
 
-        $('form input').on('focusin', function(){
+        $('input').on('focusin', function(){
             $(this).closest('.form_input').addClass('focused');
-            console.log('in');
         });
 
-        $('form input').on('focusout', function(){
+        $('input').on('focusout', function(){
             $(this).closest('.form_input').removeClass('focused');
-            console.log('out');
         });
 
-        $('form input').on('keyup', function(){
+        $('input').on('keyup', function(){
             
             if( $(this).val().length == 0 ){
                 $(this).closest('.form_input').removeClass('dirty');
             } else {
                 $(this).closest('.form_input').addClass('dirty').removeClass('error');
             }
+
         });
 
     /* form beutify */
@@ -139,27 +152,27 @@ $(document).ready(function(){
 
     /* pockeball open */
 
+    /* slider */
 
+        $('.slider-row>.content').slick({
+            infinite: false,
+            dots: true,
+            slidesToShow: 5,
+            slidesToScroll: 1, 
+            swipeToSlide: true
+        });
 
-    $('.form-part>form').on('submit', function(){
-        console.log( $(this).find('input').val() );
-        return false;
-    });
-
+    /* slider */
 });
 
 $(window).load(function(){
-    /* load form */
-        if ( !$('form').length == 0 ){
-            $('form').find('input').each(function(){
 
-                if( !$(this).val() ==''  ) {
-                    $(this).closest('.form_input').addClass('dirty');
-                }
-
-            })
-        }
     /* load form */
+
+        formCharge();
+        
+    /* load form */
+
 });
 
 $(window).resize(function(){

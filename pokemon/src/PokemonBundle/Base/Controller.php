@@ -197,23 +197,31 @@ class Controller extends BaseController
         return $response;
     }
 
-    public function getDefaultTemplateParams(){
-        $yaml = new Parser();
-        $a = $yaml->parse(file_get_contents(__DIR__ . '/../../../app/config/params.yml'));
-
-        //get settings
+    public function getSettingsGroup($categoryCode)
+    {
         $settings = $this->getDoctrine()
-                        ->getRepository('PokemonBundle:Settings')
-                        ->findBy(['category'=>'base']);
-        $a['settings'] = [];
+            ->getRepository('PokemonBundle:Settings')
+            ->findBy(['category'=>$categoryCode]);
+        $a = [];
+
         /**
          * @var Settings $setting
          */
         if(!empty($settings)){
             foreach ($settings as $setting){
-                $a['settings'][$setting->getCode()] = $setting->getValue();
+                $a[$setting->getCode()] = $setting->getSettingValue();
             }
         }
+        return $a;
+    }
+
+    public function getDefaultTemplateParams(){
+        $yaml = new Parser();
+        $a = $yaml->parse(file_get_contents(__DIR__ . '/../../../app/config/params.yml'));
+
+        //get settings
+        $a['settings'] = $this->getSettingsGroup('base');
+
         /**
          * @var User $user
          */

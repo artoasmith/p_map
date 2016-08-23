@@ -60,7 +60,7 @@ class AuthenticationHandlerController implements AuthenticationSuccessHandlerInt
 
             } else {
 
-                $url = $this->router->generate( 'home_page' );
+                $url = $this->router->generate( 'pokemon_default_index' );
 
             } // end if
 

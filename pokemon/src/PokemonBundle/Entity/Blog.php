@@ -66,6 +66,18 @@ class Blog extends UploaderEntity
     private $fileImage;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="imageDetail", type="string", length=255, nullable=true)
+     */
+    private $imageDetail;
+
+    /**
+     * @Assert\File(maxSize="10000000")
+     */
+    private $fileImageDetail;
+
+    /**
      * @var boolean
      * @ORM\Column(name="enabled", type="boolean")
      */
@@ -254,6 +266,53 @@ class Blog extends UploaderEntity
     public function setFileImage($fileImage)
     {
         $this->fileImage = $fileImage;
+    }
+
+    /**
+     * Set imageDetail
+     *
+     * @param string $image
+     * @return Blog
+     */
+    public function setImageDetail($image)
+    {
+        $this->imageDetail = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get imageDetail
+     *
+     * @return string
+     */
+    public function getImageDetail()
+    {
+        return $this->imageDetail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageDetailUrl()
+    {
+        return (empty($this->imageDetail)?'':$this->defaultFolderPath().$this->imageDetail);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFileImageDetail()
+    {
+        return $this->fileImageDetail;
+    }
+
+    /**
+     * @param mixed $fileImage
+     */
+    public function setFileImageDetail($fileImage)
+    {
+        $this->fileImageDetail = $fileImage;
     }
 
     /**
