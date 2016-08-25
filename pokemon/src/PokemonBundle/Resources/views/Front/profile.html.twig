@@ -501,7 +501,23 @@
                     <li>
                         <div class="my-added-pockemon">
                             <div class="left-list">
-                                <ul>
+                                <script>var user_points = [
+                                        {% if user_points is defined and user_points is not empty %}
+                                            {% for point in user_points %}
+                                                {
+                                                    id: {{ point.id }},
+                                                    locationX: {{ point.locationX }},
+                                                    locationY: {{ point.locationY }},
+                                                    pokemon: {{ point.pokemon.id }},
+                                                    jsonInfo: '{{ point.jsonInfo }}',
+                                                    confirm: {{ point.confirm }},
+                                                    enabled: {{ point.enabled }}
+                                                }{{ (loop.last?'':',') }}
+                                            {% endfor %}
+                                        {% endif %}
+                                        ];
+                                </script>
+                                {#<ul>
                                     <li>
                                         <div class="title-row-table">
                                             <div class="name"> Бульбазавр </div>
@@ -691,7 +707,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                </ul>
+                                </ul>#}
                             </div>
                             <div class="right-map">
                                 <div id="my-pockemon"></div>

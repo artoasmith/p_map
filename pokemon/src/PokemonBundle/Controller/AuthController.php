@@ -278,12 +278,17 @@ class AuthController extends Controller
      * @Route("/profile")
      */
     public function profileAction(){
+        /**
+         * @var User $a
+         */
         $a = $this->getUser();
         if(!$a)
             return $this->redirect('/login');
 
         $params = array_merge($this->getProfileInfo($a),$this->getDefaultTemplateParams());
-        $params['test'] = '<script>alert("80085");</script>';
+        $params['user_points'] = $this->getDoctrine()
+                                      ->getRepository('PokemonBundle:Point')
+                                      ->findBy(['author'=>$a->getId()],['createAt'=>'DESC','id'=>'DESC']);
         /////
         return $this->render('PokemonBundle:Front:profile.html.twig',$params)->setSharedMaxAge(0);
     }
