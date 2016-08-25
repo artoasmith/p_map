@@ -7,7 +7,7 @@
     var stashNames = [];
     var markers = [];
     var markersNew = [] ;
-    var map ;
+    var map,  map2 ;
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
 
@@ -268,8 +268,25 @@ function addContentToHell(){
                 infinite: false,
                 dots: true,
                 slidesToShow: 5,
-                slidesToScroll: 3, 
-                swipeToSlide: true
+                slidesToScroll: 1, 
+                swipeToSlide: true,
+                responsive: [
+                    {
+                    breakpoint: 1100,
+                    settings: {
+                        slidesToShow: 4,
+                        slidesToScroll: 1
+                        }
+                    },
+                    {
+                    breakpoint: 820,
+                    settings: {
+                        dots: false,
+                        slidesToShow: 3,
+                        slidesToScroll: 1
+                        }
+                    }
+                ]
             });
 
         }, 10);        
@@ -409,13 +426,162 @@ function googleMap(mapWrap) {
 
             addMarker(e.latLng);
             currentPosition = [  e.latLng.lat() , e.latLng.lng() ] ;
-            superAjax();
+            superAjax(1);
         });
 
      directionsDisplay.setMap(map);
 
     }
     initialize();
+}
+
+function googleMap2(mapWrap) {
+    function initialize() {
+        var myLatlng = new google.maps.LatLng( 36 , 36 );
+        var myOptions = {
+            zoom: 8,
+            center: myLatlng,
+            disableDefaultUI: false, //без управляющих елементов
+            mapTypeId: google.maps.MapTypeId.ROADMAP, // SATELLITE - снимки со спутника,
+            scaleControl: false,
+            scrollwheel: true,
+            navigationControl: false,
+            mapTypeControl: false,
+            styles: [{"featureType":"administrative","elementType":"all","stylers":[{"visibility":"on"},{"lightness":33}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#c5dac6"}]},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":20}]},{"featureType":"road","elementType":"all","stylers":[{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#c5c6c6"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#e4d7c6"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#fbfaf7"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#9ea7b2"}]}],
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.LEFT_BOTTOM // позиция слева внизу для упр елементов
+            }
+        }
+        map2 = new google.maps.Map(document.getElementById(mapWrap), myOptions);  
+        var geocoder = new google.maps.Geocoder; 
+        var infowindow = new google.maps.InfoWindow;
+
+        function addMarkerNew(location) {
+
+            var image = 'images/pock.png' ;
+            var markerA = new google.maps.Marker({
+                position: location,
+                map: map2,
+                icon: image
+            });
+            map2.panTo( markerA.getPosition() );
+
+            markers.push(markerA);
+        }
+
+        function geocodeLatLng(geocoder, map,  positionMarker , infowindow) {
+           
+            geocoder.geocode({'location': positionMarker }, function(results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                     var image = 'images/pock.png' ;
+                        var markerA = new google.maps.Marker({
+                            position: positionMarker,
+                            map: map2,
+                            icon: image
+                        });
+                        map2.panTo( markerA.getPosition() );
+
+                        markers.push(markerA);
+
+
+                        infowindow.setContent(results[1].formatted_address);
+                        infowindow.open(map, markerA);
+
+                    /* -------------------  */
+
+                    console.log( results[1].formatted_address ) ;
+
+                    /* -------------------  */
+
+                } else {
+                    window.alert('No results found');
+                }
+                } else {
+                window.alert('Geocoder failed due to: ' + status);
+                }
+            });
+        }
+
+
+
+        map2.addListener('click', function(e) {
+           // addMarkerNew(e.latLng);
+
+            geocodeLatLng(geocoder, map2, e.latLng, infowindow);
+
+            currentPosition = [  e.latLng.lat() , e.latLng.lng() ] ;
+        });
+
+     // directionsDisplay.setMap(map);
+
+    }
+    initialize();
+}
+
+
+function myAddedPockemon() {
+    
+    console.log(user_points);
+
+    var listOfMyPock = '<ul>';
+
+    for (var i = 0; i < user_points.length; i++) {
+
+        listOfMyPock += "<li data-id="+ 123 +">"+
+                            "<div class='title-row-table'>"+
+                                "<div class='name'> Бульбазавр </div>"+
+                                "<div class='con'>"+
+                                    "<img src='images/bubl.png' alt=''>"+
+                                "</div>"+
+                            "</div>"+
+                            "<div class='hovered-content'>"+
+                                "<div class='row-adress'>" +
+                                    "<span>Москва, 9-я Чоботовская аллея, 17</span>" +
+                                "</div>"+
+                                "<div class='results'>"+
+                                    "<div class='good'>"+
+                                        "<div class='tili'>Одобрение</div>"+
+                                        "<div class='vali'>08</div>"+
+                                    "</div>"+
+                                    "<div class='bad'>"+
+                                        "<div class='tili'>Отрицание</div>"+
+                                        "<div class='vali'>08</div>" +
+                                    "</div>"+
+                                "</div>"+
+                                "<div class='row-pay-me'>"+
+                                    "<div class='hred'>Вознаграждение</div>"+
+                                    "<div class='price'>25.75 $</div>"+
+                                "</div>"+
+                            "</div>"+
+                        "</li>";
+        
+    }
+
+    listOfMyPock += '</ul>';
+
+    $('.my-added-pockemon').find('.left-list').html( listOfMyPock );
+
+}
+
+
+
+function addNewPockemonToMap() {
+
+    google.maps.event.addDomListener(window, "load", googleMap2('add-pockemon'));
+    
+    $('.add-new-pockemon').addClass('start');
+
+    /* 
+
+    $('.add-new-pockemon').removeClass('start').addClass('stage1');
+
+    $('.add-new-pockemon').removeClass('stage1').addClass('stage2');
+
+    $('.add-new-pockemon').removeClass('stage2').addClass('stage3');
+
+    */
+    
 }
 
 $(document).ready(function(){
@@ -504,7 +670,11 @@ $(document).ready(function(){
 
 });
 
+
+
 $(window).load(function(){
+
+
 
     if( $('.slider-row').length != 0 ){
         addContentToHell();
@@ -514,6 +684,17 @@ $(window).load(function(){
     if( $('body').find('.map-page').length == 1 ){
         onLoadStartData();
     };
+    
+    if( $('body').find('.my-added-pockemon').length == 1 ){
+        /*
+        myAddedPockemon();
+        */
+    };
+
+    if( $('body').find('.add-new-pockemon').length == 1 ){
+        addNewPockemonToMap();
+    };
+    
     
 
 });

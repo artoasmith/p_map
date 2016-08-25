@@ -18,65 +18,6 @@ $(window).on( "scroll", function(){
 });
 
 
-function googleMapContact(mapWrap){
-    function initialize() {
-        var cordXcontact  = 0 ; 
-        var cordYcontact  = 0 ;
-        var myLatlng = new google.maps.LatLng(cordXcontact ,cordYcontact);
-        var myOptions = {
-            zoom: 5,
-            center: myLatlng,
-             styles: [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}],
-            disableDefaultUI: false, //без управляющих елементов
-            mapTypeId: google.maps.MapTypeId.ROADMAP, // SATELLITE - снимки со спутника,
-            zoomControlOptions: {
-               position: google.maps.ControlPosition.LEFT_BOTTOM // позиция слева внизу для упр елементов
-            }
-        }
-        var map = new google.maps.Map(document.getElementById(mapWrap), myOptions);
-
-        var image = 'images/map-location-pin.png';   // иконка картинкой
-
-        
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            map: map,
-            animation: google.maps.Animation.DROP, // анимация при загрузке карты
-            icon: image //  иконка картинкой
-
-        });
-
-        /*анимация при клике на маркер*/
-        marker.addListener('click', toggleBounce);
-        function toggleBounce() {
-          if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-          } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-          }
-        }
-        /*/анимация при клике на маркер*/
-
-        /*По клику открываеться инфоблок*/
-        google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map,marker);
-        });
-
-    }
-    initialize();
-}
-
-if ( $('body').find('#map-contact').length == 1 ){
-    google.maps.event.addDomListener(window, "load", googleMapContact('map-contact'));
-}
-
-if ( $('body').find('#add-pockemon').length == 1 ){
-    google.maps.event.addDomListener(window, "load", googleMapContact('add-pockemon'));
-}
-
-
-
-
 /* logick tubber  */
 
     $(document).on('click', '.lister-tubber>ul>li', function(){
@@ -288,11 +229,14 @@ $(window).load(function(){
 
     if ( $('.cabinet-detail').length == 1 ) {
 
+
         $('.cabinet-detail').find('.center>ul>li').each(function(){
             if (  !$(this).hasClass('active') ){
                 $(this).css('display', 'none');
             }
-        })
+        });
+
+        $('.cabinet-detail').find('.left>ul>li:first').click();
 
     }
 

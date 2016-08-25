@@ -153,22 +153,60 @@ $(document).ready(function(){
     /* pockeball open */
 
     /* slider */
-    /*
-
+    
+/*
         $('.slider-row>.content').slick({
             infinite: false,
             dots: true,
             slidesToShow: 5,
             slidesToScroll: 1, 
-            swipeToSlide: true
+            swipeToSlide: true,
+            responsive: [
+                {
+                breakpoint: 1100,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1
+                    }
+                },
+                {
+                breakpoint: 820,
+                settings: {
+                    dots: false,
+                    slidesToShow: 3,
+                    slidesToScroll: 1
+                    }
+                }
+            ]
         });
 
-    */
+    */    
+
+
 
     /* slider */
 });
 
+function changeViewport() {
+    $(window).resize(function () {
+
+        whatViewport();
+
+    });
+
+    function whatViewport() {
+        var windowWidth = screen.width;
+        var viewport = $("meta[name=viewport]");
+        viewport.attr('content', 'width=device-width');
+        if (windowWidth <= 640) {
+            viewport.attr('content', 'width=640');
+        }
+
+    };
+}
+
 $(window).load(function(){
+     changeViewport();
 
     /* load form */
 
