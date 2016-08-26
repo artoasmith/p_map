@@ -56,7 +56,6 @@ function onLoadStartData(){
 
 }
 
-
 function makeRoadToPockemon(){
     $('.road-is-so-far').click(function () {
     
@@ -227,6 +226,42 @@ function superAjax( page ) {
     });
 }
 
+function searchOnMAin(){
+    var le = 0;
+    var slideTo = 0 ;
+
+    $('.contein-search form input').on('keyup', function(){
+
+        var whatISearch = ($(this).val()).toLowerCase() ;
+        
+        if ( (whatISearch.length > 0 ) && ( le != whatISearch.length ) ){
+            
+            $('.slider-row').find('.item').removeClass('it-can-be');
+            $('.slider-row').find('.item').each(function(){
+
+                if ( whatISearch == ($(this).find('.named').html().substring( whatISearch.length, 0)).toLowerCase() ){
+
+                    $(this).addClass('it-can-be');
+                    slideTo = $(this).closest('.sliding-items').index() ;
+                    return ;
+                } 
+
+            });
+        }
+
+        le = whatISearch.length;
+
+        //$('.contein-search').find('.slider-row>.content').slickGoTo(1);
+        $('#iwanttoslide').slick('slickGoTo', slideTo) ;
+        //console.log(slideTo);
+
+    });
+
+    $('.contein-search form').on('submit', function(){
+        return false ;
+    });
+}
+
 function addContentToHell(){
 
     // pokemon
@@ -264,7 +299,7 @@ function addContentToHell(){
 
         setTimeout( function(){
 
-            $('.slider-row>.content').slick({
+            $('#iwanttoslide').slick({
                 infinite: false,
                 dots: true,
                 slidesToShow: 5,
@@ -275,6 +310,7 @@ function addContentToHell(){
                     breakpoint: 1100,
                     settings: {
                         slidesToShow: 4,
+                        dots: false,
                         slidesToScroll: 1
                         }
                     },
@@ -289,7 +325,7 @@ function addContentToHell(){
                 ]
             });
 
-        }, 10);        
+        }, 1000);        
 
     /* slider */
 
@@ -341,9 +377,9 @@ function googleMap(mapWrap) {
             center: myLatlng,
             disableDefaultUI: false, //без управляющих елементов
             mapTypeId: google.maps.MapTypeId.ROADMAP, // SATELLITE - снимки со спутника,
-            scaleControl: false,
+            scaleControl: true,
             scrollwheel: true,
-            navigationControl: false,
+            navigationControl: true,
             mapTypeControl: false,
             styles: [{"featureType":"administrative","elementType":"all","stylers":[{"visibility":"on"},{"lightness":33}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#c5dac6"}]},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":20}]},{"featureType":"road","elementType":"all","stylers":[{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#c5c6c6"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#e4d7c6"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#fbfaf7"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#9ea7b2"}]}],
             zoomControlOptions: {
@@ -519,10 +555,75 @@ function googleMap2(mapWrap) {
     initialize();
 }
 
+function googleMap3(mapWrap) {
+    function initialize() {
+        var myLatlng = new google.maps.LatLng(36 , 36);
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        var myOptions = {
+            zoom: 8,
+            center: myLatlng,
+            disableDefaultUI: false, //без управляющих елементов
+            mapTypeId: google.maps.MapTypeId.ROADMAP, // SATELLITE - снимки со спутника,
+            scaleControl: true,
+            scrollwheel: true,
+            navigationControl: true,
+            mapTypeControl: false,
+            styles: [{"featureType":"administrative","elementType":"all","stylers":[{"visibility":"on"},{"lightness":33}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#c5dac6"}]},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":20}]},{"featureType":"road","elementType":"all","stylers":[{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#c5c6c6"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#e4d7c6"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#fbfaf7"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#9ea7b2"}]}],
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.LEFT_BOTTOM // позиция слева внизу для упр елементов
+            }
+        }
+        map3 = new google.maps.Map(document.getElementById(mapWrap), myOptions);
+
+
+        for ( var i = 0;  i < user_points.length; i++ ){
+
+            var infowindow = new google.maps.InfoWindow({
+                content: '<h1>' + user_points[i].name + '</h1>'
+            });
+
+            var myLatlng2 = new google.maps.LatLng( user_points[i].locationY, user_points[i].locationX );
+            var image = user_points[i].image ;
+
+            var marker = new google.maps.Marker({
+                position: myLatlng2,
+                map: map3,
+                title: user_points[i].name,
+                dataSum: user_points[i].id,
+               // animation: google.maps.Animation.DROP, // анимация при загрузке карты
+                icon: image //  иконка картинкой
+            });
+
+            markers.push(marker);
+            makeInfoWindowEvent(map3, infowindow, marker);
+        }
+
+        makeInfoWindowEvent(map3, infowindow, marker) ;
+            
+        marker.addListener('click', toggleBounce);
+            
+        function toggleBounce() {
+
+            if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+            
+        }
+
+     directionsDisplay.setMap(map);
+
+    }
+    initialize();
+}
+
 
 function myAddedPockemon() {
     
     console.log(user_points);
+
+    google.maps.event.addDomListener(window, "load", googleMap3('my-pockemon'));
 
     var listOfMyPock = '<ul>';
 
@@ -564,8 +665,6 @@ function myAddedPockemon() {
 
 }
 
-
-
 function addNewPockemonToMap() {
 
     google.maps.event.addDomListener(window, "load", googleMap2('add-pockemon'));
@@ -586,6 +685,11 @@ function addNewPockemonToMap() {
 
 $(document).ready(function(){
 
+    if (  $('body').find('.contein-search').length == 1 ){
+        searchOnMAin();     
+
+    }
+
     /* tabs */
         $('.displaying>li').on('click', function(){
             $(this).index();
@@ -605,6 +709,7 @@ $(document).ready(function(){
     /* tabs */
 
     /* sorting */
+    /*
         $('.sorting>li').on('click', function(){
 
             var steak;
@@ -668,11 +773,20 @@ $(document).ready(function(){
 
     /* road */
 
+    
+
 });
 
 
 
+
+
 $(window).load(function(){
+   
+
+    if( $('body').find('#map').length == 1){
+        onLoadStartData() ;
+    };
 
 
 
@@ -680,15 +794,16 @@ $(window).load(function(){
         addContentToHell();
     };
     
-
+/*
     if( $('body').find('.map-page').length == 1 ){
         onLoadStartData();
     };
+*/
     
     if( $('body').find('.my-added-pockemon').length == 1 ){
-        /*
+
         myAddedPockemon();
-        */
+    
     };
 
     if( $('body').find('.add-new-pockemon').length == 1 ){

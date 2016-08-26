@@ -117,6 +117,9 @@ img {
 /* /adapted styles for wp-admin panel */
 /* /base styles */
 /* wraps styling*/
+.global-wrapper {
+  min-width: 640px; }
+
 .mbox {
   max-width: 1024px;
   width: 100%;

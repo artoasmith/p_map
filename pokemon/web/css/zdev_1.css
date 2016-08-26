@@ -472,7 +472,11 @@
           padding: 0 25px 0 50px;
           background-color: white;
           margin: 5px 0;
-          cursor: pointer; }
+          cursor: pointer;
+          -webkit-transition: all 0.3s;
+          -moz-transition: all 0.3s;
+          -o-transition: all 0.3s;
+          transition: all 0.3s; }
           .cabinet-wrap .cabinet-detail .left ul li:first-child {
             margin-top: 0; }
           .cabinet-wrap .cabinet-detail .left ul li .conteiner {

@@ -321,3 +321,91 @@
   height: 770px; }
 
 /* map */
+.buttr-bro {
+  display: none;
+  width: 60px;
+  height: 60px;
+  position: relative;
+  cursor: pointer; }
+  .buttr-bro b {
+    width: 40px;
+    height: 6px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: white;
+    position: absolute;
+    top: -webkit-calc(50% - 6px/2);
+    top: -moz-calc(50% - 6px/2);
+    top: calc(50% - 6px/2);
+    left: -webkit-calc(50% - 40px/2);
+    left: -moz-calc(50% - 40px/2);
+    left: calc(50% - 40px/2);
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; }
+  .buttr-bro:before {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 6px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: white;
+    position: absolute;
+    top: -webkit-calc(50% - 18px);
+    top: -moz-calc(50% - 18px);
+    top: calc(50% - 18px);
+    left: -webkit-calc(50% - 40px/2);
+    left: -moz-calc(50% - 40px/2);
+    left: calc(50% - 40px/2);
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; }
+  .buttr-bro:after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 6px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: white;
+    position: absolute;
+    bottom: -webkit-calc(50% - 18px);
+    bottom: -moz-calc(50% - 18px);
+    bottom: calc(50% - 18px);
+    left: -webkit-calc(50% - 40px/2);
+    left: -moz-calc(50% - 40px/2);
+    left: calc(50% - 40px/2);
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; }
+  .buttr-bro.active b {
+    opacity: 0; }
+  .buttr-bro.active:before {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    top: 29px; }
+  .buttr-bro.active:after {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    bottom: 25px;
+    left: 12px; }
+
+.find-pockemon {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  max-height: 1800px; }

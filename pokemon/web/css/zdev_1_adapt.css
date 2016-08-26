@@ -1,0 +1,133 @@
+@media screen and (max-width: 1600px) {
+  /* cabinet */
+  .cabinet-wrap .cabinet-detail {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap; }
+    .cabinet-wrap .cabinet-detail .right {
+      display: none; }
+    .cabinet-wrap .cabinet-detail .left {
+      width: 100%;
+      padding: 0 30px; }
+      .cabinet-wrap .cabinet-detail .left ul {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -moz-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -moz-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between; }
+        .cabinet-wrap .cabinet-detail .left ul li {
+          width: -webkit-calc(20% - 10px);
+          width: -moz-calc(20% - 10px);
+          width: calc(20% - 10px);
+          margin-top: 0;
+          margin-bottom: 10px;
+          padding: 0 10px;
+          overflow: hidden; }
+          .cabinet-wrap .cabinet-detail .left ul li .conteiner .con, .cabinet-wrap .cabinet-detail .left ul li .conteiner .custom-img {
+            margin: 0 auto; }
+          .cabinet-wrap .cabinet-detail .left ul li .conteiner span {
+            width: 0;
+            visibility: hidden;
+            color: white; }
+          .cabinet-wrap .cabinet-detail .left ul li:hover .conteiner .con, .cabinet-wrap .cabinet-detail .left ul li:hover .conteiner .custom-img, .cabinet-wrap .cabinet-detail .left ul li.active .conteiner .con, .cabinet-wrap .cabinet-detail .left ul li.active .conteiner .custom-img {
+            margin: 0 auto; }
+          .cabinet-wrap .cabinet-detail .left ul li:hover .conteiner span, .cabinet-wrap .cabinet-detail .left ul li.active .conteiner span {
+            color: WHITE;
+            width: -webkit-calc(100% - 30px);
+            width: -moz-calc(100% - 30px);
+            width: calc(100% - 30px);
+            visibility: visible; }
+    .cabinet-wrap .cabinet-detail .center {
+      width: 100%;
+      padding: 0 30px; }
+  .payment .balance .go-out-money {
+    margin-left: 0; }
+  .payment .balance .my-balance {
+    margin-left: 0; }
+  .my-added-pockemon .left-list {
+    margin-left: 0;
+    width: 50%; }
+  .add-new-pockemon .topper-tab {
+    margin-left: 0; }
+  .add-new-pockemon .left-list {
+    margin-left: 0;
+    width: 50%; }
+  .add-new-pockemon .right-map {
+    margin-right: 0;
+    width: -webkit-calc(50% - 10px);
+    width: -moz-calc(50% - 10px);
+    width: calc(50% - 10px); }
+  /* cabinet */ }
+
+@media screen and (max-width: 1280px) {
+  .blog-wrap .news-row {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around; }
+    .blog-wrap .news-row .item {
+      width: 45%;
+      margin-bottom: 30px;
+      min-width: 390px; } }
+
+@media screen and (max-width: 1024px) {
+  .payment {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap; }
+    .payment .balance {
+      width: 100%; }
+      .payment .balance .go-out-money, .payment .balance .my-balance {
+        margin-right: 0; }
+    .payment .history {
+      width: 100%; }
+  .cabinet-wrap .cabinet-detail .left ul li {
+    width: 75px; }
+    .cabinet-wrap .cabinet-detail .left ul li .conteiner span {
+      -webkit-transition: all 0.1s;
+      -moz-transition: all 0.1s;
+      -o-transition: all 0.1s;
+      transition: all 0.1s; }
+    .cabinet-wrap .cabinet-detail .left ul li:hover, .cabinet-wrap .cabinet-detail .left ul li.active {
+      width: 25%; }
+  .my-added-pockemon {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap; }
+    .my-added-pockemon .right-map {
+      width: 100%;
+      margin-left: 0;
+      height: 480px; }
+    .my-added-pockemon .left-list {
+      width: 100%; }
+  .add-new-pockemon .topper-tab ul li span {
+    font-size: 14px;
+    margin-left: 22px;
+    text-align: center; }
+  .add-new-pockemon .left-list {
+    width: 100%; }
+  .add-new-pockemon .right-map {
+    margin-top: 0;
+    width: 100%;
+    margin-left: 0;
+    height: 480px; }
+  .ban-topper-placeholder {
+    display: none; }
+  .ban-topper {
+    position: static;
+    height: 200px;
+    padding-top: 60px; }
+    .ban-topper .title-row {
+      position: static; } }
