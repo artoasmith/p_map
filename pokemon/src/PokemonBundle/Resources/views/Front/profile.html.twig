@@ -1,7 +1,20 @@
 {% extends 'PokemonBundle:Front:Base.html.twig' %}
 
 {% block content %}
-    <script>var user_points = [
+    <script>
+        var pokemon = [
+            {% if pokemon is defined and pokemon is not empty %}
+            {% for item in pokemon %}
+            {
+                id: {{ item.id }},
+                name: '{{ item.name }}',
+                image: '{{ item.image }}'
+            },
+            {% endfor %}
+            {% endif %}
+        ];
+
+        var user_points = [
             {% if user_points is defined and user_points is not empty %}
             {% for point in user_points %}
             {

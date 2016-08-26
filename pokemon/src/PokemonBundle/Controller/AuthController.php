@@ -289,6 +289,17 @@ class AuthController extends Controller
         $params['user_points'] = $this->getDoctrine()
                                       ->getRepository('PokemonBundle:Point')
                                       ->findBy(['author'=>$a->getId()],['createAt'=>'DESC','id'=>'DESC']);
+        $params['pokemon'] = array_map(
+            function($a){
+                return [
+                    'id'=>$a->getId(),
+                    'name'=>$a->getName(),
+                    'image'=>$a->getImageUrl()
+                ];
+            },
+            $this->getDoctrine()->getRepository('PokemonBundle:Pokemon')->findAll()
+        );
+
         /////
         return $this->render('PokemonBundle:Front:profile.html.twig',$params)->setSharedMaxAge(0);
     }
