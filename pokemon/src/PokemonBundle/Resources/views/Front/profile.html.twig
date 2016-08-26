@@ -1,7 +1,22 @@
 {% extends 'PokemonBundle:Front:Base.html.twig' %}
 
 {% block content %}
-
+    <script>var user_points = [
+            {% if user_points is defined and user_points is not empty %}
+            {% for point in user_points %}
+            {
+                id: {{ point.id }},
+                locationX: {{ point.locationX }},
+                locationY: {{ point.locationY }},
+                pokemon: {{ point.pokemon.id }},
+                jsonInfo: '{{ point.jsonInfo }}',
+                confirm: {{ point.confirm }},
+                enabled: {{ point.enabled }}
+            }{{ (loop.last?'':',') }}
+            {% endfor %}
+            {% endif %}
+        ];
+    </script>
     <div class="cabinet-wrap">
         <div class="title-row">
             <h2>Личный кабинет</h2>
@@ -501,22 +516,7 @@
                     <li>
                         <div class="my-added-pockemon">
                             <div class="left-list">
-                                <script>var user_points = [
-                                        {% if user_points is defined and user_points is not empty %}
-                                            {% for point in user_points %}
-                                                {
-                                                    id: {{ point.id }},
-                                                    locationX: {{ point.locationX }},
-                                                    locationY: {{ point.locationY }},
-                                                    pokemon: {{ point.pokemon.id }},
-                                                    jsonInfo: '{{ point.jsonInfo }}',
-                                                    confirm: {{ point.confirm }},
-                                                    enabled: {{ point.enabled }}
-                                                }{{ (loop.last?'':',') }}
-                                            {% endfor %}
-                                        {% endif %}
-                                        ];
-                                </script>
+
                                 {#<ul>
                                     <li>
                                         <div class="title-row-table">
