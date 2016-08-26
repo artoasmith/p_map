@@ -110,6 +110,8 @@
       width: 100%;
       margin-left: 0;
       height: 480px; }
+      .my-added-pockemon .right-map #my-pockemon {
+        height: 480px; }
     .my-added-pockemon .left-list {
       width: 100%; }
   .add-new-pockemon .topper-tab ul li span {
@@ -123,6 +125,8 @@
     width: 100%;
     margin-left: 0;
     height: 480px; }
+    .add-new-pockemon .right-map #add-pockemon {
+      height: 480px; }
   .ban-topper-placeholder {
     display: none; }
   .ban-topper {

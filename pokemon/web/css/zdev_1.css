@@ -1202,6 +1202,9 @@
     margin: 0 0px 10px 10px;
     height: 770px;
     background-color: red; }
+    .my-added-pockemon .right-map #my-pockemon {
+      height: 770px;
+      width: 100%; }
 
 /* all my pockemon */
 /* add new pockemon*/
@@ -1313,6 +1316,9 @@
     margin: 10px 0px 10px 10px;
     height: 770px;
     background-color: red; }
+    .add-new-pockemon .right-map #add-pockemon {
+      height: 770px;
+      width: 100%; }
   .add-new-pockemon .left-list {
     width: -webkit-calc(50% - 20px);
     width: -moz-calc(50% - 20px);
