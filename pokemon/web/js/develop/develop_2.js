@@ -6,8 +6,9 @@
     var stack = [];
     var stashNames = [];
     var markers = [];
+    var markerAdd = [];
     var markersNew = [] ;
-    var map,  map2 ;
+    var map,  map2 , map3;
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
 
@@ -276,7 +277,7 @@ function addContentToHell(){
         
 
 
-        htmlStack += '<div class="item">'+
+        htmlStack += '<div class="item" data-pockemon="'+ pokemon[i].id +'">'+
                         '<div class="top">'+  '2km' + '</div>'+
                         '<div class="circle">' + 
                             '<div class="con">' +
@@ -366,6 +367,19 @@ function makeInfoWindowEvent(map, infowindow, marker) {
     });
 }
 
+function makeInfoWindowEventForThree(map, infowindow, marker) {
+
+    google.maps.event.addListener(marker, 'click', function() {
+        
+        infowindow.open(map, marker);
+
+        map.panTo( marker.getPosition() );
+
+        setTimeout(function () { infowindow.close(); }, 3000);
+    });
+
+}
+
 function googleMap(mapWrap) {
     function initialize() {
 
@@ -413,7 +427,12 @@ function googleMap(mapWrap) {
             });
 
             var myLatlng2 = new google.maps.LatLng( stack[i].locationY, stack[i].locationX );
-            var image = stack[i].image ;
+           // var image = stack[i].image ;
+
+            var image = {
+                url: stack[i].image,
+              //  scaledSize: new google.maps.Size(120, 120)
+            };
 
             var marker = new google.maps.Marker({
                 position: myLatlng2,
@@ -467,9 +486,18 @@ function googleMap(mapWrap) {
 
      directionsDisplay.setMap(map);
 
+     google.maps.event.addListener(map, 'zoom_changed', function(event) {
+
+        console.log('changed'+ map.getZoom() );
+
+     });
+
     }
     initialize();
 }
+
+
+
 
 function googleMap2(mapWrap) {
     function initialize() {
@@ -491,50 +519,69 @@ function googleMap2(mapWrap) {
         map2 = new google.maps.Map(document.getElementById(mapWrap), myOptions);  
         var geocoder = new google.maps.Geocoder; 
         var infowindow = new google.maps.InfoWindow;
+            /*
+                    function addMarkerNew(location) {
 
-        function addMarkerNew(location) {
-
-            var image = 'images/pock.png' ;
-            var markerA = new google.maps.Marker({
-                position: location,
-                map: map2,
-                icon: image
-            });
-            map2.panTo( markerA.getPosition() );
-
-            markers.push(markerA);
-        }
-
-        function geocodeLatLng(geocoder, map,  positionMarker , infowindow) {
-           
-            geocoder.geocode({'location': positionMarker }, function(results, status) {
-                if (status === google.maps.GeocoderStatus.OK) {
-                if (results[1]) {
-                     var image = 'images/pock.png' ;
+                        var image = 'images/pock.png' ;
                         var markerA = new google.maps.Marker({
-                            position: positionMarker,
+                            position: location,
                             map: map2,
                             icon: image
                         });
                         map2.panTo( markerA.getPosition() );
 
                         markers.push(markerA);
+                    }
+            */
+        function clearOverlays() {
+            if (markerAdd) {
+                for (i in markerAdd) {
+                markerAdd[i].setMap(null);
+                }
+            }
+        }
+        
+        function geocodeLatLng(geocoder, map,  positionMarker , infowindow) {
+           
+            geocoder.geocode({'location': positionMarker }, function(results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+
+                     var image = 'images/pock.png' ;
+                        markerA = new google.maps.Marker({
+                            position: positionMarker,
+                            map: map2,
+                            adressMarker: results[1].formatted_address,
+                            icon: image
+                        });
+                        map2.panTo( markerA.getPosition() );
+
+                        markerAdd.push(markerA);
 
 
                         infowindow.setContent(results[1].formatted_address);
-                        infowindow.open(map, markerA);
-
-                    /* -------------------  */
-
-                    console.log( results[1].formatted_address ) ;
-
-                    /* -------------------  */
+                        infowindow.open(map2, markerA);
 
                 } else {
                     window.alert('No results found');
                 }
                 } else {
-                window.alert('Geocoder failed due to: ' + status);
+
+                    var image = 'images/pock.png' ;
+                        markerA = new google.maps.Marker({
+                            position: positionMarker,
+                            map: map2,
+                            adressMarker: '' + positionMarker  ,
+                            icon: image
+                        });
+                        map2.panTo( markerA.getPosition() );
+
+                        markerAdd.push(markerA);
+
+                        infowindow.setContent( '' + positionMarker  );
+                        infowindow.open(map2, markerA);
+                    //window.alert('Geocoder failed due to: ' + status);
+
                 }
             });
         }
@@ -544,9 +591,27 @@ function googleMap2(mapWrap) {
         map2.addListener('click', function(e) {
            // addMarkerNew(e.latLng);
 
+          markerAdd = [];
+
+            clearOverlays();
+
             geocodeLatLng(geocoder, map2, e.latLng, infowindow);
 
-            currentPosition = [  e.latLng.lat() , e.latLng.lng() ] ;
+            $('.add-new-pockemon').removeClass('start').removeClass('stage2').removeClass('stage3').addClass('stage1');
+
+             $('.add-new-pockemon').find('.placeholder-drop').html("<p> Выбрать покемона </p><img src='images/search.png' alt=''>");
+
+            setTimeout(function(){
+
+                $('.add-new-pockemon').find('.row-place .conteiner .place').html( markerAdd[0].adressMarker );
+
+            }, 500);
+
+            
+
+            
+
+           // currentPosition = [  e.latLng.lat() , e.latLng.lng() ] ;
         });
 
      // directionsDisplay.setMap(map);
@@ -557,17 +622,17 @@ function googleMap2(mapWrap) {
 
 function googleMap3(mapWrap) {
     function initialize() {
-        var myLatlng = new google.maps.LatLng(36 , 36);
+        var myLatlng = new google.maps.LatLng(user_points[0].locationY , user_points[0].locationX);
         directionsDisplay = new google.maps.DirectionsRenderer();
         var myOptions = {
-            zoom: 8,
+            zoom: 10,
             center: myLatlng,
             disableDefaultUI: false, //без управляющих елементов
             mapTypeId: google.maps.MapTypeId.ROADMAP, // SATELLITE - снимки со спутника,
             scaleControl: true,
             scrollwheel: true,
             navigationControl: true,
-            mapTypeControl: false,
+            mapTypeControl: true,
             styles: [{"featureType":"administrative","elementType":"all","stylers":[{"visibility":"on"},{"lightness":33}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#c5dac6"}]},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":20}]},{"featureType":"road","elementType":"all","stylers":[{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#c5c6c6"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#e4d7c6"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#fbfaf7"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#9ea7b2"}]}],
             zoomControlOptions: {
                 position: google.maps.ControlPosition.LEFT_BOTTOM // позиция слева внизу для упр елементов
@@ -575,34 +640,38 @@ function googleMap3(mapWrap) {
         }
         map3 = new google.maps.Map(document.getElementById(mapWrap), myOptions);
 
+        var geocoder = new google.maps.Geocoder;
+        var infowindow = new google.maps.InfoWindow;
 
         for ( var i = 0;  i < user_points.length; i++ ){
 
+            var curent =  _.find(pokemon, { 'id': user_points[i].pokemon }); ;         
+
             var infowindow = new google.maps.InfoWindow({
-                content: '<h1>' + user_points[i].name + '</h1>'
+                content: '<h1>' + curent.name + '</h1>'
             });
 
             var myLatlng2 = new google.maps.LatLng( user_points[i].locationY, user_points[i].locationX );
-            var image = user_points[i].image ;
+            var image = curent.image ;
 
             var marker = new google.maps.Marker({
                 position: myLatlng2,
                 map: map3,
-                title: user_points[i].name,
+                title: curent.name,
                 dataSum: user_points[i].id,
                // animation: google.maps.Animation.DROP, // анимация при загрузке карты
-                icon: image //  иконка картинкой
+               icon: image //  иконка картинкой
             });
 
             markers.push(marker);
-            makeInfoWindowEvent(map3, infowindow, marker);
+            makeInfoWindowEventForThree(map3, infowindow, marker);
         }
 
-        makeInfoWindowEvent(map3, infowindow, marker) ;
+        //makeInfoWindowEvent(map3, infowindow, marker) ;
             
-        marker.addListener('click', toggleBounce);
+        marker.addListener('click', toggleBounce3);
             
-        function toggleBounce() {
+        function toggleBounce3() {
 
             if (marker.getAnimation() !== null) {
                 marker.setAnimation(null);
@@ -612,7 +681,7 @@ function googleMap3(mapWrap) {
             
         }
 
-     directionsDisplay.setMap(map);
+     directionsDisplay.setMap(map3);
 
     }
     initialize();
@@ -629,30 +698,35 @@ function myAddedPockemon() {
 
     for (var i = 0; i < user_points.length; i++) {
 
-        listOfMyPock += "<li data-id="+ 123 +">"+
+        var curent =  _.find(pokemon, { 'id': user_points[i].pokemon }); 
+
+       // user_points[i].adress = '' + resAdress;
+
+
+        listOfMyPock += "<li data-id="+ user_points[i].id +">"+
                             "<div class='title-row-table'>"+
-                                "<div class='name'> Бульбазавр </div>"+
+                                "<div class='name'>" + curent.name + "</div>"+
                                 "<div class='con'>"+
-                                    "<img src='images/bubl.png' alt=''>"+
+                                    "<img src='" + curent.image + "' alt=''>"+
                                 "</div>"+
                             "</div>"+
                             "<div class='hovered-content'>"+
                                 "<div class='row-adress'>" +
-                                    "<span>Москва, 9-я Чоботовская аллея, 17</span>" +
+                                    "<span>"+ "в разроботке" +  "</span>" +
                                 "</div>"+
                                 "<div class='results'>"+
                                     "<div class='good'>"+
                                         "<div class='tili'>Одобрение</div>"+
-                                        "<div class='vali'>08</div>"+
+                                        "<div class='vali'>"+ user_points[i].confirm +"</div>"+
                                     "</div>"+
                                     "<div class='bad'>"+
                                         "<div class='tili'>Отрицание</div>"+
-                                        "<div class='vali'>08</div>" +
+                                        "<div class='vali'> " + user_points[i].enabled + "</div>" +
                                     "</div>"+
                                 "</div>"+
                                 "<div class='row-pay-me'>"+
                                     "<div class='hred'>Вознаграждение</div>"+
-                                    "<div class='price'>25.75 $</div>"+
+                                    "<div class='price'>" + "в разроботке" +  " $</div>"+
                                 "</div>"+
                             "</div>"+
                         "</li>";
@@ -683,10 +757,44 @@ function addNewPockemonToMap() {
     
 }
 
+function scrollToChoosenPock() {
+    
+    $('.contein-search').on('click', '.slider-row .item', function(){
+
+        var whatPockemonIChoose  = parseInt( $(this).attr('data-pockemon') );
+
+        console.log( whatPockemonIChoose );
+
+        var curent =  _.find(stack, { 'pokemon': whatPockemonIChoose }); 
+
+        if (curent != 'undefined'){
+
+            var target = $('#map').offset().top-100;
+            $(scroller).animate({scrollTop:target},500);
+
+             map.setZoom(18);
+            map.panTo( new google.maps.LatLng( curent.locationY , curent.locationX ) );
+           
+
+        } else {
+
+            alert('no such pockemon near than you');
+
+        }
+
+        console.log( curent );
+
+    });
+
+}
+
 $(document).ready(function(){
+    
 
     if (  $('body').find('.contein-search').length == 1 ){
+
         searchOnMAin();     
+        scrollToChoosenPock()
 
     }
 
@@ -776,9 +884,6 @@ $(document).ready(function(){
     
 
 });
-
-
-
 
 
 $(window).load(function(){

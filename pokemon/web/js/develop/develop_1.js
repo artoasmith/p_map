@@ -18,17 +18,6 @@ $(window).on( "scroll", function(){
 });
 
 
-/* logick tubber  */
-
-    $(document).on('click', '.lister-tubber>ul>li', function(){
-
-
-    });
-
-/* logick tubber  */
-
-
-
 
 $(document).ready(function(){
     
@@ -56,8 +45,12 @@ $(document).ready(function(){
             $('.lister-tubber').on('click', '.drop-list ul>li', function(){
 
                 $(this).closest('.pockemon-drop-down').find('.drop-list').slideUp(300);
+
                 var currentchecker = $(this).html() ;
+                $('.pockemon-drop-down').find('.placeholder-drop').attr('data-pockemon', $(this).attr('data-pockemon') );
                 $('.pockemon-drop-down').find('.placeholder-drop').html( currentchecker ); 
+
+                $('.add-new-pockemon').removeClass('stage1').addClass('stage2');
 
             });
 
@@ -92,8 +85,6 @@ $(document).ready(function(){
                     
                 }
 
-            // $('.pockemon-drop-down .drop-list').find('.jspPane').css('top', -160 );
-
             })
     
         /* dropdown select  */
@@ -127,27 +118,19 @@ $(document).ready(function(){
 
                 }
 
-                if( $('.center>ul>li').eq(currentTab).find('.pockemon-drop-down').length ==1 ){ 
-
-                    $('.drop-list').css({'display': 'block', "opacity": '0'});
-
-                    $('.drop-list').jScrollPane({
-                            showArrows: true,
-                            animateScroll: true
-                        });
-
-                        setTimeout(function(){
-                            
-                            $('.drop-list').css({'display': 'none', "opacity": '1'});
-
-                        }, 300);
-
-                }
 
                 if( $('.center>ul>li').eq(currentTab).find('.add-new-pockemon').length ==1 ){
 
                     $('.topper-tab').find('ul>li').removeClass('otrbotano').removeClass('current');
                     $('.topper-tab').find('ul>li').eq(0).addClass('current');
+                }
+
+                if( $('.center>ul>li').eq(currentTab).find('#my-pockemon').length ==1 ){ 
+
+                    google.maps.event.trigger(map3, 'resize');
+
+                    map3.setCenter( new google.maps.LatLng(user_points[0].locationY , user_points[0].locationX) );
+
                 }
 
             });
@@ -203,6 +186,26 @@ $(document).ready(function(){
 
             $('.my-added-pockemon').on('click', '.left-list>ul>li>.title-row-table', function(){
 
+
+                /* emulate click on marker */
+
+                var currentID = $(this).closest('li').attr('data-id') ;
+
+                for (var i = 0; i < markers.length; i++) {
+
+                    if ( currentID == markers[i].dataSum ) {
+
+                       map3.setZoom(16);
+
+                        map3.panTo( markers[i].getPosition() );
+
+                    }
+                                        
+                }
+                
+
+
+
                 if ( $(this).closest('li').hasClass('active') ){
 
                     $(this).closest('li').removeClass('active');
@@ -238,7 +241,43 @@ $(window).load(function(){
 
         $('.cabinet-detail').find('.left>ul>li:first').click();
 
+        
+
+        /* add content to chooser */
+
+
+            $('.drop-list').find('ul').html('li li li');
+
+            var allIAdd = '';
+
+            for (var i = 0; i < pokemon.length; i++) {
+                allIAdd += "<li data-pockemon='"+ pokemon[i].id + "'>"+
+                    "<p>"+ pokemon[i].name +"</p>" +
+                    "<img src='" + pokemon[i].image + "' alt=''>"+
+                "</li>";
+                
+            }
+
+            $('.drop-list').find('ul').html(allIAdd);
+
+                $('.drop-list').jScrollPane({
+                        showArrows: false,
+                        animateScroll: true
+                });
+/*
+                setTimeout(function(){
+                    
+                    $('.drop-list').css({'display': 'none', "opacity": '1'});
+
+                }, 300);
+*/
+
+        /* add content to chooser */
+
     }
+
+
+
 
 });
 

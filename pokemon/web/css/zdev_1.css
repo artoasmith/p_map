@@ -1451,7 +1451,7 @@
           -ms-flex-pack: center;
           justify-content: center;
           height: 75px;
-          background-color: #007d00; }
+          background-color: #e8c724; }
           .add-new-pockemon .left-list .lister-tubber ul li .chooser .head-block h3 {
             margin: 0;
             color: white;
@@ -1535,5 +1535,127 @@
           display: none; }
           .add-new-pockemon .left-list .lister-tubber ul li .status-not-done .text {
             color: #ff3c3c; }
+  .add-new-pockemon.start .topper-tab ul li:nth-child(1) {
+    background-color: #ed3e38; }
+    .add-new-pockemon.start .topper-tab ul li:nth-child(1):before {
+      border-color: transparent transparent transparent #ed3e38; }
+  .add-new-pockemon.start .left-list .lister-tubber ul li {
+    display: none; }
+    .add-new-pockemon.start .left-list .lister-tubber ul li:nth-child(1) {
+      display: block; }
+      .add-new-pockemon.start .left-list .lister-tubber ul li:nth-child(1) .row-place .conteiner {
+        display: none; }
+      .add-new-pockemon.start .left-list .lister-tubber ul li:nth-child(1) .row-place .choose-placeholder {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -moz-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -moz-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        background-color: #e83d37;
+        height: 76px; }
+        .add-new-pockemon.start .left-list .lister-tubber ul li:nth-child(1) .row-place .choose-placeholder .calculate-me {
+          color: white;
+          font-family: "ProximaNova";
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 24px; }
+  .add-new-pockemon.stage1 .topper-tab ul li:nth-child(1) {
+    background-color: #007d00; }
+    .add-new-pockemon.stage1 .topper-tab ul li:nth-child(1):before {
+      border-color: transparent transparent transparent #007d00; }
+  .add-new-pockemon.stage1 .topper-tab ul li:nth-child(2) {
+    background-color: #ed3e38; }
+    .add-new-pockemon.stage1 .topper-tab ul li:nth-child(2):before {
+      border-color: transparent transparent transparent #ed3e38; }
+  .add-new-pockemon.stage1 .left-list .lister-tubber ul li {
+    display: none; }
+    .add-new-pockemon.stage1 .left-list .lister-tubber ul li:nth-child(1) {
+      display: block; }
+      .add-new-pockemon.stage1 .left-list .lister-tubber ul li:nth-child(1) .row-place .conteiner {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex; }
+      .add-new-pockemon.stage1 .left-list .lister-tubber ul li:nth-child(1) .row-place .choose-placeholder {
+        display: none; }
+    .add-new-pockemon.stage1 .left-list .lister-tubber ul li:nth-child(2) {
+      display: block; }
+  .add-new-pockemon.stage2 .topper-tab ul li:nth-child(1) {
+    background-color: #007d00; }
+    .add-new-pockemon.stage2 .topper-tab ul li:nth-child(1):before {
+      border-color: transparent transparent transparent #007d00; }
+  .add-new-pockemon.stage2 .topper-tab ul li:nth-child(2) {
+    background-color: #007d00; }
+    .add-new-pockemon.stage2 .topper-tab ul li:nth-child(2):before {
+      border-color: transparent transparent transparent #007d00; }
+  .add-new-pockemon.stage2 .topper-tab ul li:nth-child(3) {
+    background-color: #ed3e38; }
+    .add-new-pockemon.stage2 .topper-tab ul li:nth-child(3):before {
+      border-color: transparent transparent transparent #ed3e38; }
+  .add-new-pockemon.stage2 .left-list .lister-tubber ul li {
+    display: none; }
+    .add-new-pockemon.stage2 .left-list .lister-tubber ul li:nth-child(1) {
+      display: block; }
+      .add-new-pockemon.stage2 .left-list .lister-tubber ul li:nth-child(1) .row-place .conteiner {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex; }
+      .add-new-pockemon.stage2 .left-list .lister-tubber ul li:nth-child(1) .row-place .choose-placeholder {
+        display: none; }
+    .add-new-pockemon.stage2 .left-list .lister-tubber ul li:nth-child(2) {
+      display: block; }
+    .add-new-pockemon.stage2 .left-list .lister-tubber ul li:nth-child(3) {
+      display: block; }
+  .add-new-pockemon.stage3 .topper-tab ul li:nth-child(1) {
+    background-color: #007d00; }
+    .add-new-pockemon.stage3 .topper-tab ul li:nth-child(1):before {
+      border-color: transparent transparent transparent #007d00; }
+  .add-new-pockemon.stage3 .topper-tab ul li:nth-child(2) {
+    background-color: #007d00; }
+    .add-new-pockemon.stage3 .topper-tab ul li:nth-child(2):before {
+      border-color: transparent transparent transparent #007d00; }
+  .add-new-pockemon.stage3 .topper-tab ul li:nth-child(3) {
+    background-color: #007d00; }
+    .add-new-pockemon.stage3 .topper-tab ul li:nth-child(3):before {
+      border-color: transparent transparent transparent #007d00; }
+  .add-new-pockemon.stage3 .topper-tab ul li:nth-child(4) {
+    background-color: #007d00; }
+    .add-new-pockemon.stage3 .topper-tab ul li:nth-child(4):before {
+      border-color: transparent transparent transparent #007d00; }
+  .add-new-pockemon.stage3 .left-list .lister-tubber ul li {
+    display: block; }
+    .add-new-pockemon.stage3 .left-list .lister-tubber ul li:nth-child(1) {
+      display: block; }
+      .add-new-pockemon.stage3 .left-list .lister-tubber ul li:nth-child(1) .row-place .conteiner {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex; }
+      .add-new-pockemon.stage3 .left-list .lister-tubber ul li:nth-child(1) .row-place .choose-placeholder {
+        display: none; }
+    .add-new-pockemon.stage3 .left-list .lister-tubber ul li:nth-child(3) {
+      display: none; }
+      .add-new-pockemon.stage3 .left-list .lister-tubber ul li:nth-child(3) .row-place .conteiner {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex; }
+      .add-new-pockemon.stage3 .left-list .lister-tubber ul li:nth-child(3) .row-place .choose-placeholder {
+        display: none; }
 
 /* add new pockemon*/

@@ -258,6 +258,42 @@ function changeSomeCabinet(form){
 }
 
 
+function addNewPockemonConfirm() {
+
+    sendAlone = {
+        "locationX" : markerAdd[0].getPosition().lat(),
+        "locationY" : markerAdd[0].getPosition().lng(),
+        "pokemon"   : $('.placeholder-drop').attr('data-pockemon')
+    };
+
+    console.log( sendAlone );
+/*
+    $.ajax({
+
+        
+        url : '/somewere.php',
+        data: sendAlone,
+        method:'POST',
+        success : function(data){
+
+            if( data == true ){
+
+                $('.add-new-pockemon').removeClass('stage2').addClass('stage3');
+
+            } else {
+                alert('someShit');
+            }        
+
+        }
+    });
+*/
+    $('.add-new-pockemon').removeClass('stage2').addClass('stage3');
+
+    
+    
+}
+
+
 $(document).ready(function(){
 
    /* login */
@@ -270,11 +306,16 @@ $(document).ready(function(){
     validate('.rewrite_email', {submitFunction:changeSomeCabinet} );
     validate('.rewrite_name', {submitFunction:changeSomeCabinet} );
 
-   Maskedinput();
-   fancyboxForm();
+    Maskedinput();
+    fancyboxForm();
 
-        validate('.rewrite_pass', {submitFunction:changeSomeCabinet} );
-        validate('.rewrite_email', {submitFunction:changeSomeCabinet} );
-        validate('.rewrite_name', {submitFunction:changeSomeCabinet} );
+    validate('.rewrite_pass', {submitFunction:changeSomeCabinet} );
+    validate('.rewrite_email', {submitFunction:changeSomeCabinet} );
+    validate('.rewrite_name', {submitFunction:changeSomeCabinet} );
+
+    $('.add-new-pockemon').on('click', '.chooser .button-block .confirm', function( e ){
+        e.preventDefault();
+        addNewPockemonConfirm();
+    });
 
 });

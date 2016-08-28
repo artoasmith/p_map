@@ -909,7 +909,8 @@
           font-family: "ProximaNova";
           color: #4f4f4f;
           font-weight: bold;
-          padding: 15px 0; }
+          padding: 15px 0;
+          display: none; }
         .contein-search .slider-row .sliding-items .item .circle {
           width: 165px;
           height: 165px;
