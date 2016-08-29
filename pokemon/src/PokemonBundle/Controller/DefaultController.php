@@ -3,6 +3,7 @@
 namespace PokemonBundle\Controller;
 
 use PokemonBundle\Entity\Point;
+use PokemonBundle\Entity\CallbackForm;
 use PokemonBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use PokemonBundle\Base\Controller;
@@ -86,7 +87,8 @@ class DefaultController extends Controller
     public function contactsAction()
     {
         $params = $this->getDefaultTemplateParams();
-        $params['about'] = $this->getSettingsGroup('contacts');
+        $params['contacts'] = $this->getSettingsGroup('contacts');
+        $params['about'] = $this->getSettingsGroup('about');
         return $this->render('PokemonBundle:Front:contacts.html.twig',$params);
     }
 
@@ -271,5 +273,29 @@ class DefaultController extends Controller
         $manager->flush();
         $this->resetSectorCache($point);
         $this->renderApiJson($response);
+    }
+
+    /**
+     * Заказ звонка
+     *
+     * @POST("/callback")
+     */
+    public function callbackAction(Request $request){
+        $form = $request->request->get('callback');
+
+        $callback = new CallbackForm();
+        $callback->setCreateAt(new \DateTime())
+                 ->setName((isset($form['name'])?$form['name']:null))
+                 ->setPhone((isset($form['phone'])?$form['phone']:null));
+
+        $errors = $this->get('validator')->validate($callback);
+        if (count($errors) > 0)
+            $this->renderApiJson(['error' => 'Ошибка передачи данных']);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($callback);
+        $manager->flush();
+
+        $this->renderApiJson(['success'=>true]);
     }
 }

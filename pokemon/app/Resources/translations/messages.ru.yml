@@ -1,3 +1,9 @@
+filter.label_phone: Номер телефона
+breadcrumb.link_callback_form_list: Заказаные звонки
+breadcrumb.link_callback_form_create: Создание заказа
+pokemon.admin.model.callback: Заказаные звонки
+list.label_phone: Номер телефона
+
 pokemon.admin.model.pokemon: Список покемонов
 pokemon.admin.model.user: Пользователи
 list.label_id: Идентификатор
@@ -176,7 +182,6 @@ form.label_facebook_uid: Facebook ID
 form.label_vkontakte_uid: VK ID
 form.label_gplus_uid: G+ ID
 form.label_instagram_uid: Instagram ID
-
 
 show.label_facebook_uid: Facebook ID
 show.label_vkontakte_uid: VK ID

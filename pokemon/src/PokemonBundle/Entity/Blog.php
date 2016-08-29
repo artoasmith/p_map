@@ -147,6 +147,9 @@ class Blog extends UploaderEntity
      */
     public function getCreateAt()
     {
+        if(!$this->createAt)
+            $this->createAt = new \DateTime();
+
         return $this->createAt;
     }
 

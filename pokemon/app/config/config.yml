@@ -120,6 +120,7 @@ sonata_admin:
                 items:
                     - pokemon.admin.user
                     - pokemon.admin.email
+                    - pokemon.admin.callback
                     - pokemon.admin.settings
 sonata_translation:
     locales: [en, ru]
