@@ -241,7 +241,7 @@ $(window).load(function(){
 
         $('.cabinet-detail').find('.left>ul>li:first').click();
 
-        
+        $('#preloader').fadeOut(500,function(){$(this).remove();});
 
         /* add content to chooser */
 
@@ -264,20 +264,13 @@ $(window).load(function(){
                         showArrows: false,
                         animateScroll: true
                 });
-/*
-                setTimeout(function(){
-                    
-                    $('.drop-list').css({'display': 'none', "opacity": '1'});
-
-                }, 300);
-*/
-
         /* add content to chooser */
 
+    } else {
+
+        $('#preloader').fadeOut(500,function(){$(this).remove();});
+
     }
-
-
-
 
 });
 
