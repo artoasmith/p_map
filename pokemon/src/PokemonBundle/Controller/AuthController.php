@@ -347,9 +347,33 @@ class AuthController extends Controller
             return $this->redirect('/login');
 
         $params = array_merge($this->getProfileInfo($a),$this->getDefaultTemplateParams());
-        $params['user_points'] = $this->getDoctrine()
-                                      ->getRepository('PokemonBundle:Point')
-                                      ->findBy(['author'=>$a->getId()],['createAt'=>'DESC','id'=>'DESC']);
+
+        $params['user_pay_check'] = [];
+        foreach ($this->getDoctrine()
+                     ->getRepository('PokemonBundle:PayCheck')
+                     ->findBy(['user'=>$a->getId()],['createdAt'=>'DESC','id'=>'DESC']) as $item){
+            $params['user_pay_check'][$item->getPoint()->getId()] = $item;
+        }
+        /**
+         * @var Point $item
+         */
+        $params['user_points'] = [];
+        foreach ($this->getDoctrine()
+            ->getRepository('PokemonBundle:Point')
+            ->findBy(['author'=>$a->getId()],['createAt'=>'DESC','id'=>'DESC']) as $item){
+            $params['user_points'][$item->getId()] = [
+                'id'=>$item->getId(),
+                'locationX'=>$item->getLocationX(),
+                'locationY'=>$item->getLocationY(),
+                'pokemon'=>$item->getPokemon()->getId(),
+                'jsonInfo'=>$item->getJsonInfo(),
+                'confirm'=>$item->getConfirm(),
+                'enabled'=>$item->getEnabled(),
+                'address'=>$item->getAddress(),
+                'reward'=>(isset($params['user_pay_check'][$item->getId()])?$params['user_pay_check'][$item->getId()]->getValue():0)
+            ];
+        }
+
         $params['pokemon'] = array_map(
             function($a){
                 return [
