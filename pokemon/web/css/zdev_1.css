@@ -499,7 +499,8 @@
             -webkit-transition: all 0.3s;
             -moz-transition: all 0.3s;
             -o-transition: all 0.3s;
-            transition: all 0.3s; }
+            transition: all 0.3s;
+            text-decoration: none; }
             .cabinet-wrap .cabinet-detail .left ul li .conteiner span {
               color: #4f4f4f;
               font-family: "ProximaNova";
@@ -1400,6 +1401,26 @@
             overflow: auto; }
             .add-new-pockemon .left-list .lister-tubber ul li .pockemon-drop-down .drop-list .jspContainer {
               height: 400px !important; }
+            .add-new-pockemon .left-list .lister-tubber ul li .pockemon-drop-down .drop-list .jspVerticalBar {
+              width: 8px;
+              background: transparent; }
+              .add-new-pockemon .left-list .lister-tubber ul li .pockemon-drop-down .drop-list .jspVerticalBar .jspTrack {
+                background-color: transparent; }
+                .add-new-pockemon .left-list .lister-tubber ul li .pockemon-drop-down .drop-list .jspVerticalBar .jspTrack:before {
+                  content: '';
+                  position: absolute;
+                  top: 0;
+                  bottom: 0;
+                  width: 2px;
+                  background-color: #ed3e38;
+                  left: -webkit-calc(8px/2 - 2px/2);
+                  left: -moz-calc(8px/2 - 2px/2);
+                  left: calc(8px/2 - 2px/2); }
+                .add-new-pockemon .left-list .lister-tubber ul li .pockemon-drop-down .drop-list .jspVerticalBar .jspTrack .jspDrag {
+                  background: #ed3e38;
+                  -webkit-border-radius: 3px;
+                  -moz-border-radius: 3px;
+                  border-radius: 3px; }
             .add-new-pockemon .left-list .lister-tubber ul li .pockemon-drop-down .drop-list ul li {
               display: -webkit-box;
               display: -webkit-flex;

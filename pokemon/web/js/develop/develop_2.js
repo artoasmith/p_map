@@ -349,7 +349,6 @@ function showMeThisPockemon( whatPockemonIWillShow ){
     $('.map').find('.after-all>.distance>span').html( curent.distance );
 
 }
-  
 
 function makeInfoWindowEvent(map, infowindow, marker) {
 
@@ -495,9 +494,6 @@ function googleMap(mapWrap) {
     }
     initialize();
 }
-
-
-
 
 function googleMap2(mapWrap) {
     function initialize() {
@@ -767,12 +763,22 @@ function scrollToChoosenPock() {
 
         var curent =  _.find(stack, { 'pokemon': whatPockemonIChoose }); 
 
-        if (curent != 'undefined'){
+        if (curent != undefined ){
 
             var target = $('#map').offset().top-100;
             $(scroller).animate({scrollTop:target},500);
 
-             map.setZoom(18);
+            if( curent.confirmed ){
+                $('.map').find('.hide-content').addClass('confirm-pokemon');
+            }
+
+            $('.hide-content').addClass('activate').attr('data-pokemon-id', curent.id );
+            
+            $('.map').find('.topper>.con>img').attr( 'src', curent.image );
+            $('.map').find('.after-all>.top-name').html( curent.name );
+            $('.map').find('.after-all>.distance>span').html( curent.distance );
+
+            map.setZoom(18);
             map.panTo( new google.maps.LatLng( curent.locationY , curent.locationX ) );
            
 
