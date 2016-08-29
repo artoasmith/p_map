@@ -59,7 +59,7 @@ class DefaultController extends Controller
                     'image'=>$a->getImageUrl()
                 ];
             },
-            $this->getDoctrine()->getRepository('PokemonBundle:Pokemon')->findAll()
+            $this->getDoctrine()->getRepository('PokemonBundle:Pokemon')->findBy([],['name'=>'ASC'])
         );
 
 

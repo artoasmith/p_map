@@ -23,8 +23,8 @@
                     locationY: {{ point.locationY }},
                     pokemon: {{ point.pokemon }},
                     jsonInfo: '{{ point.jsonInfo|raw }}',
-                    confirm: {{ point.confirm }},
-                    enabled: {{ point.enabled }},
+                    confirm: {{ (point.confirm?1:0) }},
+                    enabled: {{ (point.enabled?1:0) }},
                     address: '{{ point.address|raw }}',
                     reward: {{ point.reward }}
                 }{{ (loop.last?'':',') }}
