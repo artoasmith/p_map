@@ -25,7 +25,7 @@ function onLoadStartData(){
     } else {
         console.log("Geolocation is not supported by this browser.");
 
-        alert( " select your position " );
+        //alert( " select your position " );
 
     }
 
@@ -34,7 +34,7 @@ function onLoadStartData(){
     function showError(error) {
         switch(error.code) {
             case error.PERMISSION_DENIED:
-                alert( " select your position " );
+              //  alert( " select your position " );
                  superAjax( 1 );
                 break;
             case error.POSITION_UNAVAILABLE:
@@ -234,17 +234,23 @@ function searchOnMAin(){
     $('.contein-search form input').on('keyup', function(){
 
         var whatISearch = ($(this).val()).toLowerCase() ;
+
+
+        $('.slider-row').find('.item').removeClass('it-can-be');
+        $('.slider-row').find('.sliding-items').removeClass('can-be-coll');
         
         if ( (whatISearch.length > 0 ) && ( le != whatISearch.length ) ){
             
-            $('.slider-row').find('.item').removeClass('it-can-be');
+            
+            
             $('.slider-row').find('.item').each(function(){
 
                 if ( whatISearch == ($(this).find('.named').html().substring( whatISearch.length, 0)).toLowerCase() ){
 
                     $(this).addClass('it-can-be');
+                    $(this).closest('.sliding-items').addClass('can-be-coll');
                     slideTo = $(this).closest('.sliding-items').index() ;
-                    return ;
+                    return;
                 } 
 
             });
@@ -252,8 +258,10 @@ function searchOnMAin(){
 
         le = whatISearch.length;
 
+        var whatscccc = $('.slider-row').find('.can-be-coll:first').index();
+
         //$('.contein-search').find('.slider-row>.content').slickGoTo(1);
-        $('#iwanttoslide').slick('slickGoTo', slideTo) ;
+        $('#iwanttoslide').slick('slickGoTo', whatscccc ) ; // slideTo
         //console.log(slideTo);
 
     });
@@ -335,6 +343,16 @@ function addContentToHell(){
 function showMeThisPockemon( whatPockemonIWillShow ){
 
     var curent =  _.find(stack, { 'id': whatPockemonIWillShow }); ;
+
+    if ( !$('#map').hasClass('activate') ){
+
+        $('.hide-content').show();
+
+        $('#map').addClass('activate');
+
+        google.maps.event.trigger(map3, 'resize');
+
+    }
 
     console.log( curent );
 
@@ -559,7 +577,7 @@ function googleMap2(mapWrap) {
                         infowindow.open(map2, markerA);
 
                 } else {
-                    window.alert('No results found');
+               //     window.alert('No results found');
                 }
                 } else {
 
@@ -683,7 +701,6 @@ function googleMap3(mapWrap) {
     initialize();
 }
 
-
 function myAddedPockemon() {
     
     console.log(user_points);
@@ -759,7 +776,15 @@ function scrollToChoosenPock() {
 
         var whatPockemonIChoose  = parseInt( $(this).attr('data-pockemon') );
 
-        console.log( whatPockemonIChoose );
+        if ( !$('#map').hasClass('activate') ){
+
+            $('.hide-content').show();
+
+            $('#map').addClass('activate');
+
+            google.maps.event.trigger(map3, 'resize');
+
+        }
 
         var curent =  _.find(stack, { 'pokemon': whatPockemonIChoose }); 
 
@@ -784,7 +809,7 @@ function scrollToChoosenPock() {
 
         } else {
 
-            alert('no such pockemon near than you');
+        //    alert('no such pockemon near than you');
 
         }
 

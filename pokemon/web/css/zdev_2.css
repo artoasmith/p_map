@@ -63,6 +63,7 @@
   width: calc(100% - 450px); }
 
 .map .hide-content {
+  display: none;
   width: 450px;
   opacity: 1;
   height: 840px;

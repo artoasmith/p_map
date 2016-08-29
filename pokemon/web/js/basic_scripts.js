@@ -127,14 +127,14 @@ function bindExample(){
 function headeButer(menuMobile,toggleMenu){
     if(menuMobile){
         menuMobile.click(function(event) {
-            if($(window).width()<1024-$.scrollbarWidth()){
+            if($(window).width()<1080-$.scrollbarWidth()){
                 $(this).toggleClass('active');
                 toggleMenu.stop().slideToggle(300);
             }
         });
 
         $(document).on('click touchstart',function (event){
-            if($(window).width()<1024-$.scrollbarWidth()){
+            if($(window).width()<1080-$.scrollbarWidth()){
                 var div = toggleMenu;
                 if (!div.is(event.target) && div.has(event.target).length === 0 && !menuMobile.is(event.target) && menuMobile.has(event.target).length === 0)
                     {

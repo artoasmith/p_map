@@ -464,11 +464,8 @@
         -ms-transform: rotate(-45deg);
         -o-transform: rotate(-45deg);
         transform: rotate(-45deg);
-        border-top: 2px solid #ef3f39;
-        border-right: 2px solid #ef3f39;
-        -webkit-box-shadow: 1px -1px 2px 0px  #ef3f39;
-        -moz-box-shadow: 1px -1px 2px 0px  #ef3f39;
-        box-shadow: 1px -1px 2px 0px  #ef3f39;
+        border-top: 3px solid #ef3f39;
+        border-right: 3px solid #ef3f39;
         /* animation: upper1 1s infinite; animation-timing-function: linear; */ }
       .pockeball .circle .arrows:after {
         content: '';
@@ -486,11 +483,8 @@
         -ms-transform: rotate(-45deg);
         -o-transform: rotate(-45deg);
         transform: rotate(-45deg);
-        border-top: 2px solid #ef3f39;
-        border-right: 2px solid #ef3f39;
-        -webkit-box-shadow: 1px -1px 2px 0px  #ef3f39;
-        -moz-box-shadow: 1px -1px 2px 0px  #ef3f39;
-        box-shadow: 1px -1px 2px 0px  #ef3f39;
+        border-top: 3px solid #ef3f39;
+        border-right: 3px solid #ef3f39;
         /* animation: upper2 1s infinite;  animation-timing-function: linear; */ }
   .pockeball .mid {
     width: -webkit-calc(100% - 8px);
@@ -702,14 +696,14 @@
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       border-radius: 50%;
-      border: 1px solid #6e606a;
+      border: 2px solid #6e606a;
       -webkit-transition: all 0.3s;
       -moz-transition: all 0.3s;
       -o-transition: all 0.3s;
       transition: all 0.3s; }
       .pockeball .mid .soc-block a .con {
-        width: 48px;
-        height: 48px;
+        width: 46px;
+        height: 46px;
         display: -webkit-box;
         display: -webkit-flex;
         display: -moz-box;
@@ -732,9 +726,10 @@
         -webkit-transition: all 0.3s;
         -moz-transition: all 0.3s;
         -o-transition: all 0.3s;
-        transition: all 0.3s; }
+        transition: all 0.3s;
+        fill: #c6c3c5; }
       .pockeball .mid .soc-block a:hover {
-        border: 1px solid #ed3f39;
+        border: 2px solid #ed3f39;
         -webkit-box-shadow: inset 0px 0px 1px 1px #ef3f39;
         -moz-box-shadow: inset 0px 0px 1px 1px #ef3f39;
         box-shadow: inset 0px 0px 1px 1px #ef3f39; }
