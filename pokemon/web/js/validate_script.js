@@ -289,7 +289,7 @@ function somePockemonNotConfirm() {
     console.log( thisIDiSend );
 
     $.ajax({        
-        url : '/pointsConfirm/'+ thisIDiSend ,
+        url : '/pointsReject/'+ thisIDiSend ,
         method:'POST',
         success : function(data){
 
