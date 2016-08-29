@@ -275,6 +275,67 @@ class AuthController extends Controller
     }
 
     /**
+     * @Route("/changeProfileData")
+     */
+    public function changeProfileData(Request $request){
+
+        if($request->getMethod() != 'POST')
+            return $this->redirect('/');
+
+        /**
+         * @var User $a
+         */
+        $a = $this->getUser();
+        if(!$a)
+            return $this->redirect('/login');
+
+        $new_username = $request->request->get('user_name');
+        $new_email = $request->request->get('user_email');
+        $new_pass = $request->request->ger('password');
+
+        //update username
+        if($new_username && $a->getUsername() != $new_username)
+            $a->setUsername($new_username);
+
+        /**
+         * @var UserManager $userManager
+         */
+        $userManager = $this->get('fos_user.user_manager');
+
+        //update email
+        if($new_email && $new_email != $a->getEmail() && filter_var($new_email,FILTER_VALIDATE_EMAIL)){
+            //unique check
+            $u = $userManager->findUserByEmail($new_email);
+            if($u)
+                $this->renderApiJson(['error'=>'Адрес электронной почты уже используется.']);
+
+            $a->setEmail($new_email);
+        }
+
+        //update pass
+        if($new_pass && is_array($new_pass) && isset($new_pass['old']) && isset($new_pass['new']) && isset($new_pass['confirm'])){
+            $encoder_service = $this->get('security.encoder_factory');
+            $encoder = $encoder_service->getEncoder($a);
+            $encoded_pass = $encoder->encodePassword($new_pass['old'], $a->getSalt());
+
+            if($encoded_pass != $a->getPassword())
+                $this->renderApiJson(['error'=>'Неверный пароль.']);
+
+            if($new_pass['new'] != $new_pass['confirm'])
+                $this->renderApiJson(['error'=>'Пароли не совпадают.']);
+
+            if(strlen($new_pass['new'])<8)
+                $this->renderApiJson(['error'=>'Пароль должен быть не меньше 8 символов.']);
+
+            $encoded_pass = $encoder->encodePassword($new_pass['new'], $a->getSalt());
+            $a->setPassword($encoded_pass);
+        }
+
+        $userManager->updateUser($a);
+        $this->renderApiJson(['success'=>true]);
+    }
+
+    /**
      * @Route("/profile")
      */
     public function profileAction(){

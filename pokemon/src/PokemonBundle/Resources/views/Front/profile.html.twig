@@ -298,7 +298,7 @@
                                             <div class="contact-form-item-input form_row">
                                                 <div class="form_input name-input">
                                                     <p>Имя</p>
-                                                    <input type="text" name="user_name" required="required" value="hyi" placeholder="" disabled>
+                                                    <input type="text" name="user_name" required="required" value="{{ app.user.username }}" placeholder="" disabled>
                                                 </div>
                                                 <div class="reduct-key">
                                                     <b>
@@ -323,7 +323,7 @@
                                             <div class="contact-form-item-input form_row">
                                                 <div class="form_input email-input">
                                                     <p>Почта</p>
-                                                    <input type="email" name="user_email" required="required" value="hyi@hyi.hyi" placeholder="" disabled>
+                                                    <input type="email" name="user_email" required="required" value="{{ app.user.email }}" placeholder="" disabled>
                                                 </div>
                                                 <div class="reduct-key">
                                                     <b>
@@ -348,7 +348,7 @@
                                             <div class="contact-form-item-input form_row">
                                                 <div class="form_input pass-input">
                                                     <p>Пароль</p>
-                                                    <input type="password" name="user_pass" required="required" value="hyi" placeholder="" disabled>
+                                                    <input type="password" name="password[old]" required="required" value="" placeholder="" disabled>
                                                 </div>
                                                 <div class="reduct-key">
                                                     <b>
@@ -370,7 +370,7 @@
                                                     <div class="contact-form-item-input form_row">
                                                         <div class="form_input pass-input">
                                                             <p>Новий пароль</p>
-                                                            <input type="password" name="user_new_pass" required="required" value="" placeholder="">
+                                                            <input type="password" name="password[new]" required="required" value="" placeholder=""  minlength="8">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -378,7 +378,7 @@
                                                     <div class="contact-form-item-input form_row">
                                                         <div class="form_input pass-input">
                                                             <p>Повторите новий пароль</p>
-                                                            <input type="password" name="user_confirm_new_pass" required="required" value="" placeholder="" >
+                                                            <input type="password" name="password[confirm]" required="required" value="" placeholder="" minlength="8">
                                                         </div>
                                                     </div>
                                                 </div>
