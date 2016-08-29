@@ -258,20 +258,66 @@ function changeSomeCabinet(form){
 }
 
 
+function somePockemonConfirm() {
+
+   var thisIDiSend = $('.map').find('.hide-content').attr('data-pokemon-id');
+
+    console.log( thisIDiSend );
+
+    $.ajax({        
+        url : '/pointsConfirm/'+ thisIDiSend ,
+        method:'POST',
+        success : function(data){
+
+            if( data == true ){
+
+                $('.map').find('.hide-content').addClass('confirm-pokemon');
+
+            } else {
+                alert('someShit');
+            }        
+
+        }
+    });
+
+}
+
+function somePockemonNotConfirm() {
+
+   var thisIDiSend = $('.map').find('.hide-content').attr('data-pokemon-id');
+
+    console.log( thisIDiSend );
+
+    $.ajax({        
+        url : '/pointsReject/'+ thisIDiSend ,
+        method:'POST',
+        success : function(data){
+
+            if( data == true ){
+
+                $('.map').find('.hide-content').removeClass('confirm-pokemon');
+
+            } else {
+                alert('someShit');
+            }        
+
+        }
+    });
+
+}
+
 function addNewPockemonConfirm() {
 
     sendAlone = {
         "locationX" : markerAdd[0].getPosition().lat(),
         "locationY" : markerAdd[0].getPosition().lng(),
         "pokemon"   : $('.placeholder-drop').attr('data-pockemon'),
-        "address"   : ''
+        "address"   : $('.add-new-pockemon').find('.row-place .place').html()
     };
 
     console.log( sendAlone );
 
-    $.ajax({
-
-        
+    $.ajax({    
         url : '/points',
         data: {
             point: sendAlone
@@ -289,10 +335,6 @@ function addNewPockemonConfirm() {
 
         }
     });
-
-   // $('.add-new-pockemon').removeClass('stage2').addClass('stage3');
-
-    
     
 }
 
@@ -304,11 +346,11 @@ $(document).ready(function(){
         validate('.form-log form', {submitFunction:validationReg} );
 
     /* login */
-
+/*
     validate('.rewrite_pass', {submitFunction:changeSomeCabinet} );
     validate('.rewrite_email', {submitFunction:changeSomeCabinet} );
     validate('.rewrite_name', {submitFunction:changeSomeCabinet} );
-
+*/
     Maskedinput();
     fancyboxForm();
 
@@ -319,6 +361,16 @@ $(document).ready(function(){
     $('.add-new-pockemon').on('click', '.chooser .button-block .confirm', function( e ){
         e.preventDefault();
         addNewPockemonConfirm();
+    });
+
+    $('.map').on('click', '.hide-content .button-block .confirm', function( e ){
+        e.preventDefault();
+        somePockemonConfirm();
+    });
+
+    $('.map').on('click', '.hide-content .button-block .not-confirm', function( e ){
+        e.preventDefault();
+        somePockemonNotConfirm();
     });
 
 });

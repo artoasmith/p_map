@@ -350,7 +350,7 @@ function showMeThisPockemon( whatPockemonIWillShow ){
 
         $('#map').addClass('activate');
 
-        google.maps.event.trigger(map3, 'resize');
+        google.maps.event.trigger(map, 'resize');
 
     }
 
@@ -782,7 +782,7 @@ function scrollToChoosenPock() {
 
             $('#map').addClass('activate');
 
-            google.maps.event.trigger(map3, 'resize');
+            google.maps.event.trigger(map, 'resize');
 
         }
 
