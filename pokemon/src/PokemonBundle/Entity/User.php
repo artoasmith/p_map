@@ -65,6 +65,13 @@ class User extends BaseUser
      */
     private $fileImage;
 
+    /**
+     * @var float
+     * @Assert\NotBlank()
+     * @ORM\Column(name="balance", type="float",nullable=false)
+     */
+    private $balance;
+
     public function __construct()
     {
         parent::__construct();
@@ -214,6 +221,29 @@ class User extends BaseUser
     public function setFileImage($fileImage)
     {
         $this->fileImage = $fileImage;
+
+        return $this;
+    }
+
+    /**
+     * Get balance
+     *
+     * @return string
+     */
+    public function getBalance()
+    {
+        return $this->balance;
+    }
+
+    /**
+     * Set balance
+     *
+     * @param string $balance
+     * @return User
+     */
+    public function setBalance($balance)
+    {
+        $this->balance = $balance;
 
         return $this;
     }

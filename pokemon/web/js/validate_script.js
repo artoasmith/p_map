@@ -263,16 +263,19 @@ function addNewPockemonConfirm() {
     sendAlone = {
         "locationX" : markerAdd[0].getPosition().lat(),
         "locationY" : markerAdd[0].getPosition().lng(),
-        "pokemon"   : $('.placeholder-drop').attr('data-pockemon')
+        "pokemon"   : $('.placeholder-drop').attr('data-pockemon'),
+        "address"   : ''
     };
 
     console.log( sendAlone );
-/*
+
     $.ajax({
 
         
-        url : '/somewere.php',
-        data: sendAlone,
+        url : '/points',
+        data: {
+            point: sendAlone
+        },
         method:'POST',
         success : function(data){
 
@@ -286,8 +289,8 @@ function addNewPockemonConfirm() {
 
         }
     });
-*/
-    $('.add-new-pockemon').removeClass('stage2').addClass('stage3');
+
+   // $('.add-new-pockemon').removeClass('stage2').addClass('stage3');
 
     
     

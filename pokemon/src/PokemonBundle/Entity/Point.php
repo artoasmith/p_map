@@ -97,6 +97,12 @@ class Point
     private $enabled=true;
 
     /**
+     * @var string
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     */
+    private $address;
+
+    /**
      * Get id
      *
      * @return int
@@ -287,6 +293,26 @@ class Point
     {
         return $this->enabled;
     }
+
+
+    /**
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $address
+     * @return Point
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+        return $this;
+    }
+
 
     public function __toString()
     {

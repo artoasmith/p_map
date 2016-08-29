@@ -17,6 +17,7 @@ class PointType extends BaseAbstractType
             ->add('locationX')
             ->add('locationY')
             ->add('pokemon','entity',['class' => 'PokemonBundle:Pokemon'])
+            ->add('address')
             ->add('save', 'submit', ['label'=>'Create']);
     }
 

@@ -16,17 +16,19 @@
 
         var user_points = [
             {% if user_points is defined and user_points is not empty %}
-            {% for point in user_points %}
-            {
-                id: {{ point.id }},
-                locationX: {{ point.locationX }},
-                locationY: {{ point.locationY }},
-                pokemon: {{ point.pokemon.id }},
-                jsonInfo: '{{ point.jsonInfo }}',
-                confirm: {{ point.confirm }},
-                enabled: {{ point.enabled }}
-            }{{ (loop.last?'':',') }}
-            {% endfor %}
+                {% for point in user_points %}
+                {
+                    id: {{ point.id }},
+                    locationX: {{ point.locationX }},
+                    locationY: {{ point.locationY }},
+                    pokemon: {{ point.pokemon }},
+                    jsonInfo: '{{ point.jsonInfo|raw }}',
+                    confirm: {{ point.confirm }},
+                    enabled: {{ point.enabled }},
+                    address: '{{ point.address|raw }}',
+                    reward: {{ point.reward }}
+                }{{ (loop.last?'':',') }}
+                {% endfor %}
             {% endif %}
         ];
     </script>
@@ -293,12 +295,12 @@
                             <div class="conti rewrite-data">
                                 <div class="contact-form-row">
                                     <div class="contact-form-item">
-                                        <form action="" class="rewrite_name">
+                                        <form action="/changeProfileData" class="rewrite_name">
                                             <input type="hidden" name="action" value="name_change" >
                                             <div class="contact-form-item-input form_row">
                                                 <div class="form_input name-input">
                                                     <p>Имя</p>
-                                                    <input type="text" name="user_name" required="required" value="hyi" placeholder="" disabled>
+                                                    <input type="text" name="user_name" required="required" value="{{ app.user.username }}" placeholder="" disabled>
                                                 </div>
                                                 <div class="reduct-key">
                                                     <b>
@@ -318,12 +320,12 @@
                                         </form>
                                     </div> 
                                     <div class="contact-form-item">
-                                        <form action="" name="" class="rewrite_email" >
+                                        <form action="/changeProfileData" name="" class="rewrite_email" >
                                             <input type="hidden" name="action" value="email_change" >
                                             <div class="contact-form-item-input form_row">
                                                 <div class="form_input email-input">
                                                     <p>Почта</p>
-                                                    <input type="email" name="user_email" required="required" value="hyi@hyi.hyi" placeholder="" disabled>
+                                                    <input type="email" name="user_email" required="required" value="{{ app.user.email }}" placeholder="" disabled>
                                                 </div>
                                                 <div class="reduct-key">
                                                     <b>
@@ -343,12 +345,12 @@
                                         </form>
                                     </div>                               
                                     <div class="contact-form-item">
-                                        <form action="" class="rewrite_pass">
+                                        <form action="/changeProfileData" class="rewrite_pass">
                                             <input type="hidden" name="action" value="pass_change" >
                                             <div class="contact-form-item-input form_row">
                                                 <div class="form_input pass-input">
                                                     <p>Пароль</p>
-                                                    <input type="password" name="user_pass" required="required" value="hyi" placeholder="" disabled>
+                                                    <input type="password" name="password[old]" required="required" value="" placeholder="" disabled>
                                                 </div>
                                                 <div class="reduct-key">
                                                     <b>
@@ -370,7 +372,7 @@
                                                     <div class="contact-form-item-input form_row">
                                                         <div class="form_input pass-input">
                                                             <p>Новий пароль</p>
-                                                            <input type="password" name="user_new_pass" required="required" value="" placeholder="">
+                                                            <input type="password" name="password[new]" required="required" value="" placeholder=""  minlength="8">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -378,7 +380,7 @@
                                                     <div class="contact-form-item-input form_row">
                                                         <div class="form_input pass-input">
                                                             <p>Повторите новий пароль</p>
-                                                            <input type="password" name="user_confirm_new_pass" required="required" value="" placeholder="" >
+                                                            <input type="password" name="password[confirm]" required="required" value="" placeholder="" minlength="8">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -396,7 +398,7 @@
                                 <div class="error-field-for-all">
                                     <div class="converterrr">
                                         <div class="circlet"></div>
-                                        <p>Tyto error just for fix!</p>
+                                        <p></p>
                                     </div>                                
                                 </div>
                             </div>
@@ -413,7 +415,7 @@
                                         </div>
                                         <div class="after-block">
                                             <div class="money-maid">
-                                                <span>522,55$</span>
+                                                <span>{{ app.user.balance|number_format(2,',',' ') }}$</span>
                                             </div>
                                         </div>
                                     </div>
@@ -427,32 +429,32 @@
                                             <ul>
                                                 <li>
                                                     <a href="">
-                                                        <img src="images/logo1.png" alt="">
+                                                        <img src="/images/logo1.png" alt="">
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="">
-                                                        <img src="images/logo2.png" alt="">
+                                                        <img src="/images/logo2.png" alt="">
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="">
-                                                        <img src="images/logo3.png" alt="">
+                                                        <img src="/images/logo3.png" alt="">
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="">
-                                                        <img src="images/logo4.png" alt="">
+                                                        <img src="/images/logo4.png" alt="">
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="">
-                                                        <img src="images/logo5.png" alt="">
+                                                        <img src="/images/logo5.png" alt="">
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="">
-                                                        <img src="images/logo6.png" alt="">
+                                                        <img src="/images/logo6.png" alt="">
                                                     </a>
                                                 </li>
                                             </ul>
@@ -460,270 +462,35 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="history">
+                            {% if user_pay_check is defined and user_pay_check is not empty %}
+                                <div class="history">
                                 <div class="history-wrap">
                                     <div class="tab-title">
                                         <h3>Вывести</h3>
                                     </div>
                                     <div class="after-list">
                                         <ul>
-                                            <li>
-                                                <div class="date">12.05/2016</div>
-                                                <div class="image">
-                                                    <img src="images/bubl.png" alt="">
-                                                </div>
-                                                <div class="name">Пикачу</div>
-                                                <div class="price">+0.5$</div>
-                                            </li>
-                                            <li>
-                                                <div class="date">12.05/2016</div>
-                                                <div class="image">
-                                                    <img src="images/bubl.png" alt="">
-                                                </div>
-                                                <div class="name">Пикачу</div>
-                                                <div class="price">+0.5$</div>
-                                            </li>
-                                            <li>
-                                                <div class="date">12.05/2016</div>
-                                                <div class="image">
-                                                    <img src="images/bubl.png" alt="">
-                                                </div>
-                                                <div class="name">Пикачу</div>
-                                                <div class="price">+0.5$</div>
-                                            </li>
-                                            <li>
-                                                <div class="date">12.05/2016</div>
-                                                <div class="image">
-                                                    <img src="images/bubl.png" alt="">
-                                                </div>
-                                                <div class="name">Пикачу</div>
-                                                <div class="price">+0.5$</div>
-                                            </li>
-                                            <li>
-                                                <div class="date">12.05/2016</div>
-                                                <div class="image">
-                                                    <img src="images/bubl.png" alt="">
-                                                </div>
-                                                <div class="name">Пикачу</div>
-                                                <div class="price">+0.5$</div>
-                                            </li>
-                                            <li>
-                                                <div class="date">12.05/2016</div>
-                                                <div class="image">
-                                                    <img src="images/bubl.png" alt="">
-                                                </div>
-                                                <div class="name">Пикачу</div>
-                                                <div class="price">+0.5$</div>
-                                            </li>
-                                            <li>
-                                                <div class="date">12.05/2016</div>
-                                                <div class="image">
-                                                    <img src="images/bubl.png" alt="">
-                                                </div>
-                                                <div class="name">Пикачу</div>
-                                                <div class="price">+0.5$</div>
-                                            </li>
+                                            {% for item in user_pay_check %}
+                                                <li>
+                                                    <div class="date">{{ item.createdAt|date("d.m/Y") }}</div>
+                                                    <div class="image">
+                                                        <img src="{{ item.point.pokemon.imageUrl }}" alt="">
+                                                    </div>
+                                                    <div class="name">{{ item.point.pokemon.name }}</div>
+                                                    <div class="price">+{{ item.value }}$</div>
+                                                </li>
+                                            {% endfor %}
                                         </ul>
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
                         </div>                        
                     </li>                        
                     <li>
                         <div class="my-added-pockemon">
                             <div class="left-list">
 
-                                {#<ul>
-                                    <li>
-                                        <div class="title-row-table">
-                                            <div class="name"> Бульбазавр </div>
-                                            <div class="con">
-                                                <img src="images/bubl.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="hovered-content">
-                                            <div class="row-adress"> 
-                                                <span>Москва, 9-я Чоботовская аллея, 17</span>
-                                            </div>
-                                            <div class="results">
-                                                <div class="good">
-                                                    <div class="tili">Одобрение</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                                <div class="bad">
-                                                    <div class="tili">Отрицание</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-pay-me">
-                                                <div class="hred">Вознаграждение</div>
-                                                <div class="price">25.75 $</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="title-row-table">
-                                            <div class="name"> Бульбазавр </div>
-                                            <div class="con">
-                                                <img src="images/bubl.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="hovered-content">
-                                            <div class="row-adress"> 
-                                                <span>Москва, 9-я Чоботовская аллея, 17</span>
-                                            </div>
-                                            <div class="results">
-                                                <div class="good">
-                                                    <div class="tili">Одобрение</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                                <div class="bad">
-                                                    <div class="tili">Отрицание</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-pay-me">
-                                                <div class="hred">Вознаграждение</div>
-                                                <div class="price">25.75 $</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="title-row-table">
-                                            <div class="name"> Бульбазавр </div>
-                                            <div class="con">
-                                                <img src="images/bubl.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="hovered-content">
-                                            <div class="row-adress"> 
-                                                <span>Москва, 9-я Чоботовская аллея, 17</span>
-                                            </div>
-                                            <div class="results">
-                                                <div class="good">
-                                                    <div class="tili">Одобрение</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                                <div class="bad">
-                                                    <div class="tili">Отрицание</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-pay-me">
-                                                <div class="hred">Вознаграждение</div>
-                                                <div class="price">25.75 $</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="title-row-table">
-                                            <div class="name"> Бульбазавр </div>
-                                            <div class="con">
-                                                <img src="images/bubl.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="hovered-content">
-                                            <div class="row-adress"> 
-                                                <span>Москва, 9-я Чоботовская аллея, 17</span>
-                                            </div>
-                                            <div class="results">
-                                                <div class="good">
-                                                    <div class="tili">Одобрение</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                                <div class="bad">
-                                                    <div class="tili">Отрицание</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-pay-me">
-                                                <div class="hred">Вознаграждение</div>
-                                                <div class="price">25.75 $</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="title-row-table">
-                                            <div class="name"> Бульбазавр </div>
-                                            <div class="con">
-                                                <img src="images/bubl.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="hovered-content">
-                                            <div class="row-adress"> 
-                                                <span>Москва, 9-я Чоботовская аллея, 17</span>
-                                            </div>
-                                            <div class="results">
-                                                <div class="good">
-                                                    <div class="tili">Одобрение</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                                <div class="bad">
-                                                    <div class="tili">Отрицание</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-pay-me">
-                                                <div class="hred">Вознаграждение</div>
-                                                <div class="price">25.75 $</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="title-row-table">
-                                            <div class="name"> Бульбазавр </div>
-                                            <div class="con">
-                                                <img src="images/bubl.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="hovered-content">
-                                            <div class="row-adress"> 
-                                                <span>Москва, 9-я Чоботовская аллея, 17</span>
-                                            </div>
-                                            <div class="results">
-                                                <div class="good">
-                                                    <div class="tili">Одобрение</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                                <div class="bad">
-                                                    <div class="tili">Отрицание</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-pay-me">
-                                                <div class="hred">Вознаграждение</div>
-                                                <div class="price">25.75 $</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="title-row-table">
-                                            <div class="name"> Бульбазавр </div>
-                                            <div class="con">
-                                                <img src="images/bubl.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="hovered-content">
-                                            <div class="row-adress"> 
-                                                <span>Москва, 9-я Чоботовская аллея, 17</span>
-                                            </div>
-                                            <div class="results">
-                                                <div class="good">
-                                                    <div class="tili">Одобрение</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                                <div class="bad">
-                                                    <div class="tili">Отрицание</div>
-                                                    <div class="vali">08</div>
-                                                </div>
-                                            </div>
-                                            <div class="row-pay-me">
-                                                <div class="hred">Вознаграждение</div>
-                                                <div class="price">25.75 $</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>#}
                             </div>
                             <div class="right-map">
                                 <div id="my-pockemon"></div>
@@ -737,10 +504,10 @@
                 <div class="user-block">
                     <div class="top-image">
                         <div class="con">
-                            <img src="images/current-user.png" alt="">
+                            <img src="{{ (user_pic?user_pic:'/images/current-user.png') }}" alt="">
                         </div>
                     </div>
-                    <div class="bot-name">Mister_Pokemon</div>
+                    <div class="bot-name">{{ app.user.username }}</div>
                 </div>
             </div>
         </div>

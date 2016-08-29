@@ -275,6 +275,67 @@ class AuthController extends Controller
     }
 
     /**
+     * @Route("/changeProfileData")
+     */
+    public function changeProfileData(Request $request){
+
+        if($request->getMethod() != 'POST')
+            return $this->redirect('/');
+
+        /**
+         * @var User $a
+         */
+        $a = $this->getUser();
+        if(!$a)
+            return $this->redirect('/login');
+
+        $new_username = $request->request->get('user_name');
+        $new_email = $request->request->get('user_email');
+        $new_pass = $request->request->get('password');
+
+        //update username
+        if($new_username && $a->getUsername() != $new_username)
+            $a->setUsername($new_username);
+
+        /**
+         * @var UserManager $userManager
+         */
+        $userManager = $this->get('fos_user.user_manager');
+
+        //update email
+        if($new_email && $new_email != $a->getEmail() && filter_var($new_email,FILTER_VALIDATE_EMAIL)){
+            //unique check
+            $u = $userManager->findUserByEmail($new_email);
+            if($u)
+                $this->renderApiJson(['message'=>'Адрес электронной почты уже используется.']);
+
+            $a->setEmail($new_email);
+        }
+
+        //update pass
+        if($new_pass && is_array($new_pass) && isset($new_pass['old']) && isset($new_pass['new']) && isset($new_pass['confirm'])){
+            $encoder_service = $this->get('security.encoder_factory');
+            $encoder = $encoder_service->getEncoder($a);
+            $encoded_pass = $encoder->encodePassword($new_pass['old'], $a->getSalt());
+
+            if($encoded_pass != $a->getPassword())
+                $this->renderApiJson(['message'=>'Неверный пароль.']);
+
+            if($new_pass['new'] != $new_pass['confirm'])
+                $this->renderApiJson(['message'=>'Пароли не совпадают.']);
+
+            if(strlen($new_pass['new'])<8)
+                $this->renderApiJson(['message'=>'Пароль должен быть не меньше 8 символов.']);
+
+            $encoded_pass = $encoder->encodePassword($new_pass['new'], $a->getSalt());
+            $a->setPassword($encoded_pass);
+        }
+
+        $userManager->updateUser($a);
+        $this->renderApiJson(['success'=>true]);
+    }
+
+    /**
      * @Route("/profile")
      */
     public function profileAction(){
@@ -286,9 +347,33 @@ class AuthController extends Controller
             return $this->redirect('/login');
 
         $params = array_merge($this->getProfileInfo($a),$this->getDefaultTemplateParams());
-        $params['user_points'] = $this->getDoctrine()
-                                      ->getRepository('PokemonBundle:Point')
-                                      ->findBy(['author'=>$a->getId()],['createAt'=>'DESC','id'=>'DESC']);
+
+        $params['user_pay_check'] = [];
+        foreach ($this->getDoctrine()
+                     ->getRepository('PokemonBundle:PayCheck')
+                     ->findBy(['user'=>$a->getId()],['createdAt'=>'DESC','id'=>'DESC']) as $item){
+            $params['user_pay_check'][$item->getPoint()->getId()] = $item;
+        }
+        /**
+         * @var Point $item
+         */
+        $params['user_points'] = [];
+        foreach ($this->getDoctrine()
+            ->getRepository('PokemonBundle:Point')
+            ->findBy(['author'=>$a->getId()],['createAt'=>'DESC','id'=>'DESC']) as $item){
+            $params['user_points'][$item->getId()] = [
+                'id'=>$item->getId(),
+                'locationX'=>$item->getLocationX(),
+                'locationY'=>$item->getLocationY(),
+                'pokemon'=>$item->getPokemon()->getId(),
+                'jsonInfo'=>$item->getJsonInfo(),
+                'confirm'=>$item->getConfirm(),
+                'enabled'=>$item->getEnabled(),
+                'address'=>$item->getAddress(),
+                'reward'=>(isset($params['user_pay_check'][$item->getId()])?$params['user_pay_check'][$item->getId()]->getValue():0)
+            ];
+        }
+
         $params['pokemon'] = array_map(
             function($a){
                 return [
