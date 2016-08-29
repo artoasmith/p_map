@@ -291,7 +291,7 @@ class AuthController extends Controller
 
         $new_username = $request->request->get('user_name');
         $new_email = $request->request->get('user_email');
-        $new_pass = $request->request->ger('password');
+        $new_pass = $request->request->get('password');
 
         //update username
         if($new_username && $a->getUsername() != $new_username)
@@ -307,7 +307,7 @@ class AuthController extends Controller
             //unique check
             $u = $userManager->findUserByEmail($new_email);
             if($u)
-                $this->renderApiJson(['error'=>'Адрес электронной почты уже используется.']);
+                $this->renderApiJson(['message'=>'Адрес электронной почты уже используется.']);
 
             $a->setEmail($new_email);
         }
@@ -319,13 +319,13 @@ class AuthController extends Controller
             $encoded_pass = $encoder->encodePassword($new_pass['old'], $a->getSalt());
 
             if($encoded_pass != $a->getPassword())
-                $this->renderApiJson(['error'=>'Неверный пароль.']);
+                $this->renderApiJson(['message'=>'Неверный пароль.']);
 
             if($new_pass['new'] != $new_pass['confirm'])
-                $this->renderApiJson(['error'=>'Пароли не совпадают.']);
+                $this->renderApiJson(['message'=>'Пароли не совпадают.']);
 
             if(strlen($new_pass['new'])<8)
-                $this->renderApiJson(['error'=>'Пароль должен быть не меньше 8 символов.']);
+                $this->renderApiJson(['message'=>'Пароль должен быть не меньше 8 символов.']);
 
             $encoded_pass = $encoder->encodePassword($new_pass['new'], $a->getSalt());
             $a->setPassword($encoded_pass);
