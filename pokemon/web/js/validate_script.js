@@ -368,7 +368,7 @@ $(document).ready(function(){
         somePockemonConfirm();
     });
 
-    $('.map').on('click', '.hide-content .button-block .confirm', function( e ){
+    $('.map').on('click', '.hide-content .button-block .not-confirm', function( e ){
         e.preventDefault();
         somePockemonNotConfirm();
     });
