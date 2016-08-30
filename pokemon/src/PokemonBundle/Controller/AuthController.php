@@ -178,6 +178,11 @@ class AuthController extends Controller
      */
     public function RegistrationAction(Request $request)
     {
+        if ( $request->isXmlHttpRequest() )
+            $this->renderApiJson(1);
+        else
+            $this->renderApiJson(0);
+
         $params = $this->getDefaultTemplateParams();
         $params['show_ball'] = false;
         $params['reg_form'] = [
