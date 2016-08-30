@@ -338,19 +338,36 @@ function addNewPockemonConfirm() {
     
 }
 
+function openFancy(massage) {
+    
+    $('#error-pop').find('.text').html( massage );
+
+    $.fancybox.open('#error-pop',{
+        padding:0,
+        fitToView:false,
+        wrapCSS: 'fancybox-form',
+        autoSize:true,
+        afterClose: function(){
+            clearTimeout(timer);
+        }
+    });
+
+    var timer = null;
+
+    timer = setTimeout(function(){
+        $.fancybox.close('#error-pop');
+    },10000);
+}
 
 $(document).ready(function(){
 
    /* login */
 
-        validate('.form-log form', {submitFunction:validationReg} );
+        validate('.find-pockemon .form-log form', {submitFunction:validationReg} );
+        validate('.find-pockemon .form-reg form', {submitFunction:validationReg} );
 
     /* login */
-/*
-    validate('.rewrite_pass', {submitFunction:changeSomeCabinet} );
-    validate('.rewrite_email', {submitFunction:changeSomeCabinet} );
-    validate('.rewrite_name', {submitFunction:changeSomeCabinet} );
-*/
+    
     Maskedinput();
     fancyboxForm();
 
@@ -371,6 +388,74 @@ $(document).ready(function(){
     $('.map').on('click', '.hide-content .button-block .not-confirm', function( e ){
         e.preventDefault();
         somePockemonNotConfirm();
+    });
+
+    $('.fancybox-form-open-log').click(function(){
+
+       $('#call-popup').fadeIn(500, function(){
+           $('#call-popup').addClass('open');
+
+       });
+       $('#call-popup .pockeball ').addClass('open-login');
+
+       $('#call-popup .pockeball .mid .form-reg').css('display', 'none');
+       $('#call-popup .pockeball .mid .form-log').css('display', 'block');
+
+       if ($(window).height() < 940 ||  $(window).width() < 1080 ){
+            $('#call-popup .converter').jScrollPane({
+                showArrows: false,
+                animateScroll: true
+            });
+       }
+
+   });
+
+   $('.fancybox-form-open-reg').click(function(){
+
+       $('#call-popup2').fadeIn(500, function(){
+           $('#call-popup2').addClass('open');
+
+       });
+       $('#call-popup2 .pockeball ').addClass('open-reg');
+
+       $('#call-popup2 .pockeball .mid .form-reg').css('display', 'block');
+       $('#call-popup2 .pockeball .mid .form-log').css('display', 'none');
+
+       if ($(window).height() < 940 ||  $(window).width() < 1080 ){
+            $('#call-popup2 .converter').jScrollPane({
+                showArrows: false,
+                animateScroll: true
+            });
+       }
+
+   });
+
+    $('#call-popup .circle').click(function(){
+
+        $('#call-popup .pockeball ').removeClass('open-login');
+
+        $('#call-popup .pockeball .mid .form-log').slideUp(300);
+
+        $('#call-popup').fadeOut(500, function(){
+
+            $('#call-popup').removeClass('open');
+
+        });
+
+    });
+
+    $('#call-popup2 .circle').click(function(){
+
+        $('#call-popup2 .pockeball ').removeClass('open-reg');
+
+        $('#call-popup2 .pockeball .mid .form-reg').slideUp(300);
+
+        $('#call-popup2').fadeOut(500, function(){
+
+            $('#call-popup2').removeClass('open');
+
+        });
+        
     });
 
 });
