@@ -365,9 +365,12 @@ $(document).ready(function(){
 
         validate('.find-pockemon .form-log form', {submitFunction:validationReg} );
         validate('.find-pockemon .form-reg form', {submitFunction:validationReg} );
+        validate('#call-popup .form-reg form', {submitFunction:validationReg} );
+        validate('#call-popup2 .form-reg form', {submitFunction:validationReg} );
+        validate('#call-me-baby form', {submitFunction:validationReg} );
 
     /* login */
-    
+
     Maskedinput();
     fancyboxForm();
 

@@ -72,15 +72,16 @@
     .row-in .row-ser-logout .spread {
       width: 130px;
       text-align: center; }
-    .row-in .row-ser-logout a {
+    .row-in .row-ser-logout span {
       text-decoration: none;
       color: white;
       font-size: 18px;
       font-family: "ProximaNova";
       color: white;
       position: relative;
-      padding-bottom: 2px; }
-      .row-in .row-ser-logout a:before {
+      padding-bottom: 2px;
+      cursor: pointer; }
+      .row-in .row-ser-logout span:before {
         content: '';
         position: absolute;
         bottom: 0;
@@ -91,10 +92,12 @@
         -webkit-transition: all 0.3s;
         -moz-transition: all 0.3s;
         -o-transition: all 0.3s;
-        transition: all 0.3s; }
-      .row-in .row-ser-logout a:hover:before {
+        transition: all 0.3s;
+        opacity: 0; }
+      .row-in .row-ser-logout span:hover:before {
         left: 0;
-        right: 0; }
+        right: 0;
+        opacity: 1; }
 
 .header-wrap .con {
   display: -webkit-box;
