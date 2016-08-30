@@ -786,6 +786,7 @@ function scrollToChoosenPock() {
 
         }
 
+
         var curent =  _.find(stack, { 'pokemon': whatPockemonIChoose }); 
 
         if (curent != undefined ){
@@ -809,7 +810,7 @@ function scrollToChoosenPock() {
 
         } else {
 
-        //    alert('no such pockemon near than you');
+            openFancy(' Сорян, <br/> Нет такого покемона поблизости! ');
 
         }
 
