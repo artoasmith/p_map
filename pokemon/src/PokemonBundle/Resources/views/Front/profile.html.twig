@@ -192,7 +192,7 @@
                                                 <div class="conteiner">
                                                     <div class="place"> Россия, ул.Трудовая, 10а </div>
                                                     <div class="point">
-                                                        <img src="images/map-location-pin.png" alt="">
+                                                        <img src="/images/map-location-pin.png" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="choose-placeholder">
@@ -205,50 +205,11 @@
                                                 <input type="text" name="pock" class='derty-input'>
                                                 <div class="placeholder-drop"> 
                                                     <p> Выбрать покемона </p>
-                                                    <img src="images/search.png" alt="">
+                                                    <img src="/images/search.png" alt="">
                                                 </div>
                                                 <div class="drop-list">
                                                     <ul>
-                                                        <li>
-                                                            <p>Аульбазавр1</p>
-                                                            <img src="images/bubl.png" alt="">
-                                                        </li>
-                                                        <li>
-                                                            <p>Бульбазавр2</p>
-                                                            <img src="images/bubl.png" alt="">
-                                                        </li>
-                                                        <li>
-                                                            <p>Вульбазавр3</p>
-                                                            <img src="images/bubl.png" alt="">
-                                                        </li>
-                                                        <li>
-                                                            <p>Гульбазавр4</p>
-                                                            <img src="images/bubl.png" alt="">
-                                                        </li>
-                                                        <li>
-                                                            <p>Дульбазавр5</p>
-                                                            <img src="images/bubl.png" alt="">
-                                                        </li>
-                                                        <li>
-                                                            <p>Еульбазавр1</p>
-                                                            <img src="images/bubl.png" alt="">
-                                                        </li>
-                                                        <li>
-                                                            <p>Жульбазавр2</p>
-                                                            <img src="images/bubl.png" alt="">
-                                                        </li>
-                                                        <li>
-                                                            <p>Кульбазавр3</p>
-                                                            <img src="images/bubl.png" alt="">
-                                                        </li>
-                                                        <li>
-                                                            <p>Чульбазавр4</p>
-                                                            <img src="images/bubl.png" alt="">
-                                                        </li>
-                                                        <li>
-                                                            <p>Яульбазавр5</p>
-                                                            <img src="images/bubl.png" alt="">
-                                                        </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -508,8 +469,8 @@
                         </div>
                     </div>
                     <div class="bot-name">{{ app.user.username }}</div>
-                    <div class="bot-add-pock">Добавленые покемоны - <b>5</b> </div>
-                    <div class="bot-add-money"> Баланс- <b>5$</b> </div>
+                    <div class="bot-add-pock">Добавленые покемоны - <b>{{ user_points|length }}</b> </div>
+                    <div class="bot-add-money"> Баланс- <b>{{ app.user.balance|number_format(2,',',' ') }}$</b> </div>
                 </div>
             </div>
         </div>

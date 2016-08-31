@@ -180,8 +180,6 @@ function validationReg(form){
         data: formSur,
         method:'POST',
         success : function(data){
-            console.log(data);
-            debugger;
             if ( data.success ) {
                 console.log('reload');
                 location.reload();

@@ -33,6 +33,10 @@ class AuthController extends Controller
      */
     public function remindPassword(Request $request)
     {
+        $user = $this->getUser();
+        if($user)
+            return $this->redirect('/profile');
+
         $params = $this->getDefaultTemplateParams($request);
         $params['show_ball'] = false;
         $params['form_user'] = [
@@ -121,6 +125,7 @@ class AuthController extends Controller
                     }
                 }
             }
+
         } else {
             $token = $request->query->get('token');
             if (!empty($token)) {
@@ -178,6 +183,10 @@ class AuthController extends Controller
      */
     public function RegistrationAction(Request $request)
     {
+        $user = $this->getUser();
+        if($user)
+            return $this->redirect('/profile');
+
         $params = $this->getDefaultTemplateParams($request);
         $params['show_ball'] = false;
         $params['reg_form'] = [
@@ -289,7 +298,7 @@ class AuthController extends Controller
          */
         $a = $this->getUser();
         if(!$a)
-            return $this->redirect('/login');
+            return $this->redirect('/');
 
         $new_username = $request->request->get('user_name');
         $new_email = $request->request->get('user_email');
@@ -346,7 +355,7 @@ class AuthController extends Controller
          */
         $a = $this->getUser();
         if(!$a)
-            return $this->redirect('/login');
+            return $this->redirect('/');
 
         $params = array_merge($this->getProfileInfo($a),$this->getDefaultTemplateParams($request));
 
@@ -430,12 +439,12 @@ class AuthController extends Controller
 
         $csrfToken = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
 
-
         $params['last_username'] = $lastUsername;
         $params['error'] = $error;
         $params['csrf_token'] = $csrfToken;
 
-        return $this->render('PokemonBundle:Front:login.html.twig',$params);
+        return $this->redirect('/');
+        //return $this->render('PokemonBundle:Front:login.html.twig',$params);
     }
 
     /**

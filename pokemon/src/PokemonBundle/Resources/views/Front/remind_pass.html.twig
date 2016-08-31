@@ -1,34 +1,38 @@
 {% extends 'PokemonBundle:Front:Base.html.twig' %}
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            {% if form_pass is defined %}
+                {% if form_pass.ms is defined and form_pass.ms is not empty %}
+                openFancySucc('{{ form_pass.ms }}');
+                {% endif %}
+                {% if form_pass.error is defined and form_pass.error is not empty %}
+                    openFancy('{{ form_pass.error }}');
+                {% endif %}
+            {% else %}
+                {% if form_user.ms is defined and form_user.ms is not empty %}
+                    openFancySucc('{{ form_user.ms }}');
+                {% endif %}
+                {% if form_user.fields.user.error is defined and form_user.fields.user.error is not empty %}
+                    openFancy('{{ form_user.fields.user.error }}');
+                {% endif %}
+            {% endif %}
+        });
+    </script>
+{% endblock %}
 
 {% block content %}
     {% if form_pass is defined %}
-        {% if form_pass.ms is not empty %}
-
-            
             <div class="login-wrap">
                 <div class="contein">
                     <div class="form-wrap">
                         <div class="topper">
-                            <h2> {{ form_pass.ms }}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        {% else %}
-
-            <div class="login-wrap">
-                <div class="contein">
-                    <div class="form-wrap">
-                        <div class="topper">
-                            <h2> {{ form_pass.error }} </h2>
+                            <h2> Новый пароль </h2>
                         </div>
                         <div class="form rewrite-data">
                             <form  name="" class="register-form" method="post" >
                                 <input type="hidden" name="{{ form_pass.key }}[token]" value="{{ form_pass.token }}" />
-                                <div class="contact-form-title">
-                                    <h5> what </h5>
-                                </div>
                                 <div class="contact-form-row cfix">
                                     <div class="contact-form-item">
                                         <div class="contact-form-item-input form_row">
@@ -59,21 +63,7 @@
                     </div>
                 </div>
             </div>
-
-            {#
-            {{ form_pass.error }}
-            <form method="post">
-                <input type="hidden" name="{{ form_pass.key }}[token]" value="{{ form_pass.token }}" />
-                pass
-                <input type="password" minlength="8" name="{{ form_pass.key }}[password]" />
-                confirm pass
-                <input type="password" minlength="8" name="{{ form_pass.key }}[repassword]" />
-                <input type="submit" value="GO">
-            </form>
-            #}
-        {% endif %}
     {% else %}
-
         <div class="login-wrap">
             <div class="contein">
                 <div class="form-wrap">
@@ -111,15 +101,5 @@
                 </div>
             </div>
         </div>
-
-    {#
-        <form method="post">
-            login or email
-            <input type="text" minlength="5" required="required" name="{{ form_user.key }}[user]" value="{{ form_user.fields.user.value }}">
-            {{ form_user.fields.user.error }}
-            {{ form_user.ms }}
-            <input type="submit" value="GO">
-        </form>
-    #}
     {% endif %}
 {% endblock %}
