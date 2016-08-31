@@ -730,7 +730,7 @@ function myAddedPockemon() {
                             "</div>"+
                             "<div class='hovered-content'>"+
                                 "<div class='row-adress'>" +
-                                    "<span>"+ "в разроботке" +  "</span>" +
+                                    "<span>"+ user_points[i].address +  "</span>" +
                                 "</div>"+
                                 "<div class='results'>"+
                                     "<div class='good'>"+
@@ -744,7 +744,7 @@ function myAddedPockemon() {
                                 "</div>"+
                                 "<div class='row-pay-me'>"+
                                     "<div class='hred'>Вознаграждение</div>"+
-                                    "<div class='price'>" + "в разроботке" +  " $</div>"+
+                                    "<div class='price'>" + user_points[i].reward +  " $</div>"+
                                 "</div>"+
                             "</div>"+
                         "</li>";
