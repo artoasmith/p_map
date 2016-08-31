@@ -875,7 +875,8 @@
         -o-transform: rotate(45deg);
         transform: rotate(45deg);
         border-right: 1px solid black;
-        border-bottom: 1px solid black; }
+        border-bottom: 1px solid black;
+        display: none; }
   .contein-search .slider-row {
     padding-bottom: 150px;
     padding-top: 20px; }
