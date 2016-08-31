@@ -598,7 +598,14 @@
         -ms-flex-line-pack: center;
         align-content: center;
         margin: 0 10px;
-        background-color: white; }
+        background-color: white;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -moz-box-orient: vertical;
+        -moz-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column; }
         .cabinet-wrap .cabinet-detail .right .user-block .top-image {
           width: 100%; }
           .cabinet-wrap .cabinet-detail .right .user-block .top-image .con {
@@ -622,6 +629,22 @@
         .cabinet-wrap .cabinet-detail .right .user-block .bot-name {
           padding-top: 20px;
           color: #483e45;
+          font-family: "ProximaNova";
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 36px;
+          word-wrap: break-word; }
+        .cabinet-wrap .cabinet-detail .right .user-block .bot-add-pock {
+          padding-top: 5px;
+          color: #ed3e38;
+          font-family: "ProximaNova";
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 36px;
+          word-wrap: break-word; }
+        .cabinet-wrap .cabinet-detail .right .user-block .bot-add-money {
+          padding-top: 5px;
+          color: #007d00;
           font-family: "ProximaNova";
           font-size: 18px;
           font-weight: 400;
