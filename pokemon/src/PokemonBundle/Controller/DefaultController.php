@@ -149,16 +149,16 @@ class DefaultController extends Controller
          */
         $user = $this->getUser();
         if(!$user)
-            $this->renderApiJson(['code'=>1,'error'=>true,'message'=>'Ошибка авторизации']);
+            $this->renderApiJson(['code'=>1,'error'=>'Ошибка авторизации']);
 
         $point = $this->getDoctrine()
                       ->getRepository('PokemonBundle:Point')
                       ->find($id);
         if(!$point || !$point->getEnabled())
-            $this->renderApiJson(['code'=>2,'error'=>true,'message'=>'Точка была удалена или отсутствует']);
+            $this->renderApiJson(['code'=>2,'error'=>'Точка была удалена или отсутствует']);
 
         if($point->getAuthor() && $point->getAuthor()->getId() == $user->getId())
-            $this->renderApiJson(['code'=>3,'error'=>true,'message'=>'Нельза подтверждать точку, автором которой являетесь Вы.']);
+            $this->renderApiJson(['code'=>3,'error'=>'Нельза подтверждать точку, автором которой являетесь Вы.']);
 
 
         $json = $point->getJsonInfo();
@@ -191,7 +191,7 @@ class DefaultController extends Controller
         $formater = $this->getSerializePointCallback();
         $response = array_map($formater,[$point]);
 
-        $this->renderApiJson(['success'=>true, 'point'=>array_shift($response)]);
+        $this->renderApiJson(['success'=>'Данные приняты', 'point'=>array_shift($response)]);
     }
 
     /**
@@ -206,16 +206,16 @@ class DefaultController extends Controller
          */
         $user = $this->getUser();
         if(!$user)
-            $this->renderApiJson(['code'=>1,'error'=>true,'message'=>'Ошибка авторизации']);
+            $this->renderApiJson(['code'=>1,'error'=>'Ошибка авторизации']);
 
         $point = $this->getDoctrine()
                       ->getRepository('PokemonBundle:Point')
                       ->find($id);
         if(!$point || !$point->getEnabled())
-            $this->renderApiJson(['code'=>2,'error'=>true,'message'=>'Точка была удалена или отсутствует']);
+            $this->renderApiJson(['code'=>2,'error'=>'Точка была удалена или отсутствует']);
 
         if($point->getAuthor() && $point->getAuthor()->getId() == $user->getId())
-            $this->renderApiJson(['code'=>3,'error'=>true,'message'=>'Нельза подтверждать точку, автором которой являетесь Вы.']);
+            $this->renderApiJson(['code'=>3,'error'=>'Нельза подтверждать точку, автором которой являетесь Вы.']);
 
         $json = $point->getJsonInfo();
         if(!$json)
@@ -234,7 +234,7 @@ class DefaultController extends Controller
 
         $manager = $this->getDoctrine()->getManager();
         $response = [
-            'success'=>true
+            'success'=>'Данные приняты'
         ];
         $length = count($json['confirm'])-count($json['reject']);
         $point->setEnabled($length>-5);
