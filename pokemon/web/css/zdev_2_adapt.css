@@ -14,7 +14,11 @@
     width: -webkit-calc(100% - 350px);
     width: -moz-calc(100% - 350px);
     width: calc(100% - 350px); }
-  /* map on main */ }
+  /* map on main */
+  /* footer */
+  .footer .row-like-header .mbox {
+    padding: 0 15px; }
+  /* footer */ }
 
 @media screen and (max-width: 1080px) {
   /* map on main */

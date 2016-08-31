@@ -360,6 +360,28 @@ function openFancy(massage) {
     },10000);
 }
 
+function openFancySucc(massage, locationPlace) {
+    
+    $('#succ-pop').find('.text').html( massage );
+
+    $.fancybox.open('#succ-pop',{
+        padding:0,
+        fitToView:false,
+        wrapCSS: 'fancybox-form',
+        autoSize:true,
+        afterClose: function(){
+            clearTimeout(timer);
+        }
+    });
+
+    var timer = null;
+
+    timer = setTimeout(function(){
+        $.fancybox.close('#error-pop');
+        location.replace( locationPlace );
+    },3000);
+}
+
 $(document).ready(function(){
 
    /* login */
