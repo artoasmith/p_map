@@ -180,8 +180,6 @@ function validationReg(form){
         data: formSur,
         method:'POST',
         success : function(data){
-            console.log(data);
-            debugger;
             if ( data.success ) {
                 console.log('reload');
                 location.reload();
@@ -331,9 +329,10 @@ function addNewPockemonConfirm() {
         method:'POST',
         dataType: 'json',
         success : function(data){
+            debugger;
             if(typeof data.success == 'string'){
                 $('.add-new-pockemon').removeClass('stage2').addClass('stage3');
-                openFancySucc(data.success);
+                openFancySucc(data.success,true);
             } else if(typeof data.error == 'string') {
                 openFancy(data.error);
             } else {
