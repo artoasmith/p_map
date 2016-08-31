@@ -406,4 +406,13 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  max-height: 1800px; }
+  max-height: 1800px;
+  background-position: center center;
+  -webkit-background-size: 1956px 1200px;
+  -moz-background-size: 1956px 1200px;
+  -o-background-size: 1956px 1200px;
+  background-size: 1956px 1200px;
+  background-position: bottom center; }
+
+.footer .row-like-header .mbox {
+  padding: 0; }
