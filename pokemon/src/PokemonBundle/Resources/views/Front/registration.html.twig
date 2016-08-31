@@ -15,72 +15,17 @@
         
     {% else %}
 
-        <div class="login-wrap">
-            <div class="contein">
-                <div class="form-wrap">
+        <div class="login-wrap" style="
+            display: block;
+            width: 200px;
+            margin: auto;
+        ">
+            <div class="mid">
+                <div class="form-log">
                     <div class="topper">
                         <h2>Регистрация</h2>
                     </div>
-                    <div class="form">
-                        <form method="post"  name="" class="register-form">
-                            <div class="contact-form-row cfix">
-                                <div class="contact-form-item">
-                                    <div class="contact-form-item-input form_row">
-                                        <div class="form_input {% if reg_form.fields.login.error is not empty%} error {% endif %}">
-                                            <p> Логин </p>
-                                            <input type="text" minlength="5" required="required" name="{{ reg_form.key }}[login]" value="{{ reg_form.fields.login.value }}">
-                                            <div class="error-field">
-                                                <div class="costruct">
-                                                    <span> {{ reg_form.fields.login.error }} </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="contact-form-item">
-                                    <div class="contact-form-item-input form_row">
-                                        <div class="form_input  {% if reg_form.fields.email.error is not empty%} error {% endif %} ">
-                                            <p> Почта </p>
-                                            <input type="email" required="required" name="{{ reg_form.key }}[email]" value="{{ reg_form.fields.email.value }}">
-                                            <div class="error-field">
-                                                <div class="costruct">
-                                                    <span> {{ reg_form.fields.email.error }} </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="contact-form-item">
-                                    <div class="contact-form-item-input form_row">
-                                        <div class="form_input {% if reg_form.fields.password.error is not empty%} error {% endif %} ">
-                                            <p> Пароль </p>
-                                            <input type="password" minlength="8" required="required" name="{{ reg_form.key }}[password]" value="{{ reg_form.fields.password.value }}">
-                                            <div class="error-field">
-                                                <div class="costruct">
-                                                    <span> {{ reg_form.fields.password.error }} </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="contact-form-item">
-                                    <div class="contact-form-item-input form_row">
-                                        <div class="form_input {% if reg_form.fields.password.error is not empty%} error {% endif %}">
-                                            <p> Повторить пароль </p>
-                                             <input type="password" minlength="8" required="required" name="{{ reg_form.key }}[repassword]">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="contact-form-row-submit cfix">
-                                <div class="contact-form-item">
-                                    <button type="submit" class="contact-submit" value="GO!">
-                                        <span>Регистрация</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    {{ block('register_form') }}
                 </div>
             </div>
         </div>
