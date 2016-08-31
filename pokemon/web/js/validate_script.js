@@ -297,6 +297,7 @@ function somePockemonNotConfirm() {
         method:'POST',
         dataType: 'json',
         success : function(data){
+
             if(typeof data.success == 'string'){
 
                 $('.map').find('.hide-content').removeClass('confirm-pokemon');

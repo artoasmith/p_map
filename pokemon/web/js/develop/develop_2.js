@@ -356,18 +356,21 @@ function showMeThisPockemon( whatPockemonIWillShow ){
 
     console.log( curent );
 
-    if( curent.confirmed ){
-        $('.map').find('.hide-content').addClass('confirm-pokemon');
+    if (curent !=  '' ){
+
+        if( curent.confirmed ){
+            $('.map').find('.hide-content').addClass('confirm-pokemon');
+        }
+
+        $('.hide-content').addClass('activate').attr('data-pokemon-id', curent.id );
+        
+        $('.map').find('.topper>.con>img').attr( 'src', curent.image );
+        $('.map').find('.after-all>.top-name').html( curent.name );
+        $('.map').find('.after-all>.distance>span').html( curent.distance );
+
+        map.set('scaleControl', true);
+        map.set('scrollwheel', true);
     }
-
-    $('.hide-content').addClass('activate').attr('data-pokemon-id', curent.id );
-    
-    $('.map').find('.topper>.con>img').attr( 'src', curent.image );
-    $('.map').find('.after-all>.top-name').html( curent.name );
-    $('.map').find('.after-all>.distance>span').html( curent.distance );
-
-    map.set('scaleControl', true);
-    map.set('scrollwheel', true);
 }
 
 function makeInfoWindowEvent(map, infowindow, marker) {
@@ -789,9 +792,13 @@ function scrollToChoosenPock() {
         }
 
 
-        var curent =  _.find(stack, { 'pokemon': whatPockemonIChoose }); 
+        var curent =0 ; 
 
-        if (curent != undefined ){
+        curent =  _.find(stack, { 'pokemon': whatPockemonIChoose });
+
+        console.log( curent );
+
+        if ( !( typeof curent == "undefined") ){
 
             var target = $('#map').offset().top-100;
             $(scroller).animate({scrollTop:target},500);
@@ -807,9 +814,6 @@ function scrollToChoosenPock() {
             $('.map').find('.after-all>.distance>span').html( curent.distance );
 
             map.setZoom(18);
-            /*
-            scaleControl: false, // tyt
-            scrollwheel: false, */
             map.set('scaleControl', true);
             map.set('scrollwheel', true);
             map.panTo( new google.maps.LatLng( curent.locationY , curent.locationX ) );
@@ -821,7 +825,7 @@ function scrollToChoosenPock() {
 
         }
 
-        console.log( curent );
+        
 
     });
 
