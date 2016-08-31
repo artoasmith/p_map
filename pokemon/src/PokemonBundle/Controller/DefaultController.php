@@ -264,7 +264,7 @@ class DefaultController extends Controller
 
         $errors = $this->get('validator')->validate($callback);
         if (count($errors) > 0)
-            $this->renderApiJson(['error' => 'Ошибка передачи данных']);
+            $this->renderApiJson(['error' => ['Ошибка передачи данных']]);
 
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($callback);

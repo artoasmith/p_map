@@ -186,7 +186,7 @@ function validationReg(form){
                 console.log('reload');
                 location.reload();
             } else if( data.message ){
-                openFancy(data.message); //fancy_message
+                openFancySucc(data.message); //fancy_message
             }else {
                thisForm.closest('div').find('.error-row').css('display','block').find('p').html((typeof data.error[0] != 'undefined'?data.error[0]:'Ошибка, перезагрузите страницу и попробуйте еще раз'));
             }
