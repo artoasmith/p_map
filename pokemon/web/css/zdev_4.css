@@ -1058,7 +1058,13 @@
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
-  transition: all 0.5s; }
+  transition: all 0.5s;
+  background-image: url(../images/ffffqrfs.jpg);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center center; }
   #call-popup.open, #call-popup2.open {
     position: fixed;
     z-index: 100;
@@ -1354,3 +1360,16 @@
       font-family: "ProximaNova";
       padding: 30px;
       color: #369a80; }
+
+.login-wrap .contein {
+  padding: 0 15px; }
+  .login-wrap .contein h2 {
+    padding-top: 30px;
+    margin: 0;
+    color: #4f4f4f;
+    font-size: 36px;
+    font-weight: 700;
+    font-family: "ProximaNova";
+    text-align: center; }
+  .login-wrap .contein .rewrite-data .contact-form-row .form_input {
+    width: 100%; }

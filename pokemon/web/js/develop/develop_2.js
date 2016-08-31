@@ -817,7 +817,7 @@ function scrollToChoosenPock() {
 
         } else {
 
-            openFancy(' Сорян, <br/> Нет такого покемона поблизости! ');
+            openFancy(' Извините, <br/> Такого покемона нет поблизости! ');
 
         }
 

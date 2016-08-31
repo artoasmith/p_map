@@ -11,6 +11,7 @@
 
                 });
             }
+            $('.form_input').addClass('dirty');
         }
         
     /* load form */

@@ -23,7 +23,7 @@
                         <div class="topper">
                             <h2> {{ form_pass.error }} </h2>
                         </div>
-                        <div class="form">
+                        <div class="form rewrite-data">
                             <form  name="" class="register-form" method="post" >
                                 <input type="hidden" name="{{ form_pass.key }}[token]" value="{{ form_pass.token }}" />
                                 <div class="contact-form-title">
@@ -32,7 +32,7 @@
                                 <div class="contact-form-row cfix">
                                     <div class="contact-form-item">
                                         <div class="contact-form-item-input form_row">
-                                            <div class="form_input">
+                                            <div class="form_input email-input">
                                                 <p> Пароль </p>
                                                 <input type="password" minlength="8" name="{{ form_pass.key }}[password]" />
                                             </div>
