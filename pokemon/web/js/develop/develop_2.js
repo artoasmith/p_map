@@ -720,7 +720,28 @@ function myAddedPockemon() {
 
        // user_points[i].adress = '' + resAdress;
 
+       if ( user_points[i].jsonInfo != '' ){
 
+           var confirm = JSON.parse(user_points[i].jsonInfo).confirm.length;
+           var reject = JSON.parse(user_points[i].jsonInfo).reject.length;
+
+       } else {
+
+           var confirm = 0 ;
+           var reject = 0 ;
+
+       }
+
+       if ( user_points[i].address != '' ){
+
+           var adress = user_points[i].address ;
+
+       } else {
+
+            var adress = "( " + user_points[i].locationX + ", " + user_points[i].locationY + " )" ;
+
+       }
+       
         listOfMyPock += "<li data-id="+ user_points[i].id +">"+
                             "<div class='title-row-table'>"+
                                 "<div class='name'>" + curent.name + "</div>"+
@@ -730,16 +751,16 @@ function myAddedPockemon() {
                             "</div>"+
                             "<div class='hovered-content'>"+
                                 "<div class='row-adress'>" +
-                                    "<span>"+ user_points[i].address +  "</span>" +
+                                    "<span>"+ adress +  "</span>" +
                                 "</div>"+
                                 "<div class='results'>"+
                                     "<div class='good'>"+
                                         "<div class='tili'>Одобрение</div>"+
-                                        "<div class='vali'>"+ user_points[i].confirm +"</div>"+
+                                        "<div class='vali'>"+ confirm  +"</div>"+
                                     "</div>"+
                                     "<div class='bad'>"+
                                         "<div class='tili'>Отрицание</div>"+
-                                        "<div class='vali'> " + user_points[i].enabled + "</div>" +
+                                        "<div class='vali'> " + reject + "</div>" +
                                     "</div>"+
                                 "</div>"+
                                 "<div class='row-pay-me'>"+
