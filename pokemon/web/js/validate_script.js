@@ -180,14 +180,15 @@ function validationReg(form){
         data: formSur,
         method:'POST',
         success : function(data){
-
             console.log(data);
+            debugger;
             if ( data.success ) {
                 console.log('reload');
                 location.reload();
-            }
-            else {
-               thisForm.closest('div').find('.error-row').css('display','block').find('p').html('Неверный логин или пароль');
+            } else if( data.message ){
+                openFancy(data.message); //fancy_message
+            }else {
+               thisForm.closest('div').find('.error-row').css('display','block').find('p').html((typeof data.error[0] != 'undefined'?data.error[0]:'Ошибка, перезагрузите страницу и попробуйте еще раз'));
             }
 
         }
@@ -365,7 +366,7 @@ $(document).ready(function(){
 
         validate('.find-pockemon .form-log form', {submitFunction:validationReg} );
         validate('.find-pockemon .form-reg form', {submitFunction:validationReg} );
-        validate('#call-popup .form-reg form', {submitFunction:validationReg} );
+        validate('#call-popup .form-log form', {submitFunction:validationReg} );
         validate('#call-popup2 .form-reg form', {submitFunction:validationReg} );
         validate('#call-me-baby form', {submitFunction:validationReg} );
 

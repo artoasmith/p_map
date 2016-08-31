@@ -215,7 +215,7 @@ class Controller extends BaseController
         return $a;
     }
 
-    public function getDefaultTemplateParams(){
+    public function getDefaultTemplateParams(Request $request){
         $yaml = new Parser();
         $a = $yaml->parse(file_get_contents(__DIR__ . '/../../../app/config/params.yml'));
 
@@ -231,9 +231,33 @@ class Controller extends BaseController
             $a['is_auth'] = true;
             $a['user_name'] = (empty($user->getFirstname())?$user->getUsername():$user->getFirstname());
             $a['user_pic'] = $user->getImageUrl();
+            $a['user_login'] = $user->getUsername();
         } else {
             $a['social'] = $this->getSocialAuthLink($a);
+
+            //check login
+            $a['log'] = $this->checkLogin($request);
+            //check reg
+            $a['reg_form'] = [
+                'key'=>'registration',
+                'error'=>[],
+                'fields'=>[
+                    'login'=>[
+                        'value'=>'',
+                        'error'=>''
+                    ],
+                    'email'=>[
+                        'value'=>'',
+                        'error'=>''
+                    ],
+                    'password'=>[
+                        'value'=>'',
+                        'error'=>''
+                    ]
+                ]
+            ];
         }
+        $a['csrf_token'] = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
         $a['show_ball'] = true;
         return (is_array($a)?$a:[]);
     }
