@@ -1,0 +1,22 @@
+{% extends 'PokemonBundle:Front:Base.html.twig' %}
+
+{% block content %}
+    <div class="ban-topper-placeholder"></div>
+    <div class="ban-topper" style="background-image: url({{ (sitemap.sitemap_picture is defined?sitemap.sitemap_picture:'/images/all-in.jpg') }});">
+        <div class="mbox-suprize">
+            <div class="title-row">
+                <div class="titl">
+                    <h2>{{ sitemap.sitemap_title }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="texter-wrap">
+        <div class="mbox-suprize">
+            <div class="ctext">
+                {{ (sitemap.sitemap_text is defined?sitemap.sitemap_text:'')| raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

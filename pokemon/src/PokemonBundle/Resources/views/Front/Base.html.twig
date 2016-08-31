@@ -445,14 +445,14 @@
             <div id="call-me-baby">
                     <div class="conteiner">
                         <div class="form-call-me" style="display: block;">
-                            <form action="/callbsck" method="post" class="register-form">
+                            <form action="/callback" method="post" class="register-form">
                                 <input type="hidden" value="">
                                 <div class="contact-form-row cfix">
                                     <div class="contact-form-item">
                                         <div class="contact-form-item-input form_row">
                                             <div class="form_input">
-                                                <p> Имя пользователя: </p>
-                                                <input type="text" id="username" name="_username" value="" required="required">
+                                                <p> Имя: </p>
+                                                <input type="text" id="username" name="callback[name]" value="" required="required">
                                             </div>
                                         </div>
                                     </div>
@@ -460,10 +460,13 @@
                                         <div class="contact-form-item-input form_row">
                                             <div class="form_input">
                                                 <p> Телефон </p>
-                                                <input type="tel" id="tel" name="_password" class="tel-mask" required="required">
+                                                <input type="tel" id="tel" name="callback[phone]" class="tel-mask" required="required">
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="error-row">
+                                    <p></p>
                                 </div>
                                 <div class="contact-form-row-submit cfix">
                                     <div class="contact-form-item">

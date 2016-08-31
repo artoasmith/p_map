@@ -37,6 +37,15 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/sitemap")
+     */
+    public function sitemapAction(Request $request){
+        $parems = $this->getDefaultTemplateParams($request);
+        $parems['sitemap'] = $this->getSettingsGroup('sitemap');
+        return $this->render('PokemonBundle:Front:sitemap.html.twig',$parems);
+    }
+
+    /**
      * @Route("/about")
      */
     public function aboutAction(Request $request)
@@ -255,7 +264,7 @@ class DefaultController extends Controller
 
         $errors = $this->get('validator')->validate($callback);
         if (count($errors) > 0)
-            $this->renderApiJson(['error' => 'Ошибка передачи данных']);
+            $this->renderApiJson(['error' => ['Ошибка передачи данных']]);
 
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($callback);

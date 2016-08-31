@@ -186,7 +186,7 @@ function validationReg(form){
                 console.log('reload');
                 location.reload();
             } else if( data.message ){
-                openFancy(data.message); //fancy_message
+                openFancySucc(data.message,true); //fancy_message
             }else {
                thisForm.closest('div').find('.error-row').css('display','block').find('p').html((typeof data.error[0] != 'undefined'?data.error[0]:'Ошибка, перезагрузите страницу и попробуйте еще раз'));
             }
@@ -371,15 +371,19 @@ function openFancySucc(massage, locationPlace) {
         autoSize:true,
         afterClose: function(){
             clearTimeout(timer);
+            if(locationPlace === true)
+                location.reload();
+            else if(typeof locationPlace == 'string')
+                location.replace(locationPlace);
         }
     });
 
     var timer = null;
 
-    timer = setTimeout(function(){
+    timer = setTimeout(function () {
         $.fancybox.close('#error-pop');
-        location.replace( locationPlace );
-    },3000);
+    }, 3000);
+
 }
 
 $(document).ready(function(){
