@@ -1039,6 +1039,11 @@
         font-size: 16px;
         font-family: "ProximaNova";
         color: silver; }
+        .footer .last-row .row .left a {
+          font-size: 16px;
+          font-family: "ProximaNova";
+          color: silver;
+          text-decoration: none; }
       .footer .last-row .row .right a {
         text-decoration: none;
         font-size: 16px;
@@ -1371,5 +1376,10 @@
     font-weight: 700;
     font-family: "ProximaNova";
     text-align: center; }
-  .login-wrap .contein .rewrite-data .contact-form-row .form_input {
-    width: 100%; }
+  .login-wrap .contein .rewrite-data {
+    padding-top: 30px; }
+    .login-wrap .contein .rewrite-data .contact-form-row .form_input {
+      width: 100%; }
+  .login-wrap .contein .rewrite-data .contact-form-row-submit {
+    width: 100%;
+    padding-top: 10px; }

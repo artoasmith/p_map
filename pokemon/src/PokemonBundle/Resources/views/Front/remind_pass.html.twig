@@ -32,7 +32,7 @@
                                 <div class="contact-form-row cfix">
                                     <div class="contact-form-item">
                                         <div class="contact-form-item-input form_row">
-                                            <div class="form_input email-input">
+                                            <div class="form_input pass-input">
                                                 <p> Пароль </p>
                                                 <input type="password" minlength="8" name="{{ form_pass.key }}[password]" />
                                             </div>
@@ -40,7 +40,7 @@
                                     </div>
                                     <div class="contact-form-item">
                                         <div class="contact-form-item-input form_row">
-                                            <div class="form_input">
+                                            <div class="form_input pass-input">
                                                 <p> Подтвердите пароль </p>
                                                 <input type="password" minlength="8" name="{{ form_pass.key }}[repassword]" />
                                             </div>
@@ -80,22 +80,15 @@
                     <div class="topper">
                         <h2> Востановление пароля </h2>
                     </div>
-                    <div class="form">
+                    <div class="form rewrite-data">
                         <form  name="" class="register-form" method="post" >
-                            <div class="contact-form-title">
-                                <h5> пароль на пошту, каналья (с) Боярский </h5>
-                            </div>
                             <div class="contact-form-row cfix">
                                 <div class="contact-form-item">
                                     <div class="contact-form-item-input form_row">
-                                        <div class="form_input">
+                                        <div class="form_input name-input">
                                             <p> Почта или пароль </p>
                                             <input type="text" minlength="5" required="required" name="{{ form_user.key }}[user]" value="{{ form_user.fields.user.value }}">
-                                            <div class="error-field">
-                                                <div class="costruct">
-                                                    <span> {{ form_user.fields.user.error }} </span>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -108,6 +101,12 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="error-field-for-all" >
+                            <div class="converterrr">
+                                <div class="circlet"></div>
+                                <p>{{ form_user.fields.user.error }}</p>
+                            </div>                                
+                        </div>
                     </div>
                 </div>
             </div>
