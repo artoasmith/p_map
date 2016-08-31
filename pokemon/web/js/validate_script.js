@@ -415,6 +415,12 @@ $(document).ready(function(){
         addNewPockemonConfirm();
     });
 
+    $('.add-new-pockemon').on('click', '.chooser .button-block .not-confirm', function( e ){
+        e.preventDefault();
+        $('.add-new-pockemon').removeClass("stage2").removeClass("stage3").addClass('start');
+    });
+
+
     $('.map').on('click', '.hide-content .button-block .confirm', function( e ){
         e.preventDefault();
         somePockemonConfirm();
