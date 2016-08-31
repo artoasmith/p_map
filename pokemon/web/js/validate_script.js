@@ -268,14 +268,17 @@ function somePockemonConfirm() {
     $.ajax({        
         url : '/pointsConfirm/'+ thisIDiSend ,
         method:'POST',
+        dataType: 'json',
         success : function(data){
-
-            if( data == true ){
+            if(typeof data.success == 'string'){
 
                 $('.map').find('.hide-content').addClass('confirm-pokemon');
+                openFancySucc(data.success);
 
+            } else if(typeof data.error == 'string') {
+                openFancy(data.error);
             } else {
-                alert('someShit');
+                openFancy('Что-то пошло не так');
             }        
 
         }
@@ -292,16 +295,17 @@ function somePockemonNotConfirm() {
     $.ajax({        
         url : '/pointsReject/'+ thisIDiSend ,
         method:'POST',
+        dataType: 'json',
         success : function(data){
-
-            if( data == true ){
+            if(typeof data.success == 'string'){
 
                 $('.map').find('.hide-content').removeClass('confirm-pokemon');
-
+                openFancySucc(data.success);
+            } else if(typeof data.error == 'string') {
+                openFancy(data.error);
             } else {
-                alert('someShit');
-            }        
-
+                openFancy('Что-то пошло не так');
+            }
         }
     });
 
@@ -324,16 +328,16 @@ function addNewPockemonConfirm() {
             point: sendAlone
         },
         method:'POST',
+        dataType: 'json',
         success : function(data){
-
-            if( data == true ){
-
+            if(typeof data.success == 'string'){
                 $('.add-new-pockemon').removeClass('stage2').addClass('stage3');
-
+                openFancySucc(data.success);
+            } else if(typeof data.error == 'string') {
+                openFancy(data.error);
             } else {
-                alert('someShit');
-            }        
-
+                openFancy('Что-то пошло не так');
+            }
         }
     });
     
