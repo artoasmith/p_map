@@ -1333,13 +1333,13 @@
       font-size: 24px;
       font-weight: bold;
       font-family: "ProximaNova";
-      padding: 10px;
+      padding: 30px;
       color: #e93c36; }
 
 #succ-pop {
   width: 400px;
   padding: 60px 0;
-  background-image: url(../images/error-pop.jpg);
+  background-image: url(../images/succ-pop.jpg);
   background-position: center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -1352,5 +1352,5 @@
       font-size: 24px;
       font-weight: bold;
       font-family: "ProximaNova";
-      padding: 10px;
+      padding: 30px;
       color: #369a80; }
