@@ -366,6 +366,8 @@ function showMeThisPockemon( whatPockemonIWillShow ){
     $('.map').find('.after-all>.top-name').html( curent.name );
     $('.map').find('.after-all>.distance>span').html( curent.distance );
 
+    map.set('scaleControl', true);
+    map.set('scrollwheel', true);
 }
 
 function makeInfoWindowEvent(map, infowindow, marker) {
@@ -408,8 +410,8 @@ function googleMap(mapWrap) {
             center: myLatlng,
             disableDefaultUI: false, //без управляющих елементов
             mapTypeId: google.maps.MapTypeId.ROADMAP, // SATELLITE - снимки со спутника,
-            scaleControl: true,
-            scrollwheel: true,
+            scaleControl: false, // tyt
+            scrollwheel: false,  // tyt
             navigationControl: true,
             mapTypeControl: false,
             styles: [{"featureType":"administrative","elementType":"all","stylers":[{"visibility":"on"},{"lightness":33}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#c5dac6"}]},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":20}]},{"featureType":"road","elementType":"all","stylers":[{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#c5c6c6"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#e4d7c6"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#fbfaf7"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#9ea7b2"}]}],
@@ -805,6 +807,11 @@ function scrollToChoosenPock() {
             $('.map').find('.after-all>.distance>span').html( curent.distance );
 
             map.setZoom(18);
+            /*
+            scaleControl: false, // tyt
+            scrollwheel: false, */
+            map.set('scaleControl', true);
+            map.set('scrollwheel', true);
             map.panTo( new google.maps.LatLng( curent.locationY , curent.locationX ) );
            
 
