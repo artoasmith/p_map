@@ -33,7 +33,7 @@ class AuthController extends Controller
      */
     public function remindPassword(Request $request)
     {
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
         $params['show_ball'] = false;
         $params['form_user'] = [
             'key'=>'form_user',
@@ -149,7 +149,7 @@ class AuthController extends Controller
         $token = $request->query->get('token');
         $errorMessage = 'Неверный код активации';
 
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
         $params['show_ball'] = false;
 
         if(empty($token)) {
@@ -178,12 +178,7 @@ class AuthController extends Controller
      */
     public function RegistrationAction(Request $request)
     {
-        if ( $request->isXmlHttpRequest() )
-            $this->renderApiJson(1);
-        else
-            $this->renderApiJson(0);
-
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
         $params['show_ball'] = false;
         $params['reg_form'] = [
             'key'=>'registration',
@@ -210,20 +205,22 @@ class AuthController extends Controller
             $form->handleRequest($request);
             $formdata = $form->getData();
             $error = false;
-            if($formdata['repassword'] != $formdata['password'])
-                $error = $params['reg_form']['fields']['password']['error'] = 'Неверное подтверждение пароля';
+            if($formdata['repassword'] != $formdata['password']){
+                $params['reg_form']['error'][] = $error = $params['reg_form']['fields']['password']['error'] = 'Неверное подтверждение пароля';
+            }
             if(strlen($formdata['password'])<8)
-                $error = $params['reg_form']['fields']['password']['error'] = 'Пароль должен быть не меньше 8 символов';
+                $params['reg_form']['error'][] = $error = $params['reg_form']['fields']['password']['error'] = 'Пароль должен быть не меньше 8 символов';
             if(!preg_match("/^[a-zA-Z][a-zA-Z0-9_]+$/",$formdata['login']))
-                $error = $params['reg_form']['fields']['login']['error'] = 'Логин недопустимого формата';
+                $params['reg_form']['error'][] = $error = $params['reg_form']['fields']['login']['error'] = 'Логин недопустимого формата';
             if(strlen($formdata['login'])<5)
-                $error = $params['reg_form']['fields']['login']['error'] = 'Логин должен быть не меньше 5 символов';
+                $params['reg_form']['error'][] = $error = $params['reg_form']['fields']['login']['error'] = 'Логин должен быть не меньше 5 символов';
             if(empty($formdata['email']))
-                $error = $params['reg_form']['fields']['email']['error'] = 'Недопустимый адрес электронной почты';
+                $params['reg_form']['error'][] = $error = $params['reg_form']['fields']['email']['error'] = 'Недопустимый адрес электронной почты';
 
             $params['reg_form']['fields']['login']['value'] = $formdata['login'];
             $params['reg_form']['fields']['email']['value'] = $formdata['email'];
 
+            $params['reg_form']['ff'] = $formdata;
             if($error === false){
                 /**
                  * @var UserManager $userManager
@@ -232,11 +229,11 @@ class AuthController extends Controller
 
                 $u = $userManager->findUserByEmail($formdata['email']);
                 if($u)
-                    $error = $params['reg_form']['fields']['email']['error'] = 'Адрес электронной почты уже используется';
+                    $params['reg_form']['error'][] = $error = $params['reg_form']['fields']['email']['error'] = 'Адрес электронной почты уже используется';
 
                 $u = $userManager->findUserByUsername($formdata['login']);
                 if($u)
-                    $error = $params['reg_form']['fields']['login']['error'] = 'Логин уже используется';
+                    $params['reg_form']['error'][] = $error = $params['reg_form']['fields']['login']['error'] = 'Логин уже используется';
 
                 if($error === false){
                     $User = $userManager->createUser();
@@ -343,7 +340,7 @@ class AuthController extends Controller
     /**
      * @Route("/profile")
      */
-    public function profileAction(){
+    public function profileAction(Request $request){
         /**
          * @var User $a
          */
@@ -351,7 +348,7 @@ class AuthController extends Controller
         if(!$a)
             return $this->redirect('/login');
 
-        $params = array_merge($this->getProfileInfo($a),$this->getDefaultTemplateParams());
+        $params = array_merge($this->getProfileInfo($a),$this->getDefaultTemplateParams($request));
 
         $params['user_pay_check'] = [];
         foreach ($this->getDoctrine()
@@ -397,12 +394,12 @@ class AuthController extends Controller
     /**
      * @Route("/login")
      */
-    public function loginAction(){
+    public function loginAction(Request $request){
         $user = $this->getUser();
         if($user)
             return $this->redirect('/profile');
 
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
         $params['show_ball'] = false;
         /**
          * @var UserManager $userManager
@@ -449,7 +446,7 @@ class AuthController extends Controller
         if($user)
             return $this->redirect('/profile');
 
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
         $fb = new Facebook([
             'app_id' => $params['fb_app_id'],
             'app_secret' => $params['fb_app_secret'],
@@ -597,7 +594,7 @@ class AuthController extends Controller
         if($user)
             return $this->redirect('/profile');
 
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
         $vk = new VK([
             'client_id' => $params['vk_app_id'],
             'client_secret' => $params['vk_app_secret'],
@@ -682,7 +679,7 @@ class AuthController extends Controller
         if (!$request->query->get('code'))
             return $this->redirect('/login');
 
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
 
         $client = new \Google_Client();
         $client->setClientId($params['gp_app_id']);
@@ -759,7 +756,7 @@ class AuthController extends Controller
         if (!$request->query->get('code'))
             return $this->redirect('/login');
 
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
 
         $instagram = new Instagram(array(
             'apiKey'      => $params['in_app_id'],

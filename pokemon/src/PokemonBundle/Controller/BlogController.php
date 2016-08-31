@@ -18,7 +18,7 @@ class BlogController extends Controller
      */
     public function blogListAction(Request $request)
     {
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
 
         $page = $request->query->get('page');
         $page = ($page>1?intval($page):1);
@@ -59,7 +59,7 @@ class BlogController extends Controller
      */
     public function blogShowAction($id,Request $request)
     {
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
         /**
          * @var Blog $post
          */

@@ -18,39 +18,8 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
 
-        //user info
-        $u = $this->getUser();
-        if($u) {
-            $params['user_login'] = $u->getUsername();
-
-        } else {
-            //check login
-            $params['log'] = $this->checkLogin($request);
-            //check reg
-            $params['reg_form'] = [
-                'key'=>'registration',
-                'error'=>[],
-                'fields'=>[
-                    'login'=>[
-                        'value'=>'',
-                        'error'=>''
-                    ],
-                    'email'=>[
-                        'value'=>'',
-                        'error'=>''
-                    ],
-                    'password'=>[
-                        'value'=>'',
-                        'error'=>''
-                    ]
-                ]
-            ];
-        }
-        //demo params
-        $x = 44.442;
-        $y = 35.504;
         $params['items'] = [];
         $params['pokemon'] = array_map(
             function($a){
@@ -64,19 +33,15 @@ class DefaultController extends Controller
         );
 
 
-
-
-        $params['csrf_token'] = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
-
         return $this->render('PokemonBundle:Front:main.html.twig',$params);
     }
 
     /**
      * @Route("/about")
      */
-    public function aboutAction()
+    public function aboutAction(Request $request)
     {
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
         $params['about'] = $this->getSettingsGroup('about');
         return $this->render('PokemonBundle:Front:about.html.twig',$params);
     }
@@ -84,9 +49,9 @@ class DefaultController extends Controller
     /**
      * @Route("/contacts")
      */
-    public function contactsAction()
+    public function contactsAction(Request $request)
     {
-        $params = $this->getDefaultTemplateParams();
+        $params = $this->getDefaultTemplateParams($request);
         $params['contacts'] = $this->getSettingsGroup('contacts');
         $params['about'] = $this->getSettingsGroup('about');
         return $this->render('PokemonBundle:Front:contacts.html.twig',$params);
