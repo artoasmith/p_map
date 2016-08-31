@@ -134,7 +134,7 @@ class DefaultController extends Controller
         $this->resetSectorCache($point);
         $cache->save($cacheKey,'1',60); // 1 min
 
-        $this->renderApiJson(['success'=>true, 'point'=>array_shift($response)]);
+        $this->renderApiJson(['success'=>'Точка успешно добавлена.', 'point'=>array_shift($response)]);
     }
 
     /**
